@@ -29,13 +29,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     // Route groups for Registrations
-    Route::group(['prefix' => 'registers', 'as' => 'registers.'], function () {});
+    // Route::group(['prefix' => 'registers', 'as' => 'registers.'], function () {});
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// exemplo de rota para notificação
+Route::post('/notify/{type}', function ($type) {
+    return redirect()->back()->toast('Notificação do servidor =)', $type);
 });
 
 require __DIR__ . '/auth.php';
