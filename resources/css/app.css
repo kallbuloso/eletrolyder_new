@@ -1,0 +1,29 @@
+/* Modern Scrollbar */
+/* width */
+::-webkit-scrollbar {
+    background: rgb(var(--v-theme-surface));
+    block-size: 8px;
+    border-end-end-radius: 14px;
+    border-start-end-radius: 14px;
+    inline-size: 4px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0.5rem;
+    background: rgb(var(--v-theme-perfect-scrollbar-thumb));
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  ::-webkit-scrollbar-corner {
+    display: none;
+  }

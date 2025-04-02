@@ -1,0 +1,176 @@
+
+Projetos:
+    Cadastros básicos:
+      ✔ Cadastro da Empresa: @2h @done(04/11/2024 20:20)
+        nome/razão social,
+        apelido/nome fantasia,
+        cpf/cnpj,
+        inscrição estadual,
+        inscrição municipal,
+        email,
+        site,
+        observações,
+        endereços,
+        documentos,
+        telefones,
+        status, (ativo, inativo, bloqueado)
+      ✔ Cadastro de Usuários @1h @done(04/11/2024 20:20)
+        nome,
+        email,
+        senha,
+        grupo, (um grupo de usuários) // admin, user, guest
+        permissões, (várias permissões)
+        observações,
+        endereços,
+        documentos,
+        telefones,
+        status, (ativo, inativo, bloqueado)
+      ✔ Cadastro de Clientes @2.30h @done(04/11/2024 20:20)
+        pessoa física e jurídica,
+        nome/razão social,
+        apelido/nome fantasia,
+        contato,
+        cpf/cnpj,
+        data de nascimento/data de fundação,
+        email,
+        site,
+        observações,
+        endereços, (vários endereços)
+        documentos,
+        telefones, (vários telefones)
+        status, (ativo, inativo, bloqueado)
+      ☐ Cadastro de Fornecedores @2h
+        pessoa física e jurídica,
+        nome/razão social,
+        apelido/nome fantasia,
+        contato,
+        cpf/cnpj,
+        data de nascimento/data de fundação,
+        email,
+        site,
+        observações,
+        endereços, (vários endereços)
+        documentos,
+        telefones, (vários telefones)
+        status, (ativo, inativo, bloqueado)
+    Carastro de Produtos:
+      ☐ Cadastro de Produtos @1h
+        nome,
+        descrição,
+        ☐ categoria de produto
+          nome,
+          descrição,
+          observações,
+        ☐ Cadastro de Unidades de Medida @1h
+          nome, (unidade, metro, litro, kilo, etc)
+          descrição,
+          observações,
+        ☐ Cadastro de Marcas @1h
+          nome,
+          descrição,
+          observações,
+        modelo,
+        estado, (novo, usado, recondicionado)
+        situação, (ativo, inativo, bloqueado)
+        observações,
+        ☐ Cadastro de Estoque @1h
+          quantidade,
+          valor de compra,
+          valor de venda,
+          observações,
+    Cadastro de Ordens de Serviço:
+      Cadastro de Aparelhos:
+        ☐ Cadastro de Aparelhos @1h
+          tipo, (computador, notebook, celular, tablet, Televisor, Caixa de Som, Secador de cabelo, Chapinha, Microondas, etc)
+          marca,
+          ☐ Cadastro de Marcas @1h
+            nome,
+            descrição,
+            observações,/
+          modelo, (auto completar com base na marca selecionada)
+          imei/serial,
+          estado, (novo, usado, recondicionado)
+          avarias_visíveis, (tela quebrada, touch quebrado, botão quebrado, carcaça quebrada, etc)
+          acessórios, (carregador, fone de ouvido, cabo usb, etc)
+          defeito relatado,
+          defeito constatado,
+          observações,
+          notas, (observações do técnico, observações do cliente, etc)
+
+      Cadastro de Defeitos:
+          ☐ Cadastro de Defeitos @1h
+          ☐ Cadastro de Causas @1h
+          ☐ Cadastro de Soluções @1h
+          ☐ Cadastro de Observações @1h
+      Cadastro de Termos de Garantia:
+          ☐ Cadastro de Termos de Garantia @1h
+          ☐ Cadastro de Tipos de Garantia @1h
+          ☐ Cadastro de Períodos de Garantia @1h
+          ☐ Cadastro de Observações @1h
+      Cadastro de Serviços:
+          ☐ Cadastro de Serviços @1h
+          ☐ Cadastro de Observações @1h
+      Cadastro de Observações:
+
+      Financeiro:
+          ☐ Contas a Pagar @1h
+          ☐ Contas a Receber @1h
+          ☐ Fluxo de Caixa @1h
+          ☐ Relatórios @1h
+      Vendas:
+          ☐ Orçamentos @1h
+          ☐ Pedidos @1h
+          ☐ Notas Fiscais @1h
+          ☐ Relatórios @1h
+      Compras:
+          ☐ Pedidos @1h
+          ☐ Notas Fiscais @1h
+          ☐ Relatórios @1h
+      Estoque:
+          ☐ Entradas @1h
+          ☐ Saídas @1h
+          ☐ Relatórios @1h
+      # ☐ Qualquer coisa com dois pontos no final da linha é um projeto @1h
+      # ☐ Os projetos mostrarão algumas estatísticas ao lado deles @1h
+        ✔ Por padrão, essas estatísticas são o número de todos pendentes e a soma de suas estimativas de tempo @30m
+      Aninhado:
+        ☐ Você pode aninhar projetos uns dentro dos outros e dobrá-los @1d
+
+  Todos:
+  Você pode escrever notas/descrições em texto simples onde quiser
+  Novo:
+      ☐ Pressione Cmd/Ctrl+Enter para adicionar uma nova tarefa
+  Feito:
+      ✔ Pressione Alt+D para marcar uma tarefa como concluída
+      ✔ Pressione novamente para desfazer a ação
+  Cancelado:
+      ✘ Pressione Alt+C para marcar uma tarefa como cancelada
+      ✘ Pressione novamente para desfazer a ação
+  Marcação:
+      ☐ Você pode adicionar tags usando o símbolo @, como este @tag
+      ☐ Existem algumas tags `especiais` e personalizáveis: @critical @high @low @today
+  Cronometragem:
+      // ☐ Pressione Alt+S para marcar uma tarefa como iniciada @started(17/02/2024 16:59)
+      ✔ Agora vai mostrar o tempo decorrido @started(17-11-03 10:42) @done(17-11-03 20:11) @lasted(9h29m)
+      ☐ Você pode fornecer estimativas de tempo para as tarefas @1h30m  @done(17-11-03 20:11) @lasted(9h29m)
+      ☐ Estamos até fazendo algum processamento de linguagem natural @est(1 day and 20 minutes)
+
+  Formatação:
+  Você pode formatar o texto de maneira semelhante à redução
+  Bold:
+      ☐ Use asteriscos para *bold*
+  Italic:
+      ☐ Use sublinhados para _italic_
+  Strikethrough:
+      ☐ Use circunflexo para ~strikethrough~
+  Code:
+      ☐ Use crases para `code`
+
+  Archive:
+  ✔ Você pode arquivar todos concluídos aqui
+  ✔ Parabéns, agora você é um mestre Todo+!
+
+
+  Preciso criar um sistema de gerenciamento de anúncios e vendas do Mercado Livre.
+  Será um sistema SaaS onde cada empresa poderá ter várias contas do Mercado Livre e vários usuários.
+  O administrador poderá delegar funções e permissões aos seus usuários.
