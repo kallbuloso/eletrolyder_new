@@ -13,16 +13,18 @@
         </li>
       </ul>
       <ul>
-        <li v-tooltip="'Fechar'">
+        <li v-tooltip="'Alertas'">
           <a href="#" class="go-to-page">
             <v-icon icon="mdi-bell-outline" />
           </a>
         </li>
-        <Link v-tooltip="'Sair'" class="link text-center" :href="route('logout')" method="post" as="li">
-          <a href="javascript(0)">
-            <v-icon icon="iconify:material-symbols-light:logout" />
+        <li v-tooltip="'Sair'">
+          <a class="go-to-page">
+            <Link :href="route('logout')" method="post">
+              <v-icon icon="iconify:ic:round-logout" />
+            </Link>
           </a>
-        </Link>
+        </li>
       </ul>
     </div>
 
@@ -35,7 +37,7 @@
         :key="index"
         :class="{ 'navigation-active': activeMenu === '#' + section.id || isActiveSection(activeMenu) }"
       >
-        <li class="navigation-divider mt-1">{{ section.title }}</li>
+        <li class="navigation-divider">{{ section.title }}</li>
         <NavigationMenu :items="section.items" />
       </ul>
     </div>
@@ -55,7 +57,7 @@ const menuItems = [
   { tooltip: 'Dashboard', target: '#dashboard', icon: 'iconify:fluent-mdl2:b-i-dashboard', badge: 5 },
   { tooltip: 'Ordem de Serviço', target: '#services', icon: 'iconify:game-icons:auto-repair' },
   { tooltip: 'Chats', target: '#chats', icon: 'iconify:gridicons:chat' },
-  // { tooltip: 'Mercado Livre', target: '#meli', icon: 'iconify:simple-icons:mercadopago' },
+  { tooltip: 'Mercado Livre', target: '#meli', icon: 'iconify:simple-icons:mercadopago' },
   { tooltip: 'Cadastros', target: '#registers', icon: 'iconify:medical-icon:i-registration' },
   { tooltip: 'Configurações', target: '#settings', icon: 'iconify:carbon:settings-edit' }
 ]
@@ -113,11 +115,11 @@ const menuSections = ref([
     title: 'Chats',
     items: []
   },
-  // {
-  //   id: 'meli',
-  //   title: 'Mercado Livre',
-  //   items: []
-  // },
+  {
+    id: 'meli',
+    title: 'Mercado Livre',
+    items: []
+  },
   {
     id: 'settings',
     title: 'Configurações',
