@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
-use Illuminate\Http\JsonResponse;
 use App\Http\Requests\UserRequest;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
@@ -38,12 +37,6 @@ class UserController extends Controller
   private $titleSingular = 'Usuário';
 
   /**
-   * Summary of pageIndex
-   * @var string
-   */
-  private $pageIndex = 'registers.user.index';
-
-  /**
    * UserController constructor.
    * @param UserService $service
    */
@@ -56,73 +49,49 @@ class UserController extends Controller
    * Display a listing of the resource.
    *
    * @param  Request  $request
-   * @return \Illuminate\Http\JsonResponse|\Inertia\Response
+   * @return \Inertia\Response
    */
-  public function index(Request $request): JsonResponse|\Inertia\Response
+  public function index(Request $request): \Inertia\Response
   {
-    $this->authorize('user listar');
+    $this->authorize('user list');
 
-    if ($request->wantsJson()) {
-      try {
+    $query = User::query()->when($request->get('search'), function ($query, $search) {
+      $search = strtolower(trim($search));
+      return $query->whereRaw('LOWER(name) LIKE ?', ["%$search%"]);
+    })->when($request->get('sort'), function ($query, $sortBy) {
+      return $query->orderBy($sortBy['key'], $sortBy['order']);
+    });
 
-        $query = User::query();
-        $query = $this->service->applyFilters($query, $request, ['name', 'email']);
-
-        // Carregar os relacionamentos
-        $query->with(['roles']);
-
-        $users = $query->paginate($request->get('limit', 10));
-
-        return response()->json($users);
-      } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
-      }
-    } else {
-
-      $query = User::query();
-      $query = $this->service->applyFilters($query, $request, ['name', 'email']);
-
-      // Carregar os relacionamentos
-      $query->with(['roles']);
-
-      $users = $query->paginate($request->get('limit', 10));
-    }
-
-    return $this->renderPage('Registers/User/Index', [
+    // $users = $this->service->paginate(request('per_page', 20), request('keywords', ''),  '*', 'page', null);
+    return $this->renderPage('Settings/User/Index', [
       'title' => $this->pageTitle,
       'breadcrumbs' => [
         ['title' => 'Dashboard', 'href' => route('dashboard')],
         ['title' => $this->pageTitle, 'disabled' => true],
       ],
-      'usersCount' => $this->service->count(),
+      'data' => $query->paginate($request->get('limit', 10)),
+      // 'data' => $users,
     ]);
   }
 
   /**
    * Show the form for creating a new resource.
    *
-   * @return \Momentum\Modal\Modal
+   * @return \Inertia\Response
    */
-  public function create(): \Momentum\Modal\Modal
+  public function create(): \Inertia\Response
   {
-    $this->authorize('user criar');
+    $this->authorize('user create');
 
-    return $this->renderModal('Registers/User/Form')
-      ->with([
-        'title' => "Adicionar $this->titleSingular",
-        'roles' => Role::where('tenant_id', session('tenant_id'))->get(),
-      ])
-      ->baseRoute($this->pageIndex);
-
-    // return $this->renderPage('Registers/User/Form', [
-    //   'title' => "Adicionar $this->titleSingular",
-    //   'breadcrumbs' => [
-    //     ['title' => 'Dashboard', 'href' => route('dashboard')],
-    //     ['title' => $this->pageTitle, 'href' => route('registers.user.index')],
-    //     ['title' => 'Adicionar', 'disabled' => true],
-    //   ],
-    //   'roles' => Role::where('tenant_id', session('tenant_id'))->get(),
-    // ]);
+    return $this->renderPage('Settings/User/Form', [
+      'title' => "Adicionar $this->titleSingular",
+      'breadcrumbs' => [
+        ['title' => 'Dashboard', 'href' => route('dashboard')],
+        ['title' => $this->pageTitle, 'href' => route('settings.user.index')],
+        ['title' => 'Adicionar', 'disabled' => true],
+      ],
+      'roles' => Role::all(),
+    ]);
   }
 
   /**
@@ -133,45 +102,54 @@ class UserController extends Controller
    */
   public function store(UserRequest $request): \Illuminate\Http\RedirectResponse
   {
-    $this->authorize('user criar');
+    $this->authorize('user create');
 
     $user = $this->service->create($request->validated());
     $user->syncRoles($request->roles);
 
-    return redirect()->route($this->pageIndex)
+    return redirect()->route('settings.user.index')
       ->toast("$this->titleSingular criado.", 'success');
+  }
+
+  /**
+   * Display the specified resource.
+   *
+   * @return \Inertia\Response
+   */
+  public function show($id): \Inertia\Response
+  {
+    $this->authorize('user show');
+
+    return $this->renderPage('Settings/User/Show', [
+      'title' => 'Detalhes de ' . $this->titleSingular,
+      'breadcrumbs' => [
+        ['title' => 'Dashboard', 'href' => route('dashboard')],
+        ['title' => $this->pageTitle, 'href' => route('settings.user.index')],
+        ['title' => 'Mostrar', 'disabled' => true],
+      ],
+      'data' => $this->service->getById($id),
+    ]);
   }
 
   /**
    * Show the form for editing the specified resource.
    *
-   * @return \Momentum\Modal\Modal
+   * @return \Inertia\Response
    */
-  public function edit($id): \Momentum\Modal\Modal
+  public function edit($id): \Inertia\Response
   {
-    $this->authorize('user editar');
+    $this->authorize('user edit');
 
-    $data = $this->service->getById($id)->load('roles');
-    // dd($data);
-
-    return $this->renderModal('Registers/User/Form')
-      ->with([
-        'title' => "Editando $this->titleSingular",
-        'data' => $data,
-        'roles' => Role::where('tenant_id', session('tenant_id'))->get(),
-      ])
-      ->baseRoute($this->pageIndex);
-
-    // return $this->renderPage('Registers/User/Form', [
-    //   'title' => "Editando $this->titleSingular",
-    //   'breadcrumbs' => [
-    //     ['title' => 'Dashboard', 'href' => route('dashboard')],
-    //     ['title' => $this->pageTitle, 'href' => route('registers.user.index')],
-    //     ['title' => 'Editar', 'disabled' => true],
-    //   ],
-    //   'data' => $data,
-    //   'roles' => Role::where('tenant_id', session('tenant_id'))->get(),
-    // ]);
+    return $this->renderPage('Settings/User/Form', [
+      'title' => "Editando $this->titleSingular",
+      'breadcrumbs' => [
+        ['title' => 'Dashboard', 'href' => route('dashboard')],
+        ['title' => $this->pageTitle, 'href' => route('settings.user.index')],
+        ['title' => 'Editar', 'disabled' => true],
+      ],
+      'data' => $this->service->getById($id)->load('roles'),
+      'roles' => Role::all(),
+    ]);
   }
 
   /**
@@ -183,34 +161,36 @@ class UserController extends Controller
    */
   public function update(Request $request, $id): \Illuminate\Http\RedirectResponse
   {
-    $this->authorize('user editar');
+    $this->authorize('user edit');
 
     $validate = $request->validate([
       'name' => ['required', 'string', 'max:255'],
       'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('users')->ignore($id)],
       'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
       'profile_photo_path' => 'string|nullable',
-      'roles.*' => 'nullable|exists:roles,tenant_id',
+      'roles.*' => 'nullable|exists:roles,id',
     ]);
+
+    dd($request->roles);
 
     $user = $this->service->getById($id);
 
     $user->update([
-      'name' => $validate['name'],
-      'email' => $validate['email'],
-      'profile_photo_path' => $validate['profile_photo_path'],
+      'name' => $request->name,
+      'email' => $request->email,
+      'profile_photo_path' => $request->profile_photo_path,
     ]);
 
-    if ($validate['password']) {
+    if ($request->password) {
       $user->update([
-        'password' => Hash::make($validate['password'])
+        'password' => Hash::make($request->password)
       ]);
     }
 
-    $roles = $request->roles ?: [];
+    $roles = $request->roles ?? [];
     $user->syncRoles($roles);
 
-    return redirect()->route($this->pageIndex)
+    return redirect()->route('settings.user.index')
       ->toast("$this->titleSingular atualizado.", 'success');
   }
 
@@ -222,11 +202,11 @@ class UserController extends Controller
    */
   public function destroy($id): \Illuminate\Http\RedirectResponse
   {
-    $this->authorize('user excluir');
+    $this->authorize('user delete');
 
     $this->service->deleteById($id);
 
-    return redirect()->route($this->pageIndex)
+    return redirect()->route('settings.user.index')
       ->toast("$this->titleSingular excluído.", 'success');
   }
 }
