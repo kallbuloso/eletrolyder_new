@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AddressController;
 // routeImport
 
 Route::get('/', function () {
@@ -32,9 +33,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Route groups for Settings
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
-        // Route::get('/{any}', function () {
-        //     return Inertia::render('Settings/' . request()->any);
-        // })->where('any', '.*');
 
         // Route groups for Role
         Route::controller(RoleController::class)->prefix('role')->as('roles.')->group(function () {
@@ -46,7 +44,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('/{id}', 'update')->name('update');
             Route::delete('/{id}', 'destroy')->name('destroy');
         });
+
+        // Route groups for Address
+        Route::controller(AddressController::class)->prefix('addresses')->as('address.')->group(function () {
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
         // addRoute
+
     });
 
     // Route groups for Registrations
