@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProfileController;
+// routeImport
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -29,7 +30,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         );
     })->name('dashboard');
 
-
     // Route groups for Settings
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
         // Route::get('/{any}', function () {
@@ -46,6 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('/{id}', 'update')->name('update');
             Route::delete('/{id}', 'destroy')->name('destroy');
         });
+        // addRoute
     });
 
     // Route groups for Registrations
