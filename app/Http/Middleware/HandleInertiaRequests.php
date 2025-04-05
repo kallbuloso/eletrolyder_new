@@ -34,7 +34,14 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user() ? [
+                    'id' => $request->user()->id,
+                    'name' => $request->user()->name,
+                    'email' => $request->user()->email,
+                    'role' => $request->user()->getRoleNames(),
+                    'profile_photo_url' => $request->user()->profile_photo_url,
+                    'permissions' => $request->user()->getAllPermissions()->pluck('name'),
+                ] : null,
             ],
             'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),
@@ -44,4 +51,37 @@ class HandleInertiaRequests extends Middleware
             'toasts' => Toast::all(),
         ];
     }
+
+    // /**
+    //  * Summary of getCompany
+    //  * @return mixed
+    //  */
+    // protected function getCompany($request)
+    // {
+    //   if (!$request->session()->get('company')) {
+    //     $company = Company::find(1)->only([
+    //       'status',
+    //       'name',
+    //       'fantasy_name',
+    //       'contact_name',
+    //       'person',
+    //       'cpf_cnpj',
+    //       'rg_insc_est',
+    //       'ccm',
+    //       'birth_date',
+    //       'logo',
+    //       'description',
+    //       'email',
+    //       'website',
+    //       'note',
+    //       'created_at',
+    //       'updated_at',
+    //       'phones',
+    //       'addresses',
+    //     ]) ?? null;
+    //     $request->session()->put('company', $company);
+    //   }
+    //   // dd($request->session()->get('company'));
+    //   return $request->session()->get('company');
+    // }
 }
