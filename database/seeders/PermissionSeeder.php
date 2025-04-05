@@ -32,7 +32,11 @@ class PermissionSeeder extends Seeder
                 'name' => 'user',
                 'description' => 'Gerenciar usuários',
             ],
-        ]; // addResources
+        	[
+				'name' => 'address',
+				'description' => 'Gerenciar addresss',
+			],
+		]; // addResources
 
         $permissions = [
             'listar',
