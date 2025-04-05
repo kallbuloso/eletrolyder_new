@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -28,8 +29,27 @@ Route::middleware(['auth', 'verified'])->group(function () {
         );
     })->name('dashboard');
 
+
+    // Route groups for Settings
+    Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
+        // Route::get('/{any}', function () {
+        //     return Inertia::render('Settings/' . request()->any);
+        // })->where('any', '.*');
+
+        // Route groups for Role
+        Route::controller(RoleController::class)->prefix('role')->as('roles.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/show/{id}', 'show')->name('show');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+    });
+
     // Route groups for Registrations
-    // Route::group(['prefix' => 'registers', 'as' => 'registers.'], function () {});
+    Route::group(['prefix' => 'registers', 'as' => 'registers.'], function () {});
 });
 
 Route::middleware('auth')->group(function () {
