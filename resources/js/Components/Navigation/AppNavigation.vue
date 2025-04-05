@@ -129,11 +129,11 @@ const menuSections = ref([
       //     icon: 'mdi-office-building',
       //     href: 'settings.company.index'
       //   },
-      //   {
-      //     title: 'Controle de Acesso',
-      //     icon: 'mdi-account-key',
-      //     href: 'settings.roles.index'
-      //   }
+      {
+        title: 'Controle de Acesso',
+        icon: 'mdi-account-key',
+        href: 'settings.roles.index'
+      }
       // {
       //   title: 'Example child',
       //   icon: 'mdi-exit-to-app',
