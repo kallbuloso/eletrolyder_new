@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\PhoneController;
 // routeImport
 
 Route::get('/', function () {
@@ -50,7 +51,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('/{id}', 'update')->name('update');
             Route::delete('/{id}', 'destroy')->name('destroy');
         });
+        // Route groups for Phone
+        Route::controller(PhoneController::class)->prefix('phones')->as('phones.')->group(function () {
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
         // addRoute
+
 
     });
 
