@@ -48,7 +48,7 @@ class AddressController extends Controller
 
         $this->service->update($id, $request->validated());
 
-        return redirect()->route('addresses.index')
+        return redirect()->back()
             ->toast("$this->titleSingular atualizado.", 'success');
     }
 
@@ -64,7 +64,7 @@ class AddressController extends Controller
 
         $this->service->deleteById($id);
 
-        return redirect()->route('addresses.index')
+        return redirect()->back()
             ->toast("$this->titleSingular excluído.", 'success');
     }
 }
