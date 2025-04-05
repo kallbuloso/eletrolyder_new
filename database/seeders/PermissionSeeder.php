@@ -24,31 +24,36 @@ class PermissionSeeder extends Seeder
 
         // create permissions
         $resources = [
-            'role',
-            'user'
+            [
+                'name' => 'role',
+                'description' => 'Gerenciar perfis de usuários',
+            ],
+            [
+                'name' => 'user',
+                'description' => 'Gerenciar usuários',
+            ],
         ];
 
         $permissions = [
-            'list',
-            'show', // 'show' não é usado neste exemplo, mas pode ser usado para mostrar um único recurso
-            'create',
-            'edit',
-            'delete',
+            'listar',
+            'mostrar', // 'show' não é usado neste exemplo, mas pode ser usado para mostrar um único recurso
+            'criar',
+            'editar',
+            'deletar',
         ];
 
         foreach ($resources as $resource) {
             foreach ($permissions as $permission) {
-                $res = $resource . ' ' . $permission;
-
-                Permission::create(['name' => $res]);
+                $res = $resource['name'] . ' ' . $permission;
+                Permission::create(['name' => $res, 'description' => $resource['description']]);
             }
         }
         // create roles and assign existing permissions
-        $role1 = Role::create(['name' => 'Super-admin']);
-        $role3 = Role::create(['name' => 'Gerente']);
-        $role3->syncPermissions(['user list']);
+        $role1 = Role::create(['name' => 'Super-admin', 'description' => 'Acesso total ao sistema']);
+        $role3 = Role::create(['name' => 'Gerente', 'description' => 'Acesso limitado ao sistema']);
+        $role3->syncPermissions(['user listar']);
 
-        $role2 = Role::create(['name' => 'Administrador']);
+        $role2 = Role::create(['name' => 'Administrador', 'description' => 'Acesso administrativo ao sistema']);
         $role2->syncPermissions(Permission::all());
 
 
