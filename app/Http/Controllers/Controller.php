@@ -16,22 +16,21 @@ abstract class Controller
      * @param array|null $props
      * @return \Inertia\Response
      */
-    public function renderPage(string $component, array $props = null): \Inertia\Response
+    public function renderPage(string $component, array $props = []): \Inertia\Response
     {
         return Inertia::render($component, $props);
     }
 
-    // /**
-    //  * Render a modal component.
-    //  *
-    //  * @param string $component
-    //  * @param array|null $props
-    //  * @param string|array $baseRoute
-    //  * @return \Momentum\Modal\Modal
-    //  */
-    // public function renderModal(string $component, array $props = null): \Momentum\Modal\Modal
-    // {
-    //   return Inertia::modal($component)
-    //     ->with($props);
-    // }
+    /**
+     * Render a modal component.
+     *
+     * @param string $component
+     * @param array|null $props
+     * @param string|array $baseRoute
+     * @return \Momentum\Modal\Modal
+     */
+    public function renderModal(string $component): \Momentum\Modal\Modal
+    {
+        return Inertia::modal($component);
+    }
 }
