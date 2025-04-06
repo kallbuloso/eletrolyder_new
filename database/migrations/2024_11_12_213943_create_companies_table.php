@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->nullable()->constrained();
             $table->string('name');
             $table->string('fantasy_name')->nullable();
             $table->string('contact_name')->nullable();
