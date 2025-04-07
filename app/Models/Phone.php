@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\PhoneableTrait;
 use App\Traits\SearchableTrait;
+use App\Traits\TenantebleTrait;
 use App\Traits\DatesModelTraits;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * Class Phone
  *
  * @property $id
+ * @property $tenant_id
  * @property $phone_type
  * @property $phone_number
  * @property $phone_contact
@@ -24,7 +26,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Phone extends Model
 {
-    use HasFactory, SearchableTrait, DatesModelTraits, PhoneableTrait;
+    use HasFactory, SearchableTrait, DatesModelTraits, TenantebleTrait, PhoneableTrait;
 
     protected $table = "phones";
 
@@ -38,6 +40,7 @@ class Phone extends Model
      * @var array
      */
     protected $fillable = [
+        'tenant_id',
         'phone_type',
         'phone_number',
         'phone_contact',
