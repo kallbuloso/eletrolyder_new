@@ -61,8 +61,8 @@ function createItem() {
           <v-skeleton-loader type="table-row@10" />
         </template>
         <template #item.action="{ item }">
-          <v-icon v-if="item.name !== 'Super-admin' && can('role', 'edit')" class="ml-2" color="warning" icon="mdi-pencil" size="small" @click="editItem(item)" />
-          <v-icon v-if="item.name !== 'Super-admin' && can('role', 'delete')" class="ml-2" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
+          <v-icon v-if="item.name !== 'Administrador' && can('role', 'editar')" class="ml-2" color="warning" icon="mdi-pencil" size="small" @click="editItem(item)" />
+          <v-icon v-if="item.name !== 'Administrador' && can('role', 'excluir')" class="ml-2" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
         </template>
         <template #bottom>
           <v-divider />
