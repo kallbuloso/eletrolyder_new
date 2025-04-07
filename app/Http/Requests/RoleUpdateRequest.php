@@ -23,11 +23,12 @@ class RoleUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tenant_id' => ['nullable', 'exists:tenants,id', 'integer'],
+            'id' => ['required', 'exists:roles,id', 'integer'],
+            'tenant_id' => ['required', 'exists:tenants,id', 'integer'],
             'name' => ['required', 'string', 'max:100', Rule::unique('roles', 'tenant_id')->ignore($this->id)],
             'description' => ['nullable', 'string'],
             'guard_name' => ['required', 'string'],
-            'permissions.*' => 'nullable|exists:permissions,id',
+            'permissions.*' => ['nullable', 'exists:permissions,id'],
         ];
     }
 
