@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Permission as OriginalPermission;
  * Class Permission
  *
  * @property $id
+ * @property $tenant_id
  * @property $name
  * @property $description
  * @property $guard_name
@@ -30,6 +31,7 @@ class Permission extends OriginalPermission
      * @var array
      */
     protected $fillable = [
+        'tenant_id',
         'name',
         'description',
         'guard_name'
