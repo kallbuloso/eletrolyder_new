@@ -44,10 +44,10 @@ class PermissionSeeder extends Seeder
 
         $permissions = [
             'listar',
-            'mostrar', // 'show' não é usado neste exemplo, mas pode ser usado para mostrar um único recurso
+            'ver', // 'show' não é usado neste exemplo, mas pode ser usado para mostrar um único recurso
             'criar',
             'editar',
-            'deletar',
+            'excluir',
         ];
 
         foreach ($resources as $resource) {
@@ -56,31 +56,34 @@ class PermissionSeeder extends Seeder
                 Permission::create(['name' => $res, 'description' => $resource['description']]);
             }
         }
-        // create roles and assign existing permissions
-        $role1 = Role::create(['name' => 'Super-admin', 'description' => 'Acesso total ao sistema']);
-        $role3 = Role::create(['name' => 'Gerente', 'description' => 'Acesso limitado ao sistema']);
-        $role3->syncPermissions(['user listar']);
 
-        $role2 = Role::create(['name' => 'Administrador', 'description' => 'Acesso administrativo ao sistema']);
-        $role2->syncPermissions(Permission::all());
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // // create roles and assign existing permissions
+        // $role1 = Role::create(['name' => 'Super-admin', 'description' => 'Acesso total ao sistema']);
+        // $role3 = Role::create(['name' => 'Gerente', 'description' => 'Acesso limitado ao sistema']);
+        // $role3->syncPermissions(['user listar']);
+
+        // $role2 = Role::create(['name' => 'Administrador', 'description' => 'Acesso administrativo ao sistema']);
+        // $role2->syncPermissions(Permission::all());
 
 
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Super Admin',
-            'email' => 'karl@admim.com',
-        ]);
-        $user->assignRole($role1);
+        // $user = \App\Models\User::factory()->create([
+        //     'name' => 'Super Admin',
+        //     'email' => 'karl@admim.com',
+        // ]);
+        // $user->assignRole($role1);
 
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-        ]);
-        $user->assignRole($role2);
+        // $user = \App\Models\User::factory()->create([
+        //     'name' => 'Admin User',
+        //     'email' => 'admin@example.com',
+        // ]);
+        // $user->assignRole($role2);
 
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Example User',
-            'email' => 'test@example.com',
-        ]);
-        $user->assignRole($role3);
+        // $user = \App\Models\User::factory()->create([
+        //     'name' => 'Example User',
+        //     'email' => 'test@example.com',
+        // ]);
+        // $user->assignRole($role3);
     }
 }
