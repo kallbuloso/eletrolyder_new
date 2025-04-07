@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\SearchableTrait;
+use App\Traits\TenantebleTrait;
+use App\Traits\DatesModelTraits;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,6 +15,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * Class User
  *
  * @property $id
+ * @property $tenant_id
  * @property $name
  * @property $email
  * @property $email_verified_at
@@ -26,7 +29,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasFactory, Notifiable, HasRoles, SearchableTrait;
+    use HasFactory, Notifiable, HasRoles, SearchableTrait, TenantebleTrait, DatesModelTraits;
 
     /**
      * The attributes that are mass assignable.
@@ -34,6 +37,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'tenant_id',
         'name',
         'email',
         'profile_photo_path',
