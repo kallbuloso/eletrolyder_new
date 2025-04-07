@@ -57,7 +57,7 @@ const email = computed({
 })
 
 watch(email, (newEmail) => {
-  if (newEmail.includes('@') && !domainFilled.value) {
+  if (newEmail && newEmail.includes('@') && !domainFilled.value) {
     showSuggestionList.value = true
   } else {
     showSuggestionList.value = false
@@ -66,11 +66,11 @@ watch(email, (newEmail) => {
 
 const domainFilled = computed(() => {
   const regex = /\.com(\.br)|\.top|\.ai|\.se|\.org(\.br)|\.site|\.it|\.net|\.co|\.gov(\.br)|\.online|\.blog|\.dev|\.local?$/i
-  return regex.test(email.value)
+  return email.value ? regex.test(email.value) : false
 })
 
 const filteredDomains = computed(() => {
-  if (props.domains.length && email.value.includes('@')) {
+  if (props.domains.length && email.value && email.value.includes('@')) {
     const enteredDomain = email.value.split('@')[1]
     return props.domains.filter((domain) => domain.startsWith(enteredDomain)).slice(0, props.maxDomainsVisible)
   }
