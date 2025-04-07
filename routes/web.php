@@ -4,9 +4,10 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AddressController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PhoneController;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ProfileController;
 // routeImport
 
 Route::get('/', function () {
@@ -62,7 +63,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // Route groups for Registrations
-    Route::group(['prefix' => 'registers', 'as' => 'registers.'], function () {});
+    Route::group(['prefix' => 'registers', 'as' => 'registers.'], function () {
+
+        // Route groups for User
+        Route::controller(UserController::class)->prefix('user')->as('user.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/show/{id}', 'show')->name('show');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+    });
 });
 
 Route::middleware('auth')->group(function () {
