@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Services\RoleService;
 use App\Http\Requests\RoleRequest;
+use App\Http\Requests\RoleUpdateRequest;
 use Spatie\Permission\Models\Permission;
 
 /**
@@ -51,10 +53,9 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  Request  $request
      * @return \Inertia\Response
      */
-    public function index(Request $request): \Inertia\Response
+    public function index(): \Inertia\Response
     {
         $this->authorize('role listar');
 
@@ -99,6 +100,16 @@ class RoleController extends Controller
 
         $val = $request->validated();
 
+        $existingRole = Role::where('name', $val['name'])
+            ->where('tenant_id', $val['tenant_id'])
+            ->first();
+
+        if ($existingRole) {
+            return redirect()->back()
+                ->withErrors(['name' => 'O nome do acesso já existe para esta empresa.'])
+                ->withInput();
+        }
+
         $role = $this->service->create($val);
         $role->syncPermissions($request->permissions);
 
@@ -132,7 +143,7 @@ class RoleController extends Controller
      * @param  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(RoleRequest $request, $id): \Illuminate\Http\RedirectResponse
+    public function update(RoleUpdateRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('role editar');
 
