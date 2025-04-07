@@ -78,11 +78,11 @@ const menuSections = ref([
     id: 'registers',
     title: 'Cadastros',
     items: [
-      //   {
-      //     title: 'Usuários',
-      //     icon: 'mdi-account-group',
-      //     href: 'registers.user.index'
-      //   },
+      {
+        title: 'Usuários',
+        icon: 'mdi-account-group',
+        href: 'registers.user.index'
+      }
       //   {
       //     title: 'Clientes',
       //     icon: 'iconify:fa6-solid:people-line',
