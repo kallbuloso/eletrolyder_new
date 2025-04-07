@@ -31,11 +31,16 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        if (!empty($request->user())) {
+            // session value set on login
+            setPermissionsTeamId($request->user()->tenant_id);
+        }
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user() ? [
                     'id' => $request->user()->id,
+                    'tenant_id' => $request->user()->tenant_id,
                     'name' => $request->user()->name,
                     'email' => $request->user()->email,
                     'role' => $request->user()->getRoleNames(),
