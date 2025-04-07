@@ -106,7 +106,7 @@ class RoleController extends Controller
 
         if ($existingRole) {
             return redirect()->back()
-                ->withErrors(['name' => 'O nome do acesso já existe para esta empresa.'])
+                ->withErrors(['name' => 'O nome do acesso já existe nesta empresa.'])
                 ->withInput();
         }
 
@@ -149,12 +149,20 @@ class RoleController extends Controller
 
         $val = $request->validated();
 
+        $existingRole = Role::where('name', $val['name'])
+            ->where('tenant_id', $val['tenant_id'])
+            ->where('id', '!=', $id)
+            ->first();
+
+        if ($existingRole) {
+            return redirect()->back()
+                ->withErrors(['name' => 'O nome do acesso já existe nesta empresa.'])
+                ->withInput();
+        }
+
+        $this->service->update($id, $val);
         $role = $this->service->getById($id);
-        $role->name = $val['name'];
-        $role->description = $val['description'];
-        $role->guard_name = $val['guard_name'];
-        $role->save();
-        $role->syncPermissions($val['permissions']);
+        $role->syncPermissions($request->permissions);
 
         return redirect()->route($this->pageIndex)
             ->toast("$this->titleSingular atualizado.", 'success');
