@@ -44,6 +44,7 @@ class UserRequest extends FormRequest
             'name.required' => 'Nome do usuário é obrigatório.',
             'email.unique' => 'Já existe um usuário com esse email.',
             'password.required' => 'Senha do usuário é obrigatória.',
+            'roles.required' => 'Selecione um tipo de acesso.',
         ];
     }
 }
