@@ -1,4 +1,6 @@
 <script setup>
+import { router } from '@inertiajs/vue3'
+
 const props = defineProps({
   data: {
     type: Object,
@@ -26,7 +28,7 @@ const groupedRoles = computed(() => {
 })
 
 const form = useForm({
-  tenant_id: usePage().props.auth.user.tenant_id || null,
+  tenant_id: usePage().props.auth.user.tenant_id,
   name: null,
   email: null,
   profile_photo_path: null,
@@ -36,16 +38,29 @@ const form = useForm({
 })
 
 const submit = () => {
+  // Converte o role selecionado em um array antes de enviar
+  if (form.roles && !Array.isArray(form.roles)) {
+    form.roles = [form.roles]
+  }
+
   if (props.data) {
     form.put(route('registers.user.update', props.data.id), {
       onSuccess() {
         form.reset()
+        router.visit(route('registers.user.index'), {
+          preserveScroll: true,
+          preserveState: false
+        })
       }
     })
   } else {
     form.post(route('registers.user.store'), {
       onSuccess() {
         form.reset()
+        router.visit(route('registers.user.index'), {
+          preserveScroll: true,
+          preserveState: false
+        })
       }
     })
   }
@@ -110,13 +125,13 @@ onMounted(() => {
               </v-row>
             </v-col>
             <v-col cols="12">
-              <v-list-item> Permissões </v-list-item>
+              <v-list-item title="Permissões" />
               <v-divider />
               <v-table density="compact" hover>
                 <tbody>
                   <tr v-for="group in Object.keys(groupedRoles)" :key="group">
                     <td>
-                      <v-radio-group v-model="form.roles">
+                      <v-radio-group v-model="form.roles" :error-messages="form.errors.roles">
                         <v-radio v-for="role in groupedRoles[group]" :key="role.id" :label="role.name" :value="role.id" class="text-capitalize" hide-details />
                       </v-radio-group>
                     </td>
