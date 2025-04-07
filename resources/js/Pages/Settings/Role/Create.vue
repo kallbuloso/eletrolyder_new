@@ -7,6 +7,7 @@ const props = defineProps({
 })
 
 const form = useForm({
+  tenant_id: usePage().props.auth.user.tenant_id,
   name: null,
   description: null,
   guard_name: 'web',
@@ -83,7 +84,7 @@ onMounted(() => {
           />
         </v-card-text>
         <v-card-text>
-          <p class="font-weight-medium">Permissões</p>
+          <p class="font-weight-medium">Permissões de acesso</p>
           <v-divider />
           <v-col cols="12" class="d-flex">
             <v-spacer />
