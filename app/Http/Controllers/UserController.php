@@ -147,8 +147,14 @@ class UserController extends Controller
                 ->withErrors(['email' => 'Já existe um usuário com esse email.'])
                 ->withInput();
         }
-        $user = $this->service->create($validated);
 
+        if (empty($request->roles)) {
+            return redirect()->back()
+                ->withErrors(['roles' => 'Selecione um tipo de acesso.'])
+                ->withInput();
+        }
+
+        $user = $this->service->create($validated);
         $user->syncRoles($request->roles);
 
         return redirect()->route($this->pageIndex)
@@ -190,7 +196,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  UserRequest  $request
+     * @param  UserUpdateRequest  $request
      * @param  $id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -211,6 +217,12 @@ class UserController extends Controller
                 ->withInput();
         }
 
+        if (empty($request->roles)) {
+            return redirect()->back()
+                ->withErrors(['roles' => 'Selecione um tipo de acesso.'])
+                ->withInput();
+        }
+
         $user = $this->service->getById($id);
 
         $user->update([
@@ -225,8 +237,9 @@ class UserController extends Controller
             ]);
         }
 
-        $roles = $request->roles ?: [];
-        $user->syncRoles($roles);
+        if ($request->has('roles')) {
+            $user->syncRoles($request->roles);
+        }
 
         return redirect()->route($this->pageIndex)
             ->toast("$this->titleSingular atualizado.", 'success');
