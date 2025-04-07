@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SearchableTrait;
+use App\Traits\TenantebleTrait;
 use App\Traits\AddressableTrait;
 use App\Traits\DatesModelTraits;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * Class Address
  *
  * @property $id
+ * @property $tenant_id
  * @property $type
  * @property $street
  * @property $number
@@ -28,7 +30,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Address extends Model
 {
-    use HasFactory, SearchableTrait, DatesModelTraits, AddressableTrait;
+    use HasFactory, SearchableTrait, TenantebleTrait, DatesModelTraits, AddressableTrait;
 
     protected $table = "addresses";
 
@@ -42,6 +44,7 @@ class Address extends Model
      * @var array
      */
     protected $fillable = [
+        'tenant_id',
         'type',
         'street',
         'number',
