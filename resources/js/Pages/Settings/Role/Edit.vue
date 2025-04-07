@@ -11,6 +11,7 @@ const props = defineProps({
 })
 
 const form = useForm({
+  id: props.data.id,
   tenant_id: usePage().props.auth.user.tenant_id,
   name: null,
   description: null,
