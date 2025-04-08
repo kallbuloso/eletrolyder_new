@@ -124,11 +124,11 @@ const menuSections = ref([
     id: 'settings',
     title: 'Configurações',
     items: [
-      //   {
-      //     title: 'Empresa',
-      //     icon: 'mdi-office-building',
-      //     href: 'settings.company.index'
-      //   },
+      {
+        title: 'Empresa',
+        icon: 'mdi-office-building',
+        href: 'settings.company.index'
+      },
       {
         title: 'Controle de Acesso',
         icon: 'mdi-account-key',
