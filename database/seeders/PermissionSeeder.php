@@ -40,7 +40,11 @@ class PermissionSeeder extends Seeder
                 'name' => 'phone',
                 'description' => 'Gerenciar telefones',
             ],
-        ]; // addResources
+        	[
+				'name' => 'company',
+				'description' => 'Gerenciar companys',
+			],
+		]; // addResources
 
         $permissions = [
             'listar',
