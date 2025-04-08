@@ -22,7 +22,7 @@ class AddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tenant_id' => ['required', 'exists:tenants,id'],
+            'tenant_id' => ['nullable', 'exists:tenants,id'],
             'type' => ['required', 'string'],
             'street' => ['required', 'string'],
             'number' => ['required', 'string'],
