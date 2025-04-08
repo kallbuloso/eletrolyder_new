@@ -3,11 +3,7 @@
 namespace App\Models;
 
 use App\Traits\CompanyTrait;
-use App\Traits\DatesModelTraits;
-use App\Traits\TenantebleTrait;
-use App\Traits\SearchableTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Company
@@ -34,7 +30,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Company extends Model
 {
-    use HasFactory, TenantebleTrait, SearchableTrait, DatesModelTraits, CompanyTrait;
+    use CompanyTrait;
 
     protected $table = "companies";
 
