@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 trait CompanyTrait
 {
-    use PhoneableTrait, AddressableTrait;
+    use HasFactory, PhoneableTrait, AddressableTrait, TenantebleTrait, SearchableTrait, DatesModelTraits;
 }
