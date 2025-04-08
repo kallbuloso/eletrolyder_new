@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Tenant;
+use App\Models\Company;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -35,9 +36,9 @@ class DatabaseSeeder extends Seeder
             'blocking_reason' => null,
         ]);
 
-        // Company::factory()->create([
-        //   'tenant_id' => $tenant->id,
-        // ]);
+        Company::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
 
         // Client::factory($clientQtd)->create([
         //   'tenant_id' => $tenant->id,
@@ -86,9 +87,9 @@ class DatabaseSeeder extends Seeder
                 'blocking_reason' => $status === 'B' ? fake()->sentence() : null,
             ]);
 
-            // Company::factory()->create([
-            //   'tenant_id' => $tenant->id,
-            // ]);
+            Company::factory()->create([
+                'tenant_id' => $tenant->id,
+            ]);
 
             // Client::factory($clientQtd)->create([
             //   'tenant_id' => $tenant->id,
