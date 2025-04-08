@@ -26,7 +26,7 @@ const form = useForm({
         @submit.prevent="
           form.put(route('settings.phone.update', props.data.id), {
             onSuccess() {
-              form.reset()
+              form.defaults()
               isActive.value = false
             }
           })
