@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PhoneController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CompanyController;
 // routeImport
 
 Route::get('/', function () {
@@ -53,11 +54,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/{id}', 'destroy')->name('destroy');
         });
         // Route groups for Phone
-        Route::controller(PhoneController::class)->prefix('phones')->as('phones.')->group(function () {
+        Route::controller(PhoneController::class)->prefix('phones')->as('phone.')->group(function () {
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+        // Route groups for Company
+        Route::controller(CompanyController::class)->prefix('companies')->as('company.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/{id}/phone', 'storePhone')->name('phone.store');
+            Route::post('/{id}/address', 'storeAddress')->name('address.store');
             Route::put('/{id}', 'update')->name('update');
             Route::delete('/{id}', 'destroy')->name('destroy');
         });
         // addRoute
+
 
 
     });
