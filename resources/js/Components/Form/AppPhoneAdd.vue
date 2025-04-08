@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   modelId: {
-    type: Number,
+    type: [Number, String],
     default: null
   },
   routeStore: {
@@ -16,10 +16,6 @@ const form = useForm({
   phone_has_whatsapp: false,
   phone_contact: ''
 })
-
-// const submit = (options) => {
-//   form.post(route(props.routeStore, props.modelId), options)
-// }
 
 watch(
   () => form.phone_type === 'P',
