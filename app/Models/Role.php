@@ -46,4 +46,12 @@ class Role extends OriginalRole
         'name',
         'description'
     ];
+
+    public static function bootRole(): void
+    {
+        static::deleting(function ($model) {
+            $permissions = $model->load('permissions');
+            $model->revokePermissionTo($permissions);
+        });
+    }
 }
