@@ -90,7 +90,7 @@ class CompanyController extends Controller
      * @param  $companyId
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function storePhone(PhoneRequest $request, $companyId)
+    public function storePhone(PhoneRequest $request, $companyId): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('phone criar');
 
@@ -107,7 +107,6 @@ class CompanyController extends Controller
         return redirect()->back()
             ->toast("Telefone adicionado à empresa.", 'success');
     }
-
 
     /**
      * Store a newly created resource in storage.
