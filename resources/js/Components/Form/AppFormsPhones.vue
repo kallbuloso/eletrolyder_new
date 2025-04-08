@@ -2,7 +2,7 @@
 import { formatToPhone } from 'brazilian-values'
 const props = defineProps({
   dataId: {
-    type: Number,
+    type: [Number, String],
     default: null,
     required: false
   },
