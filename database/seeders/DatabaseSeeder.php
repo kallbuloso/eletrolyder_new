@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Client;
 use App\Models\Tenant;
 use App\Models\Company;
 use Illuminate\Database\Seeder;
@@ -27,9 +28,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'karl@admim.com',
         // ]);
 
-        $tenantQtd = 2;
-        $userQtd = 3;
-        $clientQtd = 10;
+        $tenantQtd = 12;
+        $userQtd = 13;
+        $clientQtd = 100;
 
         $tenant = Tenant::factory()->create([
             'status' => 'A',
@@ -40,9 +41,9 @@ class DatabaseSeeder extends Seeder
             'tenant_id' => $tenant->id,
         ]);
 
-        // Client::factory($clientQtd)->create([
-        //   'tenant_id' => $tenant->id,
-        // ]);
+        Client::factory($clientQtd)->create([
+            'tenant_id' => $tenant->id,
+        ]);
 
         $user = User::factory()->create([
             'tenant_id' => $tenant->id,
@@ -91,9 +92,9 @@ class DatabaseSeeder extends Seeder
                 'tenant_id' => $tenant->id,
             ]);
 
-            // Client::factory($clientQtd)->create([
-            //   'tenant_id' => $tenant->id,
-            // ]);
+            Client::factory($clientQtd)->create([
+                'tenant_id' => $tenant->id,
+            ]);
 
 
             $user = User::factory()->create([
