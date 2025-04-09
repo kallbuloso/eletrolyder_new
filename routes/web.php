@@ -9,6 +9,7 @@ use App\Http\Controllers\PhoneController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ClientController;
 // routeImport
 
 Route::get('/', function () {
@@ -68,8 +69,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
         // addRoute
 
-
-
     });
 
     // Route groups for Registrations
@@ -82,6 +81,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/', 'store')->name('store');
             Route::get('/show/{id}', 'show')->name('show');
             Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+
+        // Route groups for Client
+        Route::controller(ClientController::class)->prefix('clients')->as('client.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/show/{id}', 'show')->name('show');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::post('/{id}/phone', 'storePhone')->name('phone.store');
+            Route::post('/{id}/address', 'storeAddress')->name('address.store');
             Route::put('/{id}', 'update')->name('update');
             Route::delete('/{id}', 'destroy')->name('destroy');
         });
