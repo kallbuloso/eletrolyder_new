@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\UserService;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\UserRequest;
 use Spatie\Permission\Models\Role;
@@ -43,6 +41,12 @@ class UserController extends Controller
      * @var string
      */
     private $pageIndex = 'registers.user.index';
+
+    /**
+     * Summary of pathView
+     * @var string
+     */
+    private $pathView = 'Registers/User';
 
     /**
      * UserController constructor.
@@ -89,7 +93,7 @@ class UserController extends Controller
             $users = $query->paginate($request->get('limit', 10));
         }
 
-        return $this->renderPage('Registers/User/Index', [
+        return $this->renderPage("$this->pathView/Index", [
             'title' => $this->pageTitle,
             'breadcrumbs' => [
                 ['title' => 'Dashboard', 'href' => route('dashboard')],
@@ -108,7 +112,7 @@ class UserController extends Controller
     {
         $this->authorize('user criar');
 
-        return $this->renderModal('Registers/User/Form')
+        return $this->renderModal("$this->pathView/Form")
             ->with([
                 'title' => "Adicionar $this->titleSingular",
                 'roles' => Role::where('tenant_id', session('tenant_id'))->get(),
@@ -138,7 +142,7 @@ class UserController extends Controller
 
         $validated = $request->validated();
 
-        $existingUser = User::where('email', $validated['email'])
+        $existingUser = $this->service->where('email', $validated['email'])
             ->where('tenant_id', $validated['tenant_id'])
             ->first();
 
@@ -173,24 +177,13 @@ class UserController extends Controller
         $data = $this->service->getById($id)->load('roles');
         // dd($data);
 
-        return $this->renderModal('Registers/User/Form')
+        return $this->renderModal("$this->pathView/Form")
             ->with([
                 'title' => "Editando $this->titleSingular",
                 'data' => $data,
                 'roles' => Role::where('tenant_id', session('tenant_id'))->get(),
             ])
             ->baseRoute($this->pageIndex);
-
-        // return $this->renderPage('Registers/User/Form', [
-        //   'title' => "Editando $this->titleSingular",
-        //   'breadcrumbs' => [
-        //     ['title' => 'Dashboard', 'href' => route('dashboard')],
-        //     ['title' => $this->pageTitle, 'href' => route('registers.user.index')],
-        //     ['title' => 'Editar', 'disabled' => true],
-        //   ],
-        //   'data' => $data,
-        //   'roles' => Role::where('tenant_id', session('tenant_id'))->get(),
-        // ]);
     }
 
     /**
@@ -206,7 +199,7 @@ class UserController extends Controller
 
         $validate = $request->validated();
 
-        $existingUser = User::where('email', $validate['email'])
+        $existingUser = $this->service->where('email', $validate['email'])
             ->where('tenant_id', $validate['tenant_id'])
             ->where('id', '!=', $id)
             ->first();
