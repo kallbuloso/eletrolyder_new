@@ -44,6 +44,10 @@ class PermissionSeeder extends Seeder
 				'name' => 'company',
 				'description' => 'Gerenciar companys',
 			],
+			[
+				'name' => 'client',
+				'description' => 'Gerenciar clients',
+			],
 		]; // addResources
 
         $permissions = [
