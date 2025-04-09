@@ -82,12 +82,12 @@ const menuSections = ref([
         title: 'Usuários',
         icon: 'mdi-account-group',
         href: 'registers.user.index'
+      },
+      {
+        title: 'Clientes',
+        icon: 'iconify:fa6-solid:people-line',
+        href: 'registers.client.index'
       }
-      //   {
-      //     title: 'Clientes',
-      //     icon: 'iconify:fa6-solid:people-line',
-      //     href: 'registers.client.index'
-      //   },
       //   {
       //     title: 'Fornecedores*',
       //     icon: 'iconify:material-symbols-light:add-business',
