@@ -172,7 +172,7 @@ class ClientController extends Controller
             'phone_has_whatsapp' => $request->phone_has_whatsapp,
         ]);
         return redirect()->back()
-            ->toast("Telefone adicionado ao cliente.", 'success');
+            ->toast("Telefone adicionado ao $this->titleSingular.", 'success');
     }
 
     /**
@@ -202,7 +202,7 @@ class ClientController extends Controller
         ]);
 
         return redirect()->back()
-            ->toast("Endereço adicionado ao cliente.", 'success');
+            ->toast("Endereço adicionado ao $this->titleSingular.", 'success');
     }
 
     /**
