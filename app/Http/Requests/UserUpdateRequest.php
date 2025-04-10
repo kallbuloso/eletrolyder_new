@@ -24,7 +24,6 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tenant_id' => ['required', 'exists:tenants,id', 'integer'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('users', 'tenant_id')->ignore($this->id)],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
