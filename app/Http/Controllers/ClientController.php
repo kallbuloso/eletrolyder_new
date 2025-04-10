@@ -185,7 +185,6 @@ class ClientController extends Controller
         $client = $this->service->getById($clientId);
 
         $client->addresses()->create([
-            'tenant_id' => session('tenant_id'),
             'type' => $request->type,
             'street' => $request->street,
             'number' => $request->number,
@@ -263,7 +262,7 @@ class ClientController extends Controller
 
         $this->service->update($id, $request->validated());
 
-        return redirect()->route($this->pageIndex)
+        return redirect()->back()
             ->toast("$this->titleSingular atualizado.", 'success');
     }
 
