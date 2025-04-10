@@ -74,6 +74,10 @@ const submit = () => {
     form.post(route('registers.client.store'), {
       onSuccess() {
         form.reset()
+        router.visit(route('registers.client.index'), {
+          preserveScroll: true,
+          preserveState: false
+        })
       }
     })
   }
@@ -143,11 +147,11 @@ onMounted(() => {
           <app-addresses-register v-model="form.addresses" :errors="props.errors" />
 
           <!-- Mais Informações -->
-          <app-row-form icon="mdi-information" title="Notas">
+          <v-row>
             <v-col cols="12">
               <app-textarea v-model="form.note" label="Observações" placeholder="Escreva aqui anotações pertinentes à este cliente" rows="3" :error-messages="form.errors.note" />
             </v-col>
-          </app-row-form>
+          </v-row>
         </v-card-text>
         <v-card-actions class="mx-4">
           <v-spacer />
