@@ -24,7 +24,6 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tenant_id' => ['required', 'exists:tenants,id', 'integer'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,tenant_id'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
