@@ -117,7 +117,6 @@ class ClientController extends Controller
         if ($request->phones != []) {
             foreach ($request->phones as $phone) {
                 $client->phones()->create([
-                    'tenant_id' => $client->tenant_id,
                     'phone_type' => $phone['phone_type'],
                     'phone_number' => $phone['phone_number'],
                     'phone_has_whatsapp' => $phone['phone_has_whatsapp'],
@@ -129,7 +128,6 @@ class ClientController extends Controller
         if ($request->addresses != []) {
             foreach ($request->addresses as $address) {
                 $client->addresses()->create([
-                    'tenant_id' => $client->tenant_id,
                     'type' => $address['type'],
                     'street' => $address['street'],
                     'number' => $address['number'],
