@@ -118,16 +118,6 @@ class UserController extends Controller
                 'roles' => Role::where('tenant_id', session('tenant_id'))->get(),
             ])
             ->baseRoute($this->pageIndex);
-
-        // return $this->renderPage('Registers/User/Form', [
-        //   'title' => "Adicionar $this->titleSingular",
-        //   'breadcrumbs' => [
-        //     ['title' => 'Dashboard', 'href' => route('dashboard')],
-        //     ['title' => $this->pageTitle, 'href' => route('registers.user.index')],
-        //     ['title' => 'Adicionar', 'disabled' => true],
-        //   ],
-        //   'roles' => Role::where('tenant_id', session('tenant_id'))->get(),
-        // ]);
     }
 
     /**
@@ -143,7 +133,7 @@ class UserController extends Controller
         $validated = $request->validated();
 
         $existingUser = $this->service->where('email', $validated['email'])
-            ->where('tenant_id', $validated['tenant_id'])
+            ->where('tenant_id', session('tenant_id'))
             ->first();
 
         if ($existingUser) {
