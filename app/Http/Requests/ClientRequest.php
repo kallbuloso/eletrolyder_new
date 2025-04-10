@@ -33,7 +33,6 @@ class ClientRequest extends FormRequest
                     return $query->whereNotNull('cpf_cnpj');
                 }),
                 'required_if:person,J',
-                'cpf_ou_cnpj'
             ],
             'gender' => [
                 'nullable',
