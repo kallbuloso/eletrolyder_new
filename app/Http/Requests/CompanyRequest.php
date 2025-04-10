@@ -22,7 +22,6 @@ class CompanyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tenant_id' => ['nullable', 'exists:tenants,id'],
             'name' => ['required', 'string'],
             'fantasy_name' => ['nullable', 'string'],
             'contact_name' => ['nullable', 'string'],
