@@ -23,7 +23,6 @@ class RoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tenant_id' => ['required', 'exists:tenants,id', 'integer'],
             'name'          => ['required', 'string', 'max:100', 'unique:roles,tenant_id'], // 'unique:roles,tenant_id' é o mesmo que 'unique:roles,tenant_id,NULL,id'
             'description'    => 'nullable|string',
             'guard_name' => 'required|string',
