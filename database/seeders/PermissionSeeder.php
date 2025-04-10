@@ -40,15 +40,19 @@ class PermissionSeeder extends Seeder
                 'name' => 'phone',
                 'description' => 'Gerenciar telefones',
             ],
-        	[
-				'name' => 'company',
-				'description' => 'Gerenciar companys',
-			],
-			[
-				'name' => 'client',
-				'description' => 'Gerenciar clients',
-			],
-		]; // addResources
+            [
+                'name' => 'company',
+                'description' => 'Gerenciar empresas',
+            ],
+            [
+                'name' => 'client',
+                'description' => 'Gerenciar clientes',
+            ],
+            [
+                'name' => 'supplier',
+                'description' => 'Gerenciar fornecedores',
+            ],
+        ]; // addResources
 
         $permissions = [
             'listar',
