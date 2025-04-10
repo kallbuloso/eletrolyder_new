@@ -41,6 +41,12 @@ class ClientController extends Controller
     private $pageIndex = 'registers.client.index';
 
     /**
+     * Summary of pathView
+     * @var string
+     */
+    private $pathView = 'Registers/Client';
+
+    /**
      * ClientController constructor.
      * @param ClientService $service
      */
@@ -76,7 +82,7 @@ class ClientController extends Controller
             }
         }
 
-        return $this->renderPage('Registers/Client/Index', [
+        return $this->renderPage("$this->pathView/Index", [
             'title' => $this->pageTitle,
             'breadcrumbs' => [
                 ['title' => 'Dashboard', 'href' => route('dashboard')],
@@ -95,7 +101,7 @@ class ClientController extends Controller
     {
         $this->authorize('client criar');
 
-        return $this->renderModal('Registers/Client/Create')
+        return $this->renderModal("$this->pathView/Create")
             ->with([
                 'title' => "Adicionar $this->titleSingular",
             ])
@@ -200,26 +206,6 @@ class ClientController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @return \Inertia\Response
-     */
-    public function show($id): \Inertia\Response
-    {
-        $this->authorize('client ver');
-
-        return $this->renderPage('Client/Show', [
-            'title' => 'Detalhes de ' . $this->titleSingular,
-            'breadcrumbs' => [
-                ['title' => 'Dashboard', 'href' => route('dashboard')],
-                ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-                ['title' => 'Mostrar', 'disabled' => true],
-            ],
-            'data' => $this->service->getById($id),
-        ]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @return \Inertia\Response
@@ -234,7 +220,7 @@ class ClientController extends Controller
 
         $title = 'Detalhes do ' . $this->titleSingular;
 
-        return $this->renderPage('Registers/Client/Edit', [
+        return $this->renderPage("$this->pathView/Edit", [
             'title' => "Editando $this->titleSingular",
             'breadcrumbs' => [
                 ['title' => 'Dashboard', 'href' => route('dashboard')],
