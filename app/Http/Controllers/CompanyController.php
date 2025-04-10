@@ -97,7 +97,6 @@ class CompanyController extends Controller
         $company = $this->service->getById($companyId);
 
         $company->phones()->create([
-            'tenant_id' => session('tenant_id'),
             'phone_type' => $request->phone_type,
             'phone_number' => $request->phone_number,
             'phone_contact' => $request->phone_contact,
@@ -122,7 +121,6 @@ class CompanyController extends Controller
         $company = $this->service->getById($companyId);
 
         $company->addresses()->create([
-            'tenant_id' => session('tenant_id'),
             'type' => $request->type,
             'street' => $request->street,
             'number' => $request->number,
