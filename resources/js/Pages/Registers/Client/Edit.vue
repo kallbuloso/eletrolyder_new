@@ -213,18 +213,6 @@ function deleteClient(item) {
                 </span>
               </VListItemTitle>
             </VListItem>
-            <!-- Contato -->
-            <VListItem>
-              <VListItemTitle>
-                <span class="d-flex align-center">
-                  <VIcon icon="mdi-contacts" size="24" class="me-2" />
-                  <div class="text-body-1 font-weight-medium me-2">{{ props.client.person === 'F' ? 'Contato:' : 'Responsável:' }}</div>
-                  <div class="d-inline-block text-body-1">
-                    {{ props.client.contact }}
-                  </div>
-                </span>
-              </VListItemTitle>
-            </VListItem>
             <!-- Gênero -->
             <VListItem v-if="props.client.person === 'F'">
               <VListItemTitle>
@@ -237,19 +225,6 @@ function deleteClient(item) {
                 </span>
               </VListItemTitle>
             </VListItem>
-            <!-- Data de Nascimento -->
-            <VListItem>
-              <VListItemTitle>
-                <span class="d-flex align-center">
-                  <v-icon icon="mdi-calendar-account" size="24" class="me-2" />
-                  <div class="text-body-1 font-weight-medium me-2">{{ props.client.person === 'F' ? 'Aniverssário:' : 'Data de Fundação:' }}</div>
-                  <div class="d-inline-block text-body-1">
-                    {{ props.client.birth_date }}
-                  </div>
-                </span>
-              </VListItemTitle>
-            </VListItem>
-            <!-- Datas -->
             <p class="text-body-1 text-disabled mt-3">DATAS</p>
             <!-- Cadastrado em -->
             <VListItem>
@@ -300,9 +275,9 @@ function deleteClient(item) {
     <v-col cols="12" sm="6" md="7" lg="8" xl="9">
       <v-row>
         <!-- Telefones -->
-        <app-forms-phones :phones="props.phones" route-store="registers.client.storePhone" :data-id="props.client.id" />
+        <app-forms-phones :phones="props.phones" route-store="registers.client.phone.store" :data-id="props.client.id" />
         <!-- Endereços -->
-        <app-form-addresses :addresses="props.addresses" route-store="registers.client.storeAddress" :data-id="props.client.id"></app-form-addresses>
+        <app-form-addresses :addresses="props.addresses" route-store="registers.client.address.store" :data-id="props.client.id"></app-form-addresses>
         <!-- Mais Detalhes -->
         <v-col cols="12">
           <v-card class="mx-auto">
@@ -311,39 +286,9 @@ function deleteClient(item) {
                 <VIcon icon="mdi-account-details" size="24" class="me-2" />
               </template>
 
-              <VCardTitle>Mais Detalhes</VCardTitle>
+              <VCardTitle>Notas</VCardTitle>
             </VCardItem>
-            <v-card-text>
-              <VList class="card-list text-medium-emphasis">
-                <!-- E-mail -->
-                <VListItem>
-                  <VListItemTitle>
-                    <span class="d-flex align-center">
-                      <v-icon icon="mdi-email" size="24" class="me-2" />
-                      <div class="text-body-1 font-weight-medium me-2">E-mail:</div>
-                      <a v-if="props.client.email" class="d-inline-block text-body-1 text-primary" :href="'mailto:' + props.client.email">
-                        {{ props.client.email }}
-                      </a>
-                    </span>
-                  </VListItemTitle>
-                </VListItem>
-                <!-- Site -->
-                <VListItem>
-                  <VListItemTitle>
-                    <span class="d-flex align-center">
-                      <v-icon icon="mdi-link-variant" size="24" class="me-2" />
-                      <div class="text-body-1 font-weight-medium me-2">Site:</div>
-                      <a v-if="props.client.site" class="d-inline-block text-body-1 text-primary" :href="props.client.site" target="_blanck">
-                        {{ stringLimit(props.client.site, 95) }}
-                      </a>
-                    </span>
-                  </VListItemTitle>
-                </VListItem>
-              </VList>
-            </v-card-text>
             <v-card-text v-if="props.client.note">
-              <!-- 👉 Details -->
-              <p class="text-body-1 text-disabled">OBSERVAÇÕES</p>
               <p class="text-body-1">{{ props.client.note }}</p>
             </v-card-text>
           </v-card>
