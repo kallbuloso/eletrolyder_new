@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
  * Class Company
  *
  * @property $id
- * @property $tenant_id
  * @property $name
  * @property $fantasy_name
  * @property $contact_name
@@ -44,7 +43,6 @@ class Company extends Model
      * @var array
      */
     protected $fillable = [
-        'tenant_id',
         'name',
         'fantasy_name',
         'contact_name',
