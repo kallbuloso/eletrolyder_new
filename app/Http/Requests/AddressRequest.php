@@ -22,7 +22,6 @@ class AddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tenant_id' => ['nullable', 'exists:tenants,id'],
             'type' => ['required', 'string'],
             'street' => ['required', 'string'],
             'number' => ['required', 'string'],
@@ -44,7 +43,6 @@ class AddressRequest extends FormRequest
     public function messages(): array
     {
         return [
-
             'type.required' => 'Tipo obrigatório.',
             'street.required' => 'Logradouro obrigatório.',
             'number.required' => 'Número obrigatório.',
