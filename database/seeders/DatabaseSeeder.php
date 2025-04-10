@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PermissionSeeder::class,
         ]);
+
         // User::factory(10)->create();
 
         // User::factory()->create([
@@ -99,6 +100,10 @@ class DatabaseSeeder extends Seeder
             ]);
 
             Client::factory($clientQtd)->create([
+                'tenant_id' => $tenant->id,
+            ]);
+
+            Supplier::factory($clientQtd)->create([
                 'tenant_id' => $tenant->id,
             ]);
 
