@@ -101,7 +101,7 @@ class RoleController extends Controller
         $val = $request->validated();
 
         $existingRole = Role::where('name', $val['name'])
-            ->where('tenant_id', $val['tenant_id'])
+            ->where('tenant_id', session('tenant_id'))
             ->first();
 
         if ($existingRole) {
@@ -150,7 +150,7 @@ class RoleController extends Controller
         $val = $request->validated();
 
         $existingRole = Role::where('name', $val['name'])
-            ->where('tenant_id', $val['tenant_id'])
+            ->where('tenant_id', session('tenant_id'))
             ->where('id', '!=', $id)
             ->first();
 
