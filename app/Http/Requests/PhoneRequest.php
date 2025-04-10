@@ -22,7 +22,6 @@ class PhoneRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tenant_id' => ['nullable', 'exists:tenants,id'],
             'phone_type' => ['required', 'string'],
             'phone_number' => ['required', 'string'],
             'phone_contact' => ['nullable', 'required_if:phone_type,C', 'string'],
