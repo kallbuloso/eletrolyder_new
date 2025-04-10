@@ -98,10 +98,10 @@ onMounted(() => {
               <v-col cols="12">
                 <app-name-field
                   id="contact"
-                  v-model="form.contact"
+                  v-model="form.contact_name"
                   :label="loadPerson('Contato', 'Responsável')"
                   :placeholder="loadPerson('Contato', 'Responsável pela empresa')"
-                  :error-messages="form.errors.contact"
+                  :error-messages="form.errors.contact_name"
                 />
               </v-col>
               <v-col cols="4">
