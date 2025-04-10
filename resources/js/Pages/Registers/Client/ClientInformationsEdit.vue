@@ -13,14 +13,10 @@ const props = defineProps({
 const form = useForm({
   name: '',
   nick_name: '',
-  contact: '',
   person: 'F',
   cpf_cnpj: '',
   gender: 'M',
-  birth_date: '',
   note: '',
-  email: '',
-  site: '',
   status: 'A',
   blocking_reason: ''
 })
@@ -153,37 +149,14 @@ onMounted(() => {
               <v-col cols="4">
                 <app-gender-select v-if="form.person === 'F'" :id="loadPerson('CPF', 'CNPJ')" v-model="form.gender" :error-messages="form.errors.gender" />
               </v-col>
-              <v-col cols="4">
-                <app-date-field
-                  v-model="form.birth_date"
-                  :label="loadPerson('Aniverssário', 'Inalguração')"
-                  :placeholder="loadPerson('Aniverssário', 'Inalguração')"
-                  :error-messages="form.errors.birth_date"
-                />
-              </v-col>
-              <v-col cols="12">
-                <app-name-field
-                  id="contact"
-                  v-model="form.contact"
-                  :label="loadPerson('Contato', 'Responsável')"
-                  :placeholder="loadPerson('Contato', 'Responsável pela empresa')"
-                  :error-messages="form.errors.contact"
-                />
-              </v-col>
             </app-row-form>
 
             <!-- Mais Informações -->
-            <app-row-form icon="mdi-information" title="Informações Adicionais">
-              <v-col cols="12">
-                <app-email-field v-model="form.email" label="E-mail" placeholder="meu-email@exemplo.com" :error-messages="form.errors.email" />
-              </v-col>
-              <v-col cols="12">
-                <app-url-field v-model="form.site" label="Site" placeholder="https://meusite.com.br" :error-messages="form.errors.site" />
-              </v-col>
+            <v-row>
               <v-col cols="12">
                 <app-textarea v-model="form.note" label="Observações" placeholder="Escreva aqui anotações pertinentes à este cliente" rows="3" :error-messages="form.errors.note" />
               </v-col>
-            </app-row-form>
+            </v-row>
           </v-card-text>
           <v-card-actions>
             <v-btn color="error" @click="isActive.value = false">Cancelar</v-btn>
