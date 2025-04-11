@@ -160,7 +160,7 @@ onMounted(() => {
           </v-card-text>
           <v-card-actions>
             <v-btn color="error" @click="isActive.value = false">Cancelar</v-btn>
-            <v-btn type="submit" color="primary">Salvar</v-btn>
+            <v-btn type="submit" color="primary" :loading="form.processing">Atualizar</v-btn>
           </v-card-actions>
           <!--
             <pre>{{ props.data }}</pre>
