@@ -89,7 +89,7 @@ const menuSections = ref([
         href: 'registers.client.index'
       },
       {
-        title: 'Fornecedores*',
+        title: 'Fornecedores',
         icon: 'iconify:material-symbols-light:add-business',
         href: 'registers.supplier.index'
       }
@@ -134,22 +134,26 @@ const menuSections = ref([
         icon: 'mdi-account-key',
         href: 'settings.roles.index'
       }
-      // {
-      //   title: 'Example child',
-      //   icon: 'mdi-exit-to-app',
-      //   group: 'child',
-      //   children: [
-      //     {
-      //       title: 'Child 1',
-      //       href: 'settings.child.child1'
-      //     },
-      //     {
-      //       title: 'Child 2',
-      //       icon: 'mdi-exit-to-app',
-      //       href: 'settings.child.child2'
-      //     }
-      //   ]
-      // }
+      //   {
+      //     title: 'Example child',
+      //     icon: 'mdi-exit-to-app',
+      //     group: 'child',
+      //     children: [
+      //       {
+      //         title: 'Child 1',
+      //         href: 'settings.child.child1'
+      //       },
+      //       {
+      //         title: 'Child 2',
+      //         icon: 'mdi-exit-to-app',
+      //         href: 'settings.child.child2'
+      //       },
+      //       {
+      //         title: 'Child 3',
+      //         href: 'settings.child.child3'
+      //       }
+      //     ]
+      //   }
     ]
   }
 ])
@@ -290,13 +294,13 @@ onMounted(() => {
       li {
         position: relative;
         margin: 0 15px;
-        margin-bottom: 3px;
+        margin-bottom: 2px;
         list-style: none;
 
         &.navigation-divider {
-          padding: 10px 15px;
+          //   padding: 2px 0;
           text-transform: uppercase;
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 700;
           //   color: black;
           letter-spacing: 0.5px;
