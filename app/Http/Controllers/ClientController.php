@@ -67,7 +67,7 @@ class ClientController extends Controller
 
         try {
             $query = Client::query();
-            $query = $this->service->applyFilters($query, $request, ['name', 'nick_name']);
+            $query = $this->service->applyFilters($query, $request, ['name', 'nick_name', 'cpf_cnpj']);
             $clients = $query->paginate($request->get('limit', 10));
 
             if ($request->wantsJson()) {
