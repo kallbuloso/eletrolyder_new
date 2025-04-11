@@ -44,7 +44,7 @@ class SupplierController extends Controller
      * Summary of pathView
      * @var string
      */
-    private $pathView = 'Registers.Supplier';
+    private $pathView = 'Registers/Supplier';
 
     /**
      * SupplierController constructor.
@@ -65,59 +65,46 @@ class SupplierController extends Controller
     {
         $this->authorize('supplier listar');
 
-        if ($request->wantsJson()) {
-            try {
+        try {
+            $query = Supplier::query();
+            $query = $this->service->applyFilters($query, $request, ['name', 'nick_name', 'contact']);
+            $data = $query->paginate($request->get('limit', 10));
 
-                $query = Supplier::query();
-                $query = $this->service->applyFilters($query, $request, ['name', 'email']);
-
-                // Carregar os relacionamentos
-                $query->with(['roles']);
-
-                $data = $query->paginate($request->get('limit', 10));
-
+            if ($request->wantsJson()) {
                 return response()->json($data);
-            } catch (\Exception $e) {
+            }
+
+            return $this->renderPage("$this->pathView/Index", [
+                'title' => $this->pageTitle,
+                'breadcrumbs' => [
+                    ['title' => 'Dashboard', 'href' => route('dashboard')],
+                    ['title' => $this->pageTitle, 'disabled' => true],
+                ],
+                'suppliersCount' => $this->service->count(),
+            ]);
+        } catch (\Exception $e) {
+            if ($request->wantsJson()) {
                 return response()->json(['error' => $e->getMessage()], 500);
             }
-        } else {
 
-            $query = Supplier::query();
-            $query = $this->service->applyFilters($query, $request, ['name', 'email']);
-
-            // Carregar os relacionamentos
-            $query->with(['roles']);
-
-            $data = $query->paginate($request->get('limit', 10));
+            throw $e;
         }
-
-        return $this->renderPage("$this->pathView/Index", [
-            'title' => $this->pageTitle,
-            'breadcrumbs' => [
-                ['title' => 'Dashboard', 'href' => route('dashboard')],
-                ['title' => $this->pageTitle, 'disabled' => true],
-            ],
-            'supplierCount' => $this->service->count(),
-        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Inertia\Response
+     * @return \Momentum\Modal\Modal
      */
-    public function create(): \Inertia\Response
+    public function create(): \Momentum\Modal\Modal
     {
         $this->authorize('supplier criar');
 
-        return $this->renderPage("$this->pathView/Form", [
-            'title' => "Adicionar $this->titleSingular",
-            'breadcrumbs' => [
-                ['title' => 'Dashboard', 'href' => route('dashboard')],
-                ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-                ['title' => 'Adicionar', 'disabled' => true],
-            ],
-        ]);
+        return $this->renderModal("$this->pathView/Create")
+            ->with([
+                'title' => "Adicionar $this->titleSingular",
+            ])
+            ->baseRoute($this->pageIndex);
     }
 
     /**
@@ -130,7 +117,35 @@ class SupplierController extends Controller
     {
         $this->authorize('supplier criar');
 
-        $this->service->create($request->validated());
+        $supplier = $this->service->create($request->validated());
+
+        if ($request->phones != []) {
+            foreach ($request->phones as $phone) {
+                $supplier->phones()->create([
+                    'phone_type' => $phone['phone_type'],
+                    'phone_number' => $phone['phone_number'],
+                    'phone_has_whatsapp' => $phone['phone_has_whatsapp'],
+                    'phone_contact' => $phone['phone_contact'],
+                ]);
+            }
+        }
+
+        if ($request->addresses != []) {
+            foreach ($request->addresses as $address) {
+                $supplier->addresses()->create([
+                    'type' => $address['type'],
+                    'street' => $address['street'],
+                    'number' => $address['number'],
+                    'complement' => $address['complement'],
+                    'neighborhood' => $address['neighborhood'],
+                    'city' => $address['city'],
+                    'state' => $address['state'],
+                    'country' => $address['country'],
+                    'zip_code' => $address['zip_code'],
+                    'reference' => $address['reference'],
+                ]);
+            }
+        }
 
         return redirect()->route($this->pageIndex)
             ->toast("$this->titleSingular criado.", 'success');
@@ -218,14 +233,22 @@ class SupplierController extends Controller
     {
         $this->authorize('supplier editar');
 
-        return $this->renderPage("$this->pathView/Form", [
-            'title' => "Editando $this->titleSingular",
+        $data = $this->service->getById($id);
+        $phones = $data->phones;
+        $addresses = $data->addresses;
+
+        $title = "Detalhes do $this->titleSingular $data->name";
+
+        return $this->renderPage("$this->pathView/Edit", [
+            'title' => "Detalhes de $this->titleSingular",
             'breadcrumbs' => [
                 ['title' => 'Dashboard', 'href' => route('dashboard')],
                 ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-                ['title' => 'Editar', 'disabled' => true],
+                ['title' => $title, 'disabled' => true],
             ],
-            'data' => $this->service->getById($id),
+            'supplier' => $data,
+            'phones' => $phones,
+            'addresses' => $addresses,
         ]);
     }
 
