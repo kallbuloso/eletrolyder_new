@@ -265,7 +265,7 @@ class SupplierController extends Controller
 
         $this->service->update($id, $request->validated());
 
-        return redirect()->route($this->pageIndex)
+        return redirect()->back()
             ->toast("$this->titleSingular atualizado.", 'success');
     }
 
