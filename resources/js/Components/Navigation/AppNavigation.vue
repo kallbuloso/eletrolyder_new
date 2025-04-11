@@ -87,12 +87,12 @@ const menuSections = ref([
         title: 'Clientes',
         icon: 'iconify:fa6-solid:people-line',
         href: 'registers.client.index'
+      },
+      {
+        title: 'Fornecedores*',
+        icon: 'iconify:material-symbols-light:add-business',
+        href: 'registers.supplier.index'
       }
-      //   {
-      //     title: 'Fornecedores*',
-      //     icon: 'iconify:material-symbols-light:add-business',
-      //     href: 'registers.supplier.index'
-      //   },
       //   {
       //     title: 'Produtos*',
       //     icon: 'iconify:material-symbols-light:inventory',
