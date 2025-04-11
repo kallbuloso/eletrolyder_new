@@ -38,6 +38,38 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Route groups for Settings
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
+        // Exemplo de rota com prefixo e nome
+        // Route::group(['prefix' => 'test', 'as' => 'child.'], function () {
+        //     Route::get('/child1', function () {
+        //         return Inertia::render('Dashboard', [
+        //             'title' => 'Child 1',
+        //             'breadcrumbs' => [
+        //                 ['title' => 'Dashboard', 'href' => '/dashboard'],
+        //                 ['title' => 'Child 1', 'disabled' => true],
+        //             ]
+        //         ]);
+        //     })->name('child1');
+        //     Route::get('/child2', function () {
+        //         return Inertia::render('Dashboard', [
+        //             'title' => 'Child 2',
+        //             'breadcrumbs' => [
+        //                 ['title' => 'Dashboard', 'href' => '/dashboard'],
+        //                 ['title' => 'Child 2', 'disabled' => true],
+        //             ]
+        //         ]);
+        //     })->name('child2');
+        //     Route::get('/child3', function () {
+        //         return Inertia::render('Dashboard', [
+        //             'title' => 'Child 3',
+        //             'breadcrumbs' => [
+        //                 ['title' => 'Dashboard', 'href' => '/dashboard'],
+        //                 ['title' => 'Child 3', 'disabled' => true],
+        //             ]
+        //         ]);
+        //     })->name('child3');
+        //     // na rota: route('child.child1')
+        //     // no navegador: http://localhost:8000/child/child1
+        // });
 
         // Route groups for Role
         Route::controller(RoleController::class)->prefix('role')->as('roles.')->group(function () {
