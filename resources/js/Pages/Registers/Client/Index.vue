@@ -7,7 +7,7 @@ const props = defineProps({
 })
 
 // Estado da tabela
-const responseData = ref([])
+const responseData = ref({ data: [], total: 0, current_page: 1, last_page: 1 })
 const content = computed(() => responseData.value)
 const isLoadingTable = ref(true)
 const search = ref(null)
