@@ -62,7 +62,7 @@ const loadPerson = (param, value) => {
   return form.person === 'F' ? param : value
 }
 
-const submit = () => {
+const submit = (options) => {
   verificaPerson()
   verificaStatus()
   form.put(route('registers.supplier.update', props.data.id), options)
@@ -156,15 +156,7 @@ onMounted(() => {
                 <app-name-field id="contact" v-model="form.contact" label="Nome do Contato" placeholder="Nome do contato principal" :error-messages="form.errors.contact" />
               </v-col>
               <v-col cols="12" md="4">
-                <v-text-field
-                  v-model="form.birth_date"
-                  label="Data de Fundação"
-                  placeholder="Data de fundação"
-                  type="date"
-                  :error-messages="form.errors.birth_date"
-                  density="comfortable"
-                  variant="outlined"
-                />
+                <app-date-field v-model="form.birth_date" label="Data de Fundação" placeholder="Data de fundação" :error-messages="form.errors.birth_date" />
               </v-col>
             </app-row-form>
 
@@ -186,12 +178,6 @@ onMounted(() => {
               </v-col>
             </app-row-form>
 
-            <!-- Telefones -->
-            <app-phones-register v-model="form.phones" :errors="form.errors" />
-
-            <!-- Endereço -->
-            <app-addresses-register v-model="form.addresses" :errors="form.errors" />
-
             <!-- Mais Informações -->
             <v-row>
               <v-col cols="12">
@@ -207,7 +193,8 @@ onMounted(() => {
           </v-card-text>
           <v-card-actions>
             <v-spacer />
-            <v-btn type="submit" color="primary" variant="flat" :loading="form.processing">Atualizar</v-btn>
+            <v-btn color="error" @click="isActive.value = false">Cancelar</v-btn>
+            <v-btn type="submit" color="primary" :loading="form.processing">Atualizar</v-btn>
           </v-card-actions>
         </v-card>
       </v-form>
