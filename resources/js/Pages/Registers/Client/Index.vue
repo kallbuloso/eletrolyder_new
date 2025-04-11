@@ -1,4 +1,6 @@
 <script setup>
+import { formatToCPFOrCNPJ } from 'brazilian-values'
+
 const props = defineProps({
   clientsCount: {
     type: Number,
@@ -19,7 +21,7 @@ const headers = ref([
   { title: 'Nome', key: 'name', sortable: true },
   { title: 'Apelido', key: 'nick_name', sortable: true },
   { title: 'Pessoa', key: 'person', sortable: true },
-  { title: 'Gênero', key: 'gender', sortable: true },
+  { title: 'CPF/CNPJ', key: 'cpf_cnpj', sortable: true },
   { title: 'Status', key: 'status', sortable: true },
   { title: 'Action', key: 'action', sortable: false, align: 'end' }
 ])
@@ -134,7 +136,15 @@ function deleteItem(item) {
       <v-card-text>
         <v-row>
           <v-col cols="12" md="9" sm="9">
-            <v-text-field v-model="search" label="Procurar" prepend-inner-icon="mdi-magnify" hide-details clearable density="comfortable" />
+            <v-text-field
+              v-model="search"
+              hint="Procurar cliente por nome, apelido ou CPF/CNPJ"
+              label="Procurar cliente"
+              prepend-inner-icon="mdi-magnify"
+              clearable
+              density="comfortable"
+              persistent-hint
+            />
           </v-col>
           <v-col v-if="content.total > 10" cols="12" md="3" sm="3">
             <v-select v-model="itemsPerPage" :items="[10, 15, 25, 35, 50, 100]" label="Itens por Página" hide-details density="comfortable" />
@@ -166,6 +176,11 @@ function deleteItem(item) {
             <v-chip :color="item.statusColor" size="small">
               {{ item.status }}
             </v-chip>
+          </template>
+
+          <!-- Documento -->
+          <template #item.cpf_cnpj="{ item }">
+            {{ item.cpf_cnpj ? formatToCPFOrCNPJ(item.cpf_cnpj) : 'Não informado' }}
           </template>
 
           <!-- Ações -->
