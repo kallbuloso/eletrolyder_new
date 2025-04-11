@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CompanyRequest extends FormRequest
@@ -23,18 +24,41 @@ class CompanyRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'fantasy_name' => ['nullable', 'string'],
-            'contact_name' => ['nullable', 'string'],
-            'person' => ['required', 'string'],
-            'cpf_cnpj' => ['required', 'string'],
-            'rg_insc_est' => ['nullable', 'string'],
-            'ccm' => ['nullable', 'string'],
-            'birth_date' => ['required', 'string'],
-            'logo' => ['nullable', 'string'],
-            'description' => ['nullable', 'string'],
-            'email' => ['nullable', 'string'],
-            'website' => ['nullable', 'string'],
+            'nick_name' => ['nullable', 'string'],
+            'contact' => ['nullable', 'string'],
+            'person' => ['required'],
+            'cpf_cnpj' => [
+                'nullable',
+                'string',
+                Rule::unique('suppliers')->ignore($this->id)->where(function ($query) {
+                    return $query->whereNotNull('cpf_cnpj');
+                }),
+                'required_if:person,J',
+            ],
+            'birth_date' => ['nullable', 'date', 'date_format:d/m/Y'],
+            'site' => ['nullable', 'url'],
+            'email' => ['nullable', 'email'],
+            'avatar' => ['nullable', 'string'],
             'note' => ['nullable', 'string'],
+            'status' => ['required'],
+            'blocking_reason' => ['nullable', 'string', 'required_if:status,B'],
+            'last_purchase' => ['nullable', 'string'],
+
+            'phones.*.phone_type' => ['required', 'string'],
+            'phones.*.phone_number' => ['required', 'string'],
+            'phones.*.phone_has_whatsapp' => ['required', 'boolean'],
+            'phones.*.phone_contact' => ['nullable', 'required_if:phones.*.phone_type,C'],
+            // Endereço
+            'addresses.*.type' => ['required', 'string'],
+            'addresses.*.street' => ['required', 'string'],
+            'addresses.*.number' => ['required', 'string'],
+            'addresses.*.complement' => ['nullable', 'string'],
+            'addresses.*.neighborhood' => ['required', 'string'],
+            'addresses.*.city' => ['required', 'string'],
+            'addresses.*.state' => ['required', 'string'],
+            'addresses.*.country' => ['required', 'string'],
+            'addresses.*.zip_code' => ['required', 'string'],
+            'addresses.*.reference' => ['nullable', 'string'],
         ];
     }
 }
