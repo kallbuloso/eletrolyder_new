@@ -124,14 +124,27 @@ function deleteSupplier(item) {
           <VCardTitle>Informações Pessoais</VCardTitle>
         </VCardItem>
         <v-card-text>
-          <VList class="card-list">
+          <VList class="card-list text-medium-emphasis">
+            <!-- Tipo Pessoa -->
+            <VListItem>
+              <VListItemTitle>
+                <span class="d-flex align-center">
+                  <VIcon :icon="props.supplier.person === 'F' ? 'mdi-account' : 'mdi-office-building'" size="24" class="me-2" />
+                  <div class="text-body-1 font-weight-medium me-2">Pessoa:</div>
+                  <div class="d-inline-block text-body-1">
+                    {{ props.supplier.person === 'F' ? 'Física' : 'Jurídica' }}
+                  </div>
+                </span>
+              </VListItemTitle>
+            </VListItem>
             <!-- CPF/CNPJ -->
             <VListItem>
               <VListItemTitle>
                 <span class="d-flex align-center">
-                  <div class="text-body-1 font-weight-medium me-2">CPF/CNPJ:</div>
+                  <VIcon icon="mdi-card-account-details" size="24" class="me-2" />
+                  <div class="text-body-1 font-weight-medium me-2">{{ props.supplier.person === 'F' ? 'CPF:' : 'CNPJ:' }}</div>
                   <div class="d-inline-block text-body-1">
-                    {{ formatToCPFOrCNPJ(props.supplier.cpf_cnpj) }}
+                    {{ props.supplier.cpf_cnpj ? formatToCPFOrCNPJ(props.supplier.cpf_cnpj) : 'Não informado' }}
                   </div>
                 </span>
               </VListItemTitle>
@@ -140,9 +153,34 @@ function deleteSupplier(item) {
             <VListItem>
               <VListItemTitle>
                 <span class="d-flex align-center">
-                  <div class="text-body-1 font-weight-medium me-2">Nome Fantasia:</div>
+                  <VIcon :icon="props.supplier.person === 'F' ? 'mdi-account-star' : 'mdi-office-building'" size="24" class="me-2" />
+                  <div class="text-body-1 font-weight-medium me-2">{{ props.supplier.person === 'F' ? 'Apelido:' : 'Nome Fantasia:' }}</div>
                   <div class="d-inline-block text-body-1">
                     {{ props.supplier.nick_name }}
+                  </div>
+                </span>
+              </VListItemTitle>
+            </VListItem>
+            <!-- Contato -->
+            <VListItem>
+              <VListItemTitle>
+                <span class="d-flex align-center">
+                  <VIcon icon="mdi-account" size="24" class="me-2" />
+                  <div class="text-body-1 font-weight-medium me-2">Contato:</div>
+                  <div class="d-inline-block text-body-1">
+                    {{ props.supplier.contact }}
+                  </div>
+                </span>
+              </VListItemTitle>
+            </VListItem>
+            <!-- Inauguração -->
+            <VListItem>
+              <VListItemTitle>
+                <span class="d-flex align-center">
+                  <VIcon icon="mdi-calendar" size="24" class="me-2" />
+                  <div class="text-body-1 font-weight-medium me-2">Inauguração:</div>
+                  <div class="d-inline-block text-body-1">
+                    {{ props.supplier.birth_date }}
                   </div>
                 </span>
               </VListItemTitle>
@@ -176,7 +214,7 @@ function deleteSupplier(item) {
                 <span class="d-flex align-center">
                   <div class="text-body-1 font-weight-medium me-2">Última Venda:</div>
                   <div class="d-inline-block text-body-1">
-                    {{ props.supplier.last_sale }}
+                    {{ props.supplier.last_purchase }}
                   </div>
                 </span>
               </VListItemTitle>
