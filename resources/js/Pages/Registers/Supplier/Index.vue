@@ -1,0 +1,194 @@
+<script setup>
+const props = defineProps({
+  suppliersCount: {
+    type: Number,
+    required: true
+  }
+})
+
+// Estado da tabela
+const responseData = ref({ data: [], total: 0, current_page: 1, last_page: 1 })
+const content = computed(() => responseData.value)
+const isLoadingTable = ref(true)
+const search = ref(null)
+const itemsPerPage = ref(10)
+const page = ref(1)
+
+// Definição das colunas
+const headers = ref([
+  { title: 'Nome / Razão Social', key: 'name', sortable: true },
+  { title: 'Nome Fantasia', key: 'nick_name', sortable: true },
+  { title: 'Pessoa', key: 'person', sortable: true },
+  { title: 'Contato', key: 'contact', sortable: true },
+  { title: 'Status', key: 'status', sortable: true },
+  { title: 'Action', key: 'action', sortable: false, align: 'end' }
+])
+
+// Funções auxiliares
+const personList = {
+  F: 'Física',
+  J: 'Jurídica'
+}
+
+const statusList = {
+  A: { text: 'Ativo', color: 'primary' },
+  I: { text: 'Inativo', color: 'warning' },
+  B: { text: 'Bloqueado', color: 'error' }
+}
+
+// Carregamento dos dados
+async function loadItems(options = {}) {
+  isLoadingTable.value = true
+  const { page, itemsPerPage, sortBy = [], search = null } = options
+
+  const params = new URLSearchParams()
+  params.append('page', page || 1)
+  params.append('limit', itemsPerPage || 10)
+
+  if (sortBy?.length > 0) {
+    params.append('sort[key]', sortBy[0].key)
+    params.append('sort[order]', sortBy[0].order === 'desc' ? 'desc' : 'asc')
+  }
+
+  if (search) {
+    params.append('search', search)
+  }
+
+  try {
+    const response = await fetch(`/registers/suppliers?${params.toString()}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    if (data.data) {
+      data.data = data.data.map((item) => ({
+        ...item,
+        person: personList[item.person] || 'Não definido',
+        status: statusList[item.status]?.text || 'Não definido',
+        statusColor: statusList[item.status]?.color || 'grey'
+      }))
+    }
+    responseData.value = data
+  } catch (error) {
+    console.error('Error:', error)
+    swToast(`Erro ao carregar dados: ${error.message}`, 'error', 6000)
+  } finally {
+    isLoadingTable.value = false
+  }
+}
+
+// Ações da tabela
+function createItem() {
+  if (can('supplier', 'criar')) {
+    router.get(route('registers.supplier.create'))
+  } else {
+    swToast('Você não tem permissão para criar fornecedores.', 'error', 3000)
+  }
+}
+
+function editItem(id) {
+  if (can('supplier', 'editar')) {
+    router.get(route('registers.supplier.edit', id))
+  } else {
+    swToast('Você não tem permissão para editar fornecedores.', 'error', 3000)
+  }
+}
+
+function deleteItem(item) {
+  if (can('supplier', 'excluir')) {
+    swDeleteQuestion(item.name, route('registers.supplier.destroy', item.id))
+  } else {
+    swToast('Você não tem permissão para excluir fornecedores.', 'error', 3000)
+  }
+}
+</script>
+
+<template layout="AppShell,AuthenticatedLayout">
+  <!-- Lista de fornecedores -->
+  <template v-if="props.suppliersCount > 0">
+    <v-card class="mx-auto" prepend-icon="iconify:material-symbols-light:add-business" :title="$page.props.title">
+      <!-- Botão Novo -->
+      <template #append>
+        <v-btn prepend-icon="mdi-plus" color="primary" variant="text" @click="createItem">Novo</v-btn>
+      </template>
+
+      <!-- Filtros -->
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" md="9" sm="9">
+            <v-text-field v-model="search" label="Procurar" prepend-inner-icon="mdi-magnify" hide-details clearable density="comfortable" />
+          </v-col>
+          <v-col v-if="content.total > 10" cols="12" md="3" sm="3">
+            <v-select v-model="itemsPerPage" :items="[10, 15, 25, 35, 50, 100]" label="Itens por Página" hide-details density="comfortable" />
+          </v-col>
+        </v-row>
+      </v-card-text>
+
+      <!-- Tabela -->
+      <v-card-item>
+        <v-data-table-server
+          :headers="headers"
+          :items="content.data"
+          :items-length="Number(content.total)"
+          :items-per-page="itemsPerPage"
+          :page="page"
+          :search="search"
+          :loading="isLoadingTable"
+          :show-select="false"
+          loading-text="Carregando, por favor aguarde..."
+          @update:options="loadItems"
+        >
+          <!-- Loading -->
+          <template #loading>
+            <v-skeleton-loader type="table-row@5" />
+          </template>
+
+          <!-- Status -->
+          <template #item.status="{ item }">
+            <v-chip :color="item.statusColor" size="small">
+              {{ item.status }}
+            </v-chip>
+          </template>
+
+          <!-- Ações -->
+          <template #item.action="{ item }">
+            <v-icon v-if="can('supplier', 'editar')" color="warning" icon="mdi-pencil" size="small" class="mr-1" @click="editItem(item.id)" />
+            <v-icon v-if="can('supplier', 'excluir')" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
+          </template>
+
+          <template #bottom>
+            <v-divider />
+          </template>
+        </v-data-table-server>
+      </v-card-item>
+
+      <!-- Paginação -->
+      <v-card-actions v-if="content.total > 10">
+        <v-list-item :title="`Página ${content.current_page} de ${content.last_page}`" :subtitle="`Total de ${content.total} ${$page.props.title}`" />
+        <v-spacer />
+        <v-pagination v-model="page" :length="content.last_page" :total-visible="2" size="small" rounded />
+      </v-card-actions>
+    </v-card>
+  </template>
+
+  <!-- Estado vazio -->
+  <template v-else>
+    <v-row align="center" justify="center" style="height: 70vh">
+      <v-empty-state :headline="$page.props.title" title="Nenhum registro encontrado.">
+        <template #media>
+          <v-icon icon="iconify:material-symbols-light:add-business" />
+        </template>
+        <v-btn prepend-icon="mdi-plus" color="primary" variant="flat" @click="createItem"> Adicionar Um Fornecedor </v-btn>
+      </v-empty-state>
+    </v-row>
+  </template>
+</template>
