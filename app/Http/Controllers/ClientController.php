@@ -65,31 +65,30 @@ class ClientController extends Controller
     {
         $this->authorize('client listar');
 
-        if ($request->wantsJson()) {
-            try {
+        try {
+            $query = Client::query();
+            $query = $this->service->applyFilters($query, $request, ['name', 'nick_name']);
+            $clients = $query->paginate($request->get('limit', 10));
 
-                $query = Client::query();
-
-                $query = $this->service->applyFilters($query, $request, ['name', 'nick_name', 'cpf_cnpj', 'email']);
-
-                $query->with(['phones', 'addresses']);
-
-                $clients = $query->paginate($request->get('limit', 10));
-
+            if ($request->wantsJson()) {
                 return response()->json($clients);
-            } catch (\Exception $e) {
+            }
+
+            return $this->renderPage("$this->pathView/Index", [
+                'title' => $this->pageTitle,
+                'breadcrumbs' => [
+                    ['title' => 'Dashboard', 'href' => route('dashboard')],
+                    ['title' => $this->pageTitle, 'disabled' => true],
+                ],
+                'clientsCount' => $this->service->count(),
+            ]);
+        } catch (\Exception $e) {
+            if ($request->wantsJson()) {
                 return response()->json(['error' => $e->getMessage()], 500);
             }
-        }
 
-        return $this->renderPage("$this->pathView/Index", [
-            'title' => $this->pageTitle,
-            'breadcrumbs' => [
-                ['title' => 'Dashboard', 'href' => route('dashboard')],
-                ['title' => $this->pageTitle, 'disabled' => true],
-            ],
-            'clientsCount' => $this->service->count(),
-        ]);
+            throw $e;
+        }
     }
 
     /**
@@ -218,13 +217,13 @@ class ClientController extends Controller
         $phones = $data->phones;
         $addresses = $data->addresses;
 
-        $title = 'Detalhes do ' . $this->titleSingular;
+        $title = "Detalhes do $this->titleSingular $data->name";
 
         return $this->renderPage("$this->pathView/Edit", [
-            'title' => "Editando $this->titleSingular",
+            'title' => "Detalhes de $this->titleSingular",
             'breadcrumbs' => [
                 ['title' => 'Dashboard', 'href' => route('dashboard')],
-                ['title' => $this->pageTitle, 'href' => route('registers.client.index')],
+                ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
                 ['title' => $title, 'disabled' => true],
             ],
             'client' => $data,
