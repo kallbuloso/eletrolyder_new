@@ -136,12 +136,26 @@ onMounted(() => {
               <app-name-field id="contact" v-model="form.contact" label="Nome do Contato" placeholder="Nome do contato principal" :error-messages="form.errors.contact" />
             </v-col>
             <v-col cols="12" md="4">
-              <v-text-field v-model="form.birth_date" label="Data de Fundação" placeholder="Data de fundação" type="date" :error-messages="form.errors.birth_date" density="comfortable" variant="outlined" />
+              <app-text-field
+                v-model="form.birth_date"
+                label="Data de Fundação"
+                placeholder="Data de fundação"
+                type="date"
+                :error-messages="form.errors.birth_date"
+                density="comfortable"
+                variant="outlined"
+              />
             </v-col>
           </app-row-form>
 
+          <!-- Telefones -->
+          <app-phones-register v-model="form.phones" :errors="props.errors" />
+
+          <!-- Endereço -->
+          <app-addresses-register v-model="form.addresses" :errors="props.errors" />
+
           <!-- Contato -->
-          <app-row-form icon="mdi-contacts" title="Contato">
+          <v-row>
             <v-col cols="12" md="6">
               <v-text-field v-model="form.site" label="Site" placeholder="Site da empresa" :error-messages="form.errors.site" density="comfortable" variant="outlined" />
             </v-col>
@@ -156,18 +170,18 @@ onMounted(() => {
                 variant="outlined"
               />
             </v-col>
-          </app-row-form>
-
-          <!-- Telefones -->
-          <app-phones-register v-model="form.phones" :errors="props.errors" />
-
-          <!-- Endereço -->
-          <app-addresses-register v-model="form.addresses" :errors="props.errors" />
+          </v-row>
 
           <!-- Mais Informações -->
           <v-row>
             <v-col cols="12">
-              <app-textarea v-model="form.note" label="Observações" placeholder="Escreva aqui anotações pertinentes à este fornecedor" rows="3" :error-messages="form.errors.note" />
+              <app-textarea
+                v-model="form.note"
+                label="Observações"
+                placeholder="Escreva aqui anotações pertinentes à este fornecedor"
+                rows="3"
+                :error-messages="form.errors.note"
+              />
             </v-col>
           </v-row>
         </v-card-text>
