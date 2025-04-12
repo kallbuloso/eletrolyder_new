@@ -141,7 +141,7 @@ function deleteItem(item) {
       </v-card-item>
       <v-card-actions>
         <template v-if="content.total > 10">
-          <v-list-item :title="`Página ${content.current_page} de ${content.last_page}`" :subtitle="`Total de ${content.total} ${$page.props.title}`" />
+          <v-list-item :title="`Página ${content.current_page} de ${content.last_page}`" :subtitle="`Total de ${formatCount(content.total)} ${$page.props.title}`" />
           <v-spacer />
           <v-pagination v-model="page" :length="content.last_page" :total-visible="2" size="small" rounded></v-pagination>
         </template>
