@@ -27,6 +27,7 @@ declare global {
   const defineStore: typeof import('pinia')['defineStore']
   const effectScope: typeof import('vue')['effectScope']
   const emailValidator: typeof import('./resources/js/utils/validators.js')['emailValidator']
+  const formatCount: typeof import('./resources/js/utils/formatters.js')['formatCount']
   const formatDate: typeof import('./resources/js/utils/formatters.js')['formatDate']
   const formatDateToMonthShort: typeof import('./resources/js/utils/formatters.js')['formatDateToMonthShort']
   const getActivePinia: typeof import('pinia')['getActivePinia']
@@ -154,6 +155,7 @@ declare module 'vue' {
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly emailValidator: UnwrapRef<typeof import('./resources/js/utils/validators.js')['emailValidator']>
+    readonly formatCount: UnwrapRef<typeof import('./resources/js/utils/formatters.js')['formatCount']>
     readonly formatDate: UnwrapRef<typeof import('./resources/js/utils/formatters.js')['formatDate']>
     readonly formatDateToMonthShort: UnwrapRef<typeof import('./resources/js/utils/formatters.js')['formatDateToMonthShort']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
