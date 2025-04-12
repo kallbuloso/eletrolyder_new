@@ -30,10 +30,10 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'karl@admim.com',
         // ]);
 
-        $tenantQtd = 12;
-        $userQtd = 13;
-        $clientQtd = 50;
-        $supplierQtd = 50;
+        // $tenantQtd = 1;
+        $userQtd = 10;
+        $clientQtd = 10000;
+        $supplierQtd = 150;
 
         $tenant = Tenant::factory()->create([
             'status' => 'A',
@@ -82,7 +82,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        $this->createTenant($tenantQtd, $userQtd, $clientQtd);
+        // $this->createTenant($tenantQtd, $userQtd, $clientQtd);
     }
 
     private function createTenant($tenantQtd = 2, $userQtd = 3, $clientQtd = 100): void
