@@ -40,4 +40,10 @@ export const formatDateToMonthShort = (value, toTimeForCurrentDay = true) => {
 
   return new Intl.DateTimeFormat('pt-BR', formatting).format(new Date(value))
 }
+
 export const prefixWithPlus = (value) => (value > 0 ? `+${value}` : value)
+
+export const formatCount = (value) => {
+  if (!value) return '0'
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+}
