@@ -37,6 +37,7 @@ module.exports = {
     setMetadata: true,
     // Formaters
     formatDate: true,
+    formatCount: true,
     avatarText: true,
     kFormatter: true,
     formatDateToMonthShort: true,
@@ -145,7 +146,7 @@ module.exports = {
     storeToRefs: true,
     // Vuetify,
     vuetify: true,
-    Ziggy: 'writable' //?? i dont know why it is not defined
+    Ziggy: 'writable' // ?? i dont know why it is not defined
   },
   ignorePatterns: ['node_modules/**/*', 'public/**/*', 'resources/styles/**/*', 'vendor/**/*']
 }
