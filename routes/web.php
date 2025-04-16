@@ -141,6 +141,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('/{id}', 'update')->name('update');
             Route::delete('/{id}', 'destroy')->name('destroy');
         });
+    });
+
+    // Route groups for Order
+    Route::group(['prefix' => 'orders', 'as' => 'order.'], function () {
         // addRoute
     });
 });
