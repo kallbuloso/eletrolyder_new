@@ -108,7 +108,14 @@ const menuSections = ref([
   {
     id: 'services',
     title: 'Ordem de Serviço',
-    items: []
+    items: [
+      {
+        title: 'Config. de OS',
+        icon: 'mdi-exit-to-app',
+        group: 'config_os',
+        children: []
+      }
+    ]
   },
   {
     id: 'chats',
