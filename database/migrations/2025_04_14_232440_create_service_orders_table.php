@@ -19,8 +19,8 @@ return new class extends Migration
             // Warranty expiration date
             $table->date('warranty_expires_on')->nullable(); // Vencimento da garantia
             // References to status and step (lookup tables)
-            $table->foreignId('status_id')->nullable()->constrained('os_statuses'); // Status
-            $table->foreignId('step_id')->nullable()->constrained('os_steps'); // Etapa
+            $table->foreignId('status_id')->nullable()->constrained('so_statuses'); // Status
+            $table->foreignId('step_id')->nullable()->constrained('so_status_steps'); // Etapa do status
             // Monetary values
             $table->decimal('labor_cost', 10, 2)->nullable(); // Custos de mão de obra
             $table->decimal('parts_cost', 10, 2)->nullable(); // Custos de peças
