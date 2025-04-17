@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
             $table->foreignId('status_id')->nullable()->constrained('so_statuses');
+            $table->string('name');
             // Colunas de relacionamento polimórfico (por exemplo: stepable_id e stepable_type)
             $table->morphs('stepable');
-            $table->string('name');
             $table->timestamps();
         });
     }
