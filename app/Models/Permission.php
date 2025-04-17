@@ -21,8 +21,6 @@ use Spatie\Permission\Models\Permission as OriginalPermission;
  */
 class Permission extends OriginalPermission
 {
-    use SearchableTrait;
-
     protected $table = "permissions";
 
     /**
