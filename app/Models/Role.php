@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Role extends OriginalRole
 {
-    use HasFactory, SearchableTrait, TenantebleTrait, DatesModelTraits;
+    use HasFactory, TenantebleTrait, DatesModelTraits;
 
     protected $table = "roles";
 
