@@ -26,7 +26,7 @@ return new class extends Migration
             $table->decimal('parts_cost', 10, 2)->nullable(); // Custos de peças
             $table->decimal('service_cost', 10, 2)->nullable(); // Custos de serviço
             $table->decimal('discount', 10, 2)->nullable(); // Desconto
-            $table->decimal('advance_payment', 10, 2)->nullable(); // Pagamento antecipado
+            $table->decimal('advance_payment', 10, 2)->nullable(); // Pagamento antecipado/sinal
             // Equipment relation
             $table->foreignId('equipment_id')->nullable()->constrained('equipments'); // Equipamento
             // Editing and historical tracking
