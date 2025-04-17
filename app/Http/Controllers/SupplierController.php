@@ -67,7 +67,8 @@ class SupplierController extends Controller
 
         try {
             $query = Supplier::query();
-            $query = $this->service->applyFilters($query, $request, ['name', 'nick_name', 'contact']);
+            $fields = Supplier::getSearchable();
+            $query = $this->service->applyFilters($query, $request, $fields);
             $data = $query->paginate($request->get('limit', 10));
 
             if ($request->wantsJson()) {
