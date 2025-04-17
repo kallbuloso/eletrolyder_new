@@ -67,40 +67,33 @@ class UserController extends Controller
     {
         $this->authorize('user listar');
 
-        if ($request->wantsJson()) {
-            try {
-
-                $query = User::query();
-                $query = $this->service->applyFilters($query, $request, ['name', 'email']);
-
-                // Carregar os relacionamentos
-                $query->with(['roles']);
-
-                $users = $query->paginate($request->get('limit', 10));
-
-                return response()->json($users);
-            } catch (\Exception $e) {
-                return response()->json(['error' => $e->getMessage()], 500);
-            }
-        } else {
-
+        try {
             $query = User::query();
-            $query = $this->service->applyFilters($query, $request, ['name', 'email']);
-
+            $fields = User::getSearchable();
+            $query = $this->service->applyFilters($query, $request, $fields);
             // Carregar os relacionamentos
             $query->with(['roles']);
+            $data = $query->paginate($request->get('limit', 10));
 
-            $users = $query->paginate($request->get('limit', 10));
+            if ($request->wantsJson()) {
+                return response()->json($data);
+            }
+
+            return $this->renderPage("$this->pathView/Index", [
+                'title' => $this->pageTitle,
+                'breadcrumbs' => [
+                    ['title' => 'Dashboard', 'href' => route('dashboard')],
+                    ['title' => $this->pageTitle, 'disabled' => true],
+                ],
+                'usersCount' => $this->service->count(),
+            ]);
+        } catch (\Exception $e) {
+            if ($request->wantsJson()) {
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+
+            throw $e;
         }
-
-        return $this->renderPage("$this->pathView/Index", [
-            'title' => $this->pageTitle,
-            'breadcrumbs' => [
-                ['title' => 'Dashboard', 'href' => route('dashboard')],
-                ['title' => $this->pageTitle, 'disabled' => true],
-            ],
-            'usersCount' => $this->service->count(),
-        ]);
     }
 
     /**
