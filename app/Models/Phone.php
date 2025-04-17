@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Phone extends Model
 {
-    use HasFactory, SearchableTrait, DatesModelTraits, TenantebleTrait, PhoneableTrait;
+    use HasFactory, DatesModelTraits, TenantebleTrait, PhoneableTrait;
 
     protected $table = "phones";
 
