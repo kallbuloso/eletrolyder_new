@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Address extends Model
 {
-    use HasFactory, SearchableTrait, TenantebleTrait, DatesModelTraits, AddressableTrait;
+    use HasFactory, DatesModelTraits, TenantebleTrait, AddressableTrait;
 
     protected $table = "addresses";
 
