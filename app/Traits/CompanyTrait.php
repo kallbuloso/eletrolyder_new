@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 trait CompanyTrait
 {
-    use HasFactory, PhoneableTrait, AddressableTrait, TenantebleTrait, SearchableTrait, DatesModelTraits;
+    use HasFactory, PhoneableTrait, AddressableTrait, TenantebleTrait, DatesModelTraits;
 }
