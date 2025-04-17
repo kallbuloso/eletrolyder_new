@@ -57,13 +57,6 @@ class Client extends Model
     protected $searchable = [
         'name',
         'nick_name',
-        'person',
-        'cpf_cnpj',
-        'gender',
-        'avatar',
-        'note',
-        'status',
-        'blocking_reason',
-        'last_purchase'
+        'cpf_cnpj'
     ];
 }
