@@ -79,7 +79,9 @@ const openedGroup = ref([''])
 router.on('navigate', () => {
   if (isNotEmpty(route().current())) {
     activeRoute.value = route().current()
+    // console.log(activeRoute.value)
     openedGroup.value = [activeRoute.value.split('.')[1]]
+    // console.log(openedGroup.value)
   }
 })
 </script>
