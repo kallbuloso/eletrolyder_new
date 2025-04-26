@@ -183,7 +183,7 @@ class UserController extends Controller
         $validate = $request->validated();
 
         $existingUser = $this->service->where('email', $validate['email'])
-            ->where('tenant_id', $validate['tenant_id'])
+            ->where('tenant_id', session('tenant_id'))
             ->where('id', '!=', $id)
             ->first();
 
