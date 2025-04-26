@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\SoStatusController;
 // routeImport
 
 Route::get('/', function () {
@@ -39,37 +40,37 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route groups for Settings
     Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
         // Exemplo de rota com prefixo e nome
-        // Route::group(['prefix' => 'test', 'as' => 'child.'], function () {
-        //     Route::get('/child1', function () {
-        //         return Inertia::render('Dashboard', [
-        //             'title' => 'Child 1',
-        //             'breadcrumbs' => [
-        //                 ['title' => 'Dashboard', 'href' => '/dashboard'],
-        //                 ['title' => 'Child 1', 'disabled' => true],
-        //             ]
-        //         ]);
-        //     })->name('child1');
-        //     Route::get('/child2', function () {
-        //         return Inertia::render('Dashboard', [
-        //             'title' => 'Child 2',
-        //             'breadcrumbs' => [
-        //                 ['title' => 'Dashboard', 'href' => '/dashboard'],
-        //                 ['title' => 'Child 2', 'disabled' => true],
-        //             ]
-        //         ]);
-        //     })->name('child2');
-        //     Route::get('/child3', function () {
-        //         return Inertia::render('Dashboard', [
-        //             'title' => 'Child 3',
-        //             'breadcrumbs' => [
-        //                 ['title' => 'Dashboard', 'href' => '/dashboard'],
-        //                 ['title' => 'Child 3', 'disabled' => true],
-        //             ]
-        //         ]);
-        //     })->name('child3');
-        //     // na rota: route('child.child1')
-        //     // no navegador: http://localhost:8000/child/child1
-        // });
+        Route::group(['prefix' => 'test', 'as' => 'child.'], function () {
+            Route::get('/child1', function () {
+                return Inertia::render('Dashboard', [
+                    'title' => 'Child 1',
+                    'breadcrumbs' => [
+                        ['title' => 'Dashboard', 'href' => '/dashboard'],
+                        ['title' => 'Child 1', 'disabled' => true],
+                    ]
+                ]);
+            })->name('child1');
+            Route::get('/child2', function () {
+                return Inertia::render('Dashboard', [
+                    'title' => 'Child 2',
+                    'breadcrumbs' => [
+                        ['title' => 'Dashboard', 'href' => '/dashboard'],
+                        ['title' => 'Child 2', 'disabled' => true],
+                    ]
+                ]);
+            })->name('child2');
+            Route::get('/child3', function () {
+                return Inertia::render('Dashboard', [
+                    'title' => 'Child 3',
+                    'breadcrumbs' => [
+                        ['title' => 'Dashboard', 'href' => '/dashboard'],
+                        ['title' => 'Child 3', 'disabled' => true],
+                    ]
+                ]);
+            })->name('child3');
+            // na rota: route('child.child1')
+            // no navegador: http://localhost:8000/child/child1
+        });
 
         // Route groups for Role
         Route::controller(RoleController::class)->prefix('role')->as('roles.')->group(function () {
@@ -144,8 +145,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // Route groups for Order
-    Route::group(['prefix' => 'orders', 'as' => 'order.'], function () {
+    Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
+        // Route groups for SoStatus
+        Route::controller(SoStatusController::class)->prefix('statuses')->as('soStatus.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/show/{id}', 'show')->name('show');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
         // addRoute
+
     });
 });
 
