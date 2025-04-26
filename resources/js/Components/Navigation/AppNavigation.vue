@@ -53,9 +53,10 @@ const navigate = (target) => {
   activeMenu.value = target
 }
 
+// O target deve ser o id do menu com o mesmo nome do grupo da rota
 const menuItems = [
   { tooltip: 'Dashboard', target: '#dashboard', icon: 'iconify:fluent-mdl2:b-i-dashboard', badge: 5 },
-  { tooltip: 'Ordem de Serviço', target: '#services', icon: 'iconify:game-icons:auto-repair' },
+  { tooltip: 'Ordem de Serviço', target: '#orders', icon: 'iconify:game-icons:auto-repair' },
   { tooltip: 'Chats', target: '#chats', icon: 'iconify:gridicons:chat' },
   { tooltip: 'Mercado Livre', target: '#meli', icon: 'iconify:simple-icons:mercadopago' },
   { tooltip: 'Cadastros', target: '#registers', icon: 'iconify:medical-icon:i-registration' },
@@ -106,14 +107,23 @@ const menuSections = ref([
     ]
   },
   {
-    id: 'services',
+    id: 'orders',
     title: 'Ordem de Serviço',
     items: [
       {
         title: 'Config. de OS',
         icon: 'mdi-exit-to-app',
-        group: 'config_os',
-        children: []
+        group: 'soStatus',
+        children: [
+          {
+            title: 'Status',
+            href: 'orders.soStatus.index'
+          },
+          {
+            title: 'Adicionar',
+            href: 'orders.soStatus.create'
+          }
+        ]
       }
     ]
   },
@@ -140,27 +150,27 @@ const menuSections = ref([
         title: 'Controle de Acesso',
         icon: 'mdi-account-key',
         href: 'settings.roles.index'
+      },
+      {
+        title: 'Example child',
+        icon: 'mdi-exit-to-app',
+        group: 'child',
+        children: [
+          {
+            title: 'Child 1',
+            href: 'settings.child.child1'
+          },
+          {
+            title: 'Child 2',
+            icon: 'mdi-exit-to-app',
+            href: 'settings.child.child2'
+          },
+          {
+            title: 'Child 3',
+            href: 'settings.child.child3'
+          }
+        ]
       }
-      //   {
-      //     title: 'Example child',
-      //     icon: 'mdi-exit-to-app',
-      //     group: 'child',
-      //     children: [
-      //       {
-      //         title: 'Child 1',
-      //         href: 'settings.child.child1'
-      //       },
-      //       {
-      //         title: 'Child 2',
-      //         icon: 'mdi-exit-to-app',
-      //         href: 'settings.child.child2'
-      //       },
-      //       {
-      //         title: 'Child 3',
-      //         href: 'settings.child.child3'
-      //       }
-      //     ]
-      //   }
     ]
   }
 ])
