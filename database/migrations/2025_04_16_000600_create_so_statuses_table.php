@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('so_statuses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
-            $table->string('name');
+            $table->string('description');
             // status_type: entrada = 0, em andamento = 1, saída = 3
             $table->tinyInteger('status_type');
+            // so_status_step
+            $table->foreignId('so_status_step_id')->nullable()->constrained('so_status_steps');
             // generates_revenue: 0 = gera receita, 1 = não gera receita
             $table->tinyInteger('generates_revenue');
-            // Colunas de relacionamento polimórfico (por exemplo: statusable_id e statusable_type)
-            $table->morphs('statusable');
+            // plano de contas
+            // $table->foreignId('accounting_plan_id')->nullable()->constrained('accounting_plans');
             $table->timestamps();
         });
     }
