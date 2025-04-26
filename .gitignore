@@ -10,6 +10,7 @@
 /vendor
 /App/Console/Commands
 /App/Console/CrudGenerator
+/docs
 .env
 .env.backup
 .env.production
