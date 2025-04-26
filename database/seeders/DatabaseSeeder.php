@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Client;
 use App\Models\Tenant;
 use App\Models\Company;
+use App\Models\SoStatus;
 use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -32,7 +33,7 @@ class DatabaseSeeder extends Seeder
 
         // $tenantQtd = 1;
         $userQtd = 10;
-        $clientQtd = 10000;
+        $clientQtd = 120;
         $supplierQtd = 150;
 
         $tenant = Tenant::factory()->create([
@@ -49,6 +50,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Supplier::factory($supplierQtd)->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        SoStatus::factory(10)->create([
             'tenant_id' => $tenant->id,
         ]);
 
