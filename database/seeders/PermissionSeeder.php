@@ -52,7 +52,11 @@ class PermissionSeeder extends Seeder
                 'name' => 'supplier',
                 'description' => 'Gerenciar fornecedores',
             ],
-        ]; // addResources
+        	[
+				'name' => 'soStatus',
+				'description' => 'Gerenciar soStatuss',
+			],
+		]; // addResources
 
         $permissions = [
             'listar',
