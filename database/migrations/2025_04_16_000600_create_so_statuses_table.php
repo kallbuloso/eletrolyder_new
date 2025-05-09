@@ -15,14 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
             $table->string('description');
-            // status_type: entrada = 0, em andamento = 1, saída = 3
+            // status_type: entrada = 0, em andamento = 1, saída = 2
             $table->tinyInteger('status_type');
-            // so_status_step
-            $table->foreignId('so_status_step_id')->nullable()->constrained('so_status_steps');
             // generates_revenue: 0 = gera receita, 1 = não gera receita
-            $table->tinyInteger('generates_revenue');
+            $table->tinyInteger('generates_revenue')->nullable();
             // plano de contas
-            // $table->foreignId('accounting_plan_id')->nullable()->constrained('accounting_plans');
+            $table->foreignId('accounting_plan_id')->nullable()->constrained('accounting_plans');
             $table->timestamps();
         });
     }
