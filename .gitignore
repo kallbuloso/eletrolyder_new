@@ -8,8 +8,6 @@
 /storage/*.key
 /storage/pail
 /vendor
-/App/Console/Commands
-/App/Console/CrudGenerator
 /docs
 .env
 .env.backup
