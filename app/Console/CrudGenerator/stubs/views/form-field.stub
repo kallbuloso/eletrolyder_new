@@ -1,0 +1,6 @@
+          <v-text-field
+            v-model="form.{{column}}"
+            label="{{title}}"
+            placeholder="{{title}}"
+            :error-messages="form.errors.{{column}}"
+          />

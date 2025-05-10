@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\{{modelName}};
+
+class {{modelName}}Service extends BaseService
+{
+  public function __construct({{modelName}} $service)
+  {
+    $this->model = $service;
+  }
+}

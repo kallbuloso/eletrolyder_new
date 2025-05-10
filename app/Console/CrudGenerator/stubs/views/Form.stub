@@ -1,0 +1,51 @@
+<script setup>
+const props = defineProps({
+  data: {
+    type: Object,
+    required: false
+  },
+})
+
+const form = useForm({ {{useFormCreate}}
+})
+
+const submit = () => {
+  if (props.data) {
+    form.put(route('{{modelRoute}}.update', props.data.id), {
+      onSuccess() {
+        form.reset()
+      }
+    })
+  } else {
+    form.post(route('{{modelRoute}}.store'), {
+      onSuccess() {
+        form.reset()
+      }
+    })
+  }
+
+}
+
+onMounted(() => {
+  if (props.data) { {{useForm}}
+  }
+  // console.log('{{modelName}} page Form mounted')
+})
+</script>
+
+<template layout="AppShell,AuthenticatedLayout">
+  <v-form @submit.prevent="submit">
+    <v-card class="mx-auto" width="400" :prepend-icon="props.data ? 'mdi-pencil' : 'mdi-plus'" :title="$page.props.title">
+        <v-card-text>
+          {{form}}
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <Link :href="route('{{modelRoute}}.index')" as="div">
+            <v-btn variant="text">Cancelar</v-btn>
+          </Link>
+          <v-btn type="submit" color="primary" :loading="form.processing">{{ props.data ? 'Atualizar' : 'Salvar' }}</v-btn>
+        </v-card-actions>
+    </v-card>
+  </v-form>
+</template>

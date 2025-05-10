@@ -1,0 +1,13 @@
+// Route groups for {{modelName}}
+    Route::controller({{modelName}}Controller::class)->prefix('{{modelRoute}}')->as('{{modelNameLowerCase}}.')->group(function () {
+      Route::get('/', 'index') ->name('index');
+      Route::get('/create', 'create') ->name('create');
+      Route::post('/', 'store') ->name('store');
+      Route::get('/show/{id}', 'show') ->name('show');
+      Route::get('/{id}/edit', 'edit') ->name('edit');
+      Route::post('/{id}/phone', 'storePhone')->name('phone.store');
+      Route::post('/{id}/address', 'storeAddress')->name('address.store');
+      Route::put('/{id}', 'update') ->name('update');
+      Route::delete('/{id}', 'destroy') ->name('destroy');
+    });
+    // addRoute
