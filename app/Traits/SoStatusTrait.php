@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 trait SoStatusTrait
 {
-    use HasFactory, PhoneableTrait, AddressableTrait, TenantebleTrait, DatesModelTraits;
+    use HasFactory, TenantebleTrait, DatesModelTraits;
     //
 }
