@@ -14,10 +14,8 @@ return new class extends Migration
         Schema::create('so_status_steps', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
-            // $table->foreignId('status_id')->nullable()->constrained('so_statuses');
+            $table->foreignId('status_id')->nullable()->constrained('so_statuses');
             $table->string('description');
-            // Colunas de relacionamento polimórfico (por exemplo: stepable_id e stepable_type)
-            $table->morphs('stepable');
             $table->timestamps();
         });
     }
