@@ -20,13 +20,12 @@ return new class extends Migration
             // Documento
             $table->enum('person', ['F', 'J'])->default('F'); // F - Física, J - Jurídica
             $table->string('cpf_cnpj');
-            $table->string('rg_insc_est')->nullable();
-            $table->string('ccm')->nullable();
-            $table->string('birth_date');
+            $table->string('rg_ie')->nullable();
+            $table->string('ccm_im')->nullable();
+            $table->date('birth_date');
             // Logo
             $table->string('logo')->nullable();
 
-            $table->string('description')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
             // Observações
