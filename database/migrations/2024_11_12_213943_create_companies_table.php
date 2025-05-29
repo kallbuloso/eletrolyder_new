@@ -26,7 +26,7 @@ return new class extends Migration
             // Logo
             $table->string('logo')->nullable();
 
-            $table->string('email')->nullable();
+            $table->string('email')->nullable()->unique();
             $table->string('website')->nullable();
             // Observações
             $table->text('note')->nullable();
