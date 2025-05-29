@@ -1,84 +1,123 @@
 
-Projetos:
-    Cadastros básicos:
-      ✔ Cadastro da Empresa: @2h @done(04/11/2024 20:20)
-        nome/razão social,
-        apelido/nome fantasia,
-        cpf/cnpj,
-        inscrição estadual,
-        inscrição municipal,
-        email,
-        site,
-        observações,
-        endereços,
-        documentos,
-        telefones,
-        status, (ativo, inativo, bloqueado)
-      ✔ Cadastro de Usuários @1h @done(04/11/2024 20:20)
-        nome,
-        email,
-        senha,
-        grupo, (um grupo de usuários) // admin, user, guest
-        permissões, (várias permissões)
-        observações,
-        endereços,
-        documentos,
-        telefones,
-        status, (ativo, inativo, bloqueado)
-      ✔ Cadastro de Clientes @2.30h @done(04/11/2024 20:20)
-        pessoa física e jurídica,
-        nome/razão social,
-        apelido/nome fantasia,
-        contato,
-        cpf/cnpj,
-        data de nascimento/data de fundação,
-        email,
-        site,
-        observações,
-        endereços, (vários endereços)
-        documentos,
-        telefones, (vários telefones)
-        status, (ativo, inativo, bloqueado)
-      ☐ Cadastro de Fornecedores @2h
-        pessoa física e jurídica,
-        nome/razão social,
-        apelido/nome fantasia,
-        contato,
-        cpf/cnpj,
-        data de nascimento/data de fundação,
-        email,
-        site,
-        observações,
-        endereços, (vários endereços)
-        documentos,
-        telefones, (vários telefones)
-        status, (ativo, inativo, bloqueado)
-    Carastro de Produtos:
-      ☐ Cadastro de Produtos @1h
-        nome,
-        descrição,
-        ☐ categoria de produto
-          nome,
-          descrição,
-          observações,
-        ☐ Cadastro de Unidades de Medida @1h
-          nome, (unidade, metro, litro, kilo, etc)
-          descrição,
-          observações,
-        ☐ Cadastro de Marcas @1h
-          nome,
-          descrição,
-          observações,
-        modelo,
-        estado, (novo, usado, recondicionado)
-        situação, (ativo, inativo, bloqueado)
-        observações,
-        ☐ Cadastro de Estoque @1h
-          quantidade,
-          valor de compra,
-          valor de venda,
-          observações,
+Projeto:
+    Cadastros básicos e iniciais do sistema:
+      ✔ Cadastro de Tenants (table tenants): @2h @done(25-05-28 20:52)
+          id, (id do tenant)
+          status, (ativo, inativo, bloqueado),
+          blocking_reason, (motivo do bloqueio),
+          created_at, (data de criação),
+          updated_at, (data de atualização),
+          timestamps,
+      ✔ Cadastro de Usuários (table users): @1h @done(04/11/2024 20:20)
+          name,
+          email,
+          email_verified_at,
+          password,
+          remember_token,
+          profile_photo_path,
+          created_at,
+          updated_at, 
+          timestamps,
+      ✔ Cadastro de Roles (table roles): @1h @done(25-05-28 19:53)
+          id, (id da role)
+          name, (nome da role)
+          description, (descrição da role)
+          guard_name, (nome do guardião),
+          created_at, (data de criação),
+          updated_at, (data de atualização),
+      ✔ Cadastro de Permissões (table permissions): @1h @done(25-05-28 19:52)
+          id, (id da permissão)
+          name, (nome da permissão)
+          description, (descrição da permissão)
+          guard_name, (nome do guardião),
+          created_at, (data de criação),
+          updated_at, (data de atualização),
+      ✔ Cadastro da Empresa (table companies): @2h @done(04/11/2024 20:20)
+          id, (id da empresa)
+          tenant_id, (id da empresa)
+          name, (nome da empresa) 
+          fantasy_name, (nome fantasia)
+          contact_name, (nome do contato)
+          person, (pessoa física ou jurídica)
+          cpf_cnpj, (cpf ou cnpj)
+          rg_ie, (rg ou ie),
+          ccm, (ccm),
+          birth_date, (data de nascimento ou fundação),
+          logo, (logo da empresa)
+          description, (descrição da empresa)
+          email, (email da empresa)
+          website, (site da empresa)
+          notes, (observações da empresa)
+          timestamps,
+      ✔ Cadastro de Telefones (table phones): @done(25-05-28 20:04)
+          id, (id do telefone)
+          tenant_id, (id do tenant)
+          phone_type, (tipo do telefone, ex:  P - Principal, C - Contato)
+          phone_number, (número do telefone)
+          phone_has_whatsapp, (se o telefone tem whatsapp)
+          phoneable,
+          timestamps,
+      ✔ Cadastro de Endereços (table address): @done(25-05-28 20:07)
+          tenant_id, (id do tenant)
+          id, (id do endereço)
+          type, (tipo do endereço, ex: R - Residencial, C - Comercial)
+          street, (rua do endereço)
+          number, (número do endereço)
+          complement, (complemento do endereço)
+          neighborhood, (bairro do endereço)
+          city, (cidade do endereço)
+          state, (estado do endereço)
+          country, (país do endereço)
+          zip_code, (CEP do endereço)
+          reference, (referência do endereço)
+          addressable, 
+          timestamps,
+      ✔ Cadastro de Clientes (table cients): @2.30h @done(25-05-28 20:14)
+          id, (id do cliente)
+          tenant_id, (id do tenant)
+          name, (nome do cliente)
+          nick_name, (apelido do cliente)
+          person, (pessoa física ou jurídica)
+          cpf_cnpj, (cpf ou cnpj)
+          gender, (gênero do cliente, ex: M - Masculino, F - Feminino, O - Outro)
+          avatar, (avatar do cliente)
+          note, (observações do cliente)
+          status, (ativo, inativo, bloqueado)
+          blocking_reason, (motivo do bloqueio)
+          last_purchase, (data da última compra)
+          timestamps
+      ✔ Cadastro de Fornecedores (table suppliers): @2h @done(25-05-28 20:25)
+          id, (id do fornecedor)
+          tenant_id, (id do tenant)
+          name, (nome do fornecedor)
+          nick_name, (apelido do fornecedor)
+          contact, (contato)
+          person, (pessoa física ou jurídica)
+          cpf_cnpj, (cpf ou cnpj)
+          birth_date, (data de nascimento ou fundação)
+          avatar, (avatar do fornecedor)
+          site, (site do fornecedor)
+          email, (email do fornecedor)
+          note, (observações do fornecedor)
+          status, (ativo, inativo, bloqueado)
+          blocking_reason, (motivo do bloqueio)
+          last_purchase, (data da última compra)
+          timestamps
     Cadastro de Ordens de Serviço:
+      Cadastro de Status (table so_statuses):
+        id, (id do status)
+        tenant_id, (id do tenant)
+        description, (descrição do status)
+        status_type, (tipo do status, ex: entrada = 0, em andamento = 1, saída = 2)
+        generate_revenue, (se o status gera receita, ex: 0 = não, 1 = sim)
+        timestamps,
+      Cadastro de Status-Steps (table so_status_steps):
+        id, (id do status-step)
+        tenant_id, (id do tenant)
+        status_id, (id do status)
+        description, (descrição do status-step)
+        timestamps,
+      
       Cadastro de Aparelhos:
         ☐ Cadastro de Aparelhos @1h
           tipo, (computador, notebook, celular, tablet, Televisor, Caixa de Som, Secador de cabelo, Chapinha, Microondas, etc)
@@ -130,47 +169,74 @@ Projetos:
           ☐ Entradas @1h
           ☐ Saídas @1h
           ☐ Relatórios @1h
-      # ☐ Qualquer coisa com dois pontos no final da linha é um projeto @1h
-      # ☐ Os projetos mostrarão algumas estatísticas ao lado deles @1h
-        ✔ Por padrão, essas estatísticas são o número de todos pendentes e a soma de suas estimativas de tempo @30m
       Aninhado:
         ☐ Você pode aninhar projetos uns dentro dos outros e dobrá-los @1d
 
-  Todos:
+    Carastro de Produtos:
+      ☐ Cadastro de Produtos @1h
+        nome,
+        descrição,
+        ☐ categoria de produto
+          nome,
+          descrição,
+          observações,
+        ☐ Cadastro de Unidades de Medida @1h
+          nome, (unidade, metro, litro, kilo, etc)
+          descrição,
+          observações,
+        ☐ Cadastro de Marcas @1h
+          nome,
+          descrição,
+          observações,
+        modelo,
+        estado, (novo, usado, recondicionado)
+        situação, (ativo, inativo, bloqueado)
+        observações,
+        ☐ Cadastro de Estoque @1h
+          quantidade,
+          valor de compra,
+          valor de venda,
+          observações,
+    
+
+Todos (Todo+ documentação):
   Você pode escrever notas/descrições em texto simples onde quiser
+  # ☐ Qualquer coisa com dois pontos no final da linha é um projeto @1h
+  # ☐ Os projetos mostrarão algumas estatísticas ao lado deles @1h
+  ✔ Por padrão, essas estatísticas são o número de todos pendentes e a soma de suas estimativas de tempo @30m
   Novo:
-      ☐ Pressione Cmd/Ctrl+Enter para adicionar uma nova tarefa
+    ☐ Pressione Cmd/Ctrl+Enter para adicionar uma nova tarefa
   Feito:
-      ✔ Pressione Alt+D para marcar uma tarefa como concluída
-      ✔ Pressione novamente para desfazer a ação
+    ✔ Pressione Alt+D para marcar uma tarefa como concluída
+    ✔ Pressione novamente para desfazer a ação
   Cancelado:
-      ✘ Pressione Alt+C para marcar uma tarefa como cancelada
-      ✘ Pressione novamente para desfazer a ação
+    ✘ Pressione Alt+C para marcar uma tarefa como cancelada
+    ✘ Pressione novamente para desfazer a ação
   Marcação:
-      ☐ Você pode adicionar tags usando o símbolo @, como este @tag
-      ☐ Existem algumas tags `especiais` e personalizáveis: @critical @high @low @today
+    ☐ Você pode adicionar tags usando o símbolo @, como este @tag
+    ☐ Existem algumas tags `especiais` e personalizáveis: @critical @high @low @today
   Cronometragem:
-      // ☐ Pressione Alt+S para marcar uma tarefa como iniciada @started(17/02/2024 16:59)
-      ✔ Agora vai mostrar o tempo decorrido @started(17-11-03 10:42) @done(17-11-03 20:11) @lasted(9h29m)
-      ☐ Você pode fornecer estimativas de tempo para as tarefas @1h30m  @done(17-11-03 20:11) @lasted(9h29m)
-      ☐ Estamos até fazendo algum processamento de linguagem natural @est(1 day and 20 minutes)
+    # ☐ Pressione Alt+S para marcar uma tarefa como iniciada @started(17/02/2024 16:59)
+    ✔ Agora vai mostrar o tempo decorrido @started(17-11-03 10:42) @done(17-11-03 20:11) @lasted(9h29m)
+    ☐ Você pode fornecer estimativas de tempo para as tarefas @1h30m  @done(17-11-03 20:11) @lasted(9h29m)
+    ☐ Estamos até fazendo algum processamento de linguagem natural @est(1 day and 20 minutes)
 
   Formatação:
-  Você pode formatar o texto de maneira semelhante à redução
-  Bold:
-      ☐ Use asteriscos para *bold*
-  Italic:
-      ☐ Use sublinhados para _italic_
-  Strikethrough:
-      ☐ Use circunflexo para ~strikethrough~
-  Code:
-      ☐ Use crases para `code`
+    Você pode formatar o texto de maneira semelhante à redução
+    Bold:
+        ☐ Use asteriscos para *bold*
+    Italic:
+        ☐ Use sublinhados para _italic_
+    Strikethrough:
+        ☐ Use circunflexo para ~strikethrough~
+    Code:
+        ☐ Use crases para `code`
 
   Archive:
   ✔ Você pode arquivar todos concluídos aqui
   ✔ Parabéns, agora você é um mestre Todo+!
 
 
-  Preciso criar um sistema de gerenciamento de anúncios e vendas do Mercado Livre.
-  Será um sistema SaaS onde cada empresa poderá ter várias contas do Mercado Livre e vários usuários.
-  O administrador poderá delegar funções e permissões aos seus usuários.
+Estamos criando um sistema de gerenciamento de Ordens de Serviços para assistências técnicas.
+É um sistema SaaS onde cada empresa poderá gerenciar sua assistência técnica e seus usuários.
+O administrador poderá delegar funções e permissões aos seus usuários.
