@@ -14,11 +14,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property $contact_name
  * @property $person
  * @property $cpf_cnpj
- * @property $rg_insc_est
- * @property $ccm
+ * @property $rg_ie
+ * @property $ccm_im
  * @property $birth_date
  * @property $logo
- * @property $description
  * @property $email
  * @property $website
  * @property $note
@@ -43,16 +42,16 @@ class Company extends Model
      * @var array
      */
     protected $fillable = [
+        'tenant_id',
         'name',
         'fantasy_name',
         'contact_name',
         'person',
         'cpf_cnpj',
-        'rg_insc_est',
-        'ccm',
+        'rg_ie',
+        'ccm_im',
         'birth_date',
         'logo',
-        'description',
         'email',
         'website',
         'note'
@@ -64,11 +63,10 @@ class Company extends Model
         'contact_name',
         'person',
         'cpf_cnpj',
-        'rg_insc_est',
-        'ccm',
+        'rg_ie',
+        'ccm_im',
         'birth_date',
         'logo',
-        'description',
         'email',
         'website',
         'note'
