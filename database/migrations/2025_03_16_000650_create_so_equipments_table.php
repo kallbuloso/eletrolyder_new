@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
             $table->foreignId('client_id')->nullable()->constrained();
-            $table->string('device_type')->nullable();
+            $table->string('device_type')->nullable(); // tipo de dispositivo (ex: notebook, desktop, impressora, etc.)
             $table->string('brand')->nullable(); // marca
             $table->string('model')->nullable(); // modelo
-            $table->string('serial_number')->nullable(); // número de série
+            $table->string('serial_number')->nullable(); // número de série (ex: SN123456789)
             $table->text('damages')->nullable(); // danos visíveis no dispositivo
             $table->text('accessories')->nullable(); // acessórios
             $table->text('notes')->nullable(); // notas
