@@ -54,9 +54,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->createSoStatuses($tenant->id);
-        // SoStatus::factory(10)->create([
-        //     'tenant_id' => $tenant->id,
-        // ]);
 
         $user = User::factory()->create([
             'tenant_id' => $tenant->id,
@@ -89,6 +86,62 @@ class DatabaseSeeder extends Seeder
         }
 
         // $this->createTenant($tenantQtd, $userQtd, $clientQtd);
+    }
+
+    private function createTenant($tenantQtd = 2, $userQtd = 3, $clientQtd = 100): void
+    {
+        for ($i = 0; $i < $tenantQtd; $i++) {
+            // $person = fake()->randomElement(['F', 'J']);
+            $status = fake()->randomElement(['A', 'I', 'B']);
+            $tenant = Tenant::factory()->create([
+                'status' => $status,
+                'blocking_reason' => $status === 'B' ? fake()->sentence() : null,
+            ]);
+
+            Company::factory()->create([
+                'tenant_id' => $tenant->id,
+            ]);
+
+            Client::factory($clientQtd)->create([
+                'tenant_id' => $tenant->id,
+            ]);
+
+            Supplier::factory($clientQtd)->create([
+                'tenant_id' => $tenant->id,
+            ]);
+
+            $this->createSoStatuses($tenant->id);
+
+
+            $user = User::factory()->create([
+                'tenant_id' => $tenant->id,
+                'name' => "Test User {$tenant->id}",
+            ]);
+
+            $role = Role::create(['tenant_id' => $tenant->id, 'name' => 'Administrador']);
+            $gerente = Role::create(['tenant_id' => $tenant->id, 'name' => 'Gerente']);
+            $atendente = Role::create(['tenant_id' => $tenant->id, 'name' => 'Atendente']);
+            $tecnico = Role::create(['tenant_id' => $tenant->id, 'name' => 'Técnico']);
+            $role->syncPermissions(Permission::all());
+            setPermissionsTeamId($tenant->id);
+            $user->assignRole([$role]);
+
+            for ($j = 0; $j < $userQtd; $j++) {
+                $user = User::factory()->create([
+                    'tenant_id' => $tenant->id,
+                ]);
+
+                if ($j === 0) {
+                    $tecnico->syncPermissions(Permission::all());
+                    setPermissionsTeamId($tenant->id);
+                    $user->assignRole([$tecnico]);
+                } elseif ($j === 1) {
+                    $user->assignRole([$gerente]);
+                } else {
+                    $user->assignRole([$atendente]);
+                }
+            }
+        }
     }
     
     /**
@@ -154,59 +207,5 @@ class DatabaseSeeder extends Seeder
         // SoStatus::factory()->create([
         //     'tenant_id' => $tenantId,
         // ]);
-    }
-
-    private function createTenant($tenantQtd = 2, $userQtd = 3, $clientQtd = 100): void
-    {
-        for ($i = 0; $i < $tenantQtd; $i++) {
-            // $person = fake()->randomElement(['F', 'J']);
-            $status = fake()->randomElement(['A', 'I', 'B']);
-            $tenant = Tenant::factory()->create([
-                'status' => $status,
-                'blocking_reason' => $status === 'B' ? fake()->sentence() : null,
-            ]);
-
-            Company::factory()->create([
-                'tenant_id' => $tenant->id,
-            ]);
-
-            Client::factory($clientQtd)->create([
-                'tenant_id' => $tenant->id,
-            ]);
-
-            Supplier::factory($clientQtd)->create([
-                'tenant_id' => $tenant->id,
-            ]);
-
-
-            $user = User::factory()->create([
-                'tenant_id' => $tenant->id,
-                'name' => "Test User {$tenant->id}",
-            ]);
-
-            $role = Role::create(['tenant_id' => $tenant->id, 'name' => 'Administrador']);
-            $gerente = Role::create(['tenant_id' => $tenant->id, 'name' => 'Gerente']);
-            $atendente = Role::create(['tenant_id' => $tenant->id, 'name' => 'Atendente']);
-            $tecnico = Role::create(['tenant_id' => $tenant->id, 'name' => 'Técnico']);
-            $role->syncPermissions(Permission::all());
-            setPermissionsTeamId($tenant->id);
-            $user->assignRole([$role]);
-
-            for ($j = 0; $j < $userQtd; $j++) {
-                $user = User::factory()->create([
-                    'tenant_id' => $tenant->id,
-                ]);
-
-                if ($j === 0) {
-                    $tecnico->syncPermissions(Permission::all());
-                    setPermissionsTeamId($tenant->id);
-                    $user->assignRole([$tecnico]);
-                } elseif ($j === 1) {
-                    $user->assignRole([$gerente]);
-                } else {
-                    $user->assignRole([$atendente]);
-                }
-            }
-        }
     }
 }
