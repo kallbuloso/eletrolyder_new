@@ -14,21 +14,21 @@ return new class extends Migration
         Schema::create('service_orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
-            $table->string('order_number')->unique(); // Ordem de serviço
+            // References to status and step (lookup tables)
             $table->foreignId('client_id')->nullable()->constrained(); // Cliente
+            $table->foreignId('so_status_id')->nullable()->constrained('so_statuses'); // Status
+            $table->foreignId('so_step_id')->nullable()->constrained('so_status_steps'); // Etapa do status
+            // Equipment relation
+            $table->foreignId('so_equipment_id')->nullable()->constrained('so_equipments'); // Equipamento
+            $table->string('order_number')->unique(); // Ordem de serviço
             // Warranty expiration date
             $table->date('warranty_expires_on')->nullable(); // Vencimento da garantia
-            // References to status and step (lookup tables)
-            $table->foreignId('status_id')->nullable()->constrained('so_statuses'); // Status
-            $table->foreignId('step_id')->nullable()->constrained('so_status_steps'); // Etapa do status
             // Monetary values
             $table->decimal('labor_cost', 10, 2)->nullable(); // Custos de mão de obra
             $table->decimal('parts_cost', 10, 2)->nullable(); // Custos de peças
             $table->decimal('service_cost', 10, 2)->nullable(); // Custos de serviço
             $table->decimal('discount', 10, 2)->nullable(); // Desconto
             $table->decimal('advance_payment', 10, 2)->nullable(); // Pagamento antecipado/sinal
-            // Equipment relation
-            $table->foreignId('equipment_id')->nullable()->constrained('equipments'); // Equipamento
             // Editing and historical tracking
             $table->boolean('in_use')->default(false); // Em uso
             $table->string('currently_editing')->nullable();
