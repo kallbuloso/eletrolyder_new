@@ -24,8 +24,8 @@ class CompanyRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'nick_name' => ['nullable', 'string'],
-            'contact' => ['nullable', 'string'],
+            'fantasy_name' => ['nullable', 'string'],
+            'contact_name' => ['nullable', 'string'],
             'person' => ['required'],
             'cpf_cnpj' => [
                 'nullable',
@@ -35,14 +35,13 @@ class CompanyRequest extends FormRequest
                 }),
                 'required_if:person,J',
             ],
+            'rg_ie' => ['nullable', 'string'],
+            'ccm_im' => ['nullable', 'string'],
             'birth_date' => ['nullable', 'date', 'date_format:d/m/Y'],
-            'site' => ['nullable', 'url'],
+            'logo' => ['nullable', 'string'],
             'email' => ['nullable', 'email'],
-            'avatar' => ['nullable', 'string'],
+            'website' => ['nullable', 'url'],
             'note' => ['nullable', 'string'],
-            'status' => ['required'],
-            'blocking_reason' => ['nullable', 'string', 'required_if:status,B'],
-            'last_purchase' => ['nullable', 'string'],
 
             'phones.*.phone_type' => ['required', 'string'],
             'phones.*.phone_number' => ['required', 'string'],
