@@ -12,11 +12,10 @@ const form = useForm({
   contact_name: '',
   person: '',
   cpf_cnpj: '',
-  rg_insc_est: '',
-  ccm: '',
+  rg_ie: '',
+  ccm_im: '',
   birth_date: '',
   logo: '',
-  description: '',
   email: '',
   website: '',
   note: ''
@@ -88,7 +87,7 @@ onMounted(() => {
               </v-col>
               <v-col cols="12">
                 <app-name-field
-                  id="nick_name"
+                  id="fantasy_name"
                   v-model="form.fantasy_name"
                   :label="loadPerson('Apelido/Nome social', 'Nome Fantasia')"
                   :placeholder="loadPerson('Apelido/Como gosta de ser chamado(a)', 'Nome Fantasia')"
@@ -97,7 +96,7 @@ onMounted(() => {
               </v-col>
               <v-col cols="12">
                 <app-name-field
-                  id="contact"
+                  id="contact_name"
                   v-model="form.contact_name"
                   :label="loadPerson('Contato', 'Responsável')"
                   :placeholder="loadPerson('Contato', 'Responsável pela empresa')"
@@ -108,10 +107,10 @@ onMounted(() => {
                 <app-cpf-cnpj-field v-model="form.cpf_cnpj" :type-person="form.person" :error-messages="form.errors.cpf_cnpj" />
               </v-col>
               <v-col cols="3">
-                <app-text-field v-model="form.rg_insc_est" :label="loadPerson('RG', 'Inscr. Estadual')" :error-messages="form.errors.rg_insc_est" />
+                <app-text-field v-model="form.rg_ie" :label="loadPerson('RG', 'Inscr. Estadual')" :error-messages="form.errors.rg_ie" />
               </v-col>
               <v-col v-show="form.person === 'J'" cols="2">
-                <app-text-field v-model="form.ccm" label="CCM" :error-messages="form.errors.ccm" />
+                <app-text-field v-model="form.ccm_im" label="CCM" :error-messages="form.errors.ccm_im" />
               </v-col>
               <v-col cols="3">
                 <app-date-field
