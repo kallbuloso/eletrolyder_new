@@ -19,7 +19,7 @@ class SoStatusFactory extends Factory
         return [
             'description' => fake()->word(),
             'status_type' => fake()->numberBetween(0, 3),
-            'so_status_step_id' => null,
+            // 'so_status_step_id' => null,
             'generates_revenue' => fake()->numberBetween(0, 1),
         ];
     }
