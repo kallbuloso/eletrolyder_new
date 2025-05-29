@@ -20,7 +20,7 @@ return new class extends Migration
             // Documento
             $table->enum('person', ['F', 'J'])->default('F'); // F - Física, J - Jurídica
             $table->string('cpf_cnpj')->nullable();
-            $table->string('birth_date')->nullable();
+            $table->date('birth_date')->nullable();
             // Avatar
             $table->string('avatar')->nullable();
             // site e E-mail
@@ -41,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('supliers');
+        Schema::dropIfExists('suppliers');
     }
 };
