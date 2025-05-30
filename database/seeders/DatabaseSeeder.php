@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         $supplierQtd = 150;
 
         $tenant = Tenant::factory()->create([
-            'status' => 'A',
+            'status' => 0, // 0 - Ativo, 1 - Inativo, 2 - Bloqueado
             'blocking_reason' => null,
         ]);
 
@@ -92,10 +92,10 @@ class DatabaseSeeder extends Seeder
     {
         for ($i = 0; $i < $tenantQtd; $i++) {
             // $person = fake()->randomElement(['F', 'J']);
-            $status = fake()->randomElement(['A', 'I', 'B']);
+            $status = fake()->randomElement([0, 1, 2]);
             $tenant = Tenant::factory()->create([
                 'status' => $status,
-                'blocking_reason' => $status === 'B' ? fake()->sentence() : null,
+                'blocking_reason' => $status === 2 ? fake()->sentence() : null,
             ]);
 
             Company::factory()->create([
