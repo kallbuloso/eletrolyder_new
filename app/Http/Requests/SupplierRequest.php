@@ -38,7 +38,7 @@ class SupplierRequest extends FormRequest
             'birth_date' => ['nullable', 'string'],
             'note' => ['nullable', 'string'],
             'status' => ['required'],
-            'blocking_reason' => ['nullable', 'string', 'required_if:status,B'],
+            'blocking_reason' => ['nullable', 'string', 'required_if:status,2'],
             'last_purchase' => ['nullable', 'string'],
 
             'phones.*.phone_type' => ['required', 'string'],
