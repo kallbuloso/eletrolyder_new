@@ -17,7 +17,7 @@ const form = useForm({
   cpf_cnpj: '',
   gender: 'M',
   note: '',
-  status: 'A',
+  status: '0',
   blocking_reason: ''
 })
 
@@ -49,7 +49,7 @@ const verificaPerson = () => {
 }
 
 const verificaStatus = () => {
-  if (form.status !== 'B') {
+  if (form.status !== 2) {
     form.blocking_reason = ''
   }
 }
@@ -95,9 +95,9 @@ onMounted(() => {
                   label="Status"
                   placeholder="Status"
                   :items="[
-                    { title: 'Ativo', value: 'A' },
-                    { title: 'Inativo', value: 'I' },
-                    { title: 'Bloqueado', value: 'B' }
+                    { title: 'Ativo', value: '0' },
+                    { title: 'Inativo', value: '1' },
+                    { title: 'Bloqueado', value: '2' }
                   ]"
                   item-title="title"
                   item-value="value"
@@ -107,11 +107,11 @@ onMounted(() => {
               </v-col>
               <v-col cols="9">
                 <app-text-field
-                  v-if="form.status === 'B'"
+                  v-if="form.status === '2'"
                   v-model="form.blocking_reason"
                   label="Motivo do Bloqueio"
                   placeholder="Motivo do Bloqueio do Cliente"
-                  :required="form.status === 'B'"
+                  :required="form.status === '2'"
                   :error-messages="form.errors.blocking_reason"
                 />
               </v-col>
