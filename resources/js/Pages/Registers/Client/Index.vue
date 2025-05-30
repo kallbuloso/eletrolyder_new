@@ -41,9 +41,9 @@ const personList = {
 }
 
 const statusList = {
-  A: { text: 'Ativo', color: 'primary' },
-  I: { text: 'Inativo', color: 'warning' },
-  B: { text: 'Bloqueado', color: 'error' }
+  0: { text: 'Ativo', color: 'primary' },
+  1: { text: 'Inativo', color: 'warning' },
+  2: { text: 'Bloqueado', color: 'error' }
 }
 
 // Carregamento dos dados
