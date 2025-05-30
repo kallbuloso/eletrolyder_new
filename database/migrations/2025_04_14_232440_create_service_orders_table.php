@@ -11,6 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Schema::create('so_statuses', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->foreignId('tenant_id')->nullable()->constrained();
+        //     $table->string('description');
+        //     // status_type: entrada = 0, em andamento = 1, saída = 2
+        //     $table->tinyInteger('status_type');
+        //     // generates_revenue: 0 = gera receita, 1 = não gera receita
+        //     $table->tinyInteger('generates_revenue')->nullable();
+        //     // plano de contas
+        //     // $table->foreignId('accounting_plan_id')->nullable()->constrained('accounting_plans');
+        //     $table->timestamps();
+        // });
+
         Schema::create('service_orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
@@ -48,6 +61,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('so_statuses');
         Schema::dropIfExists('service_orders');
     }
 };
