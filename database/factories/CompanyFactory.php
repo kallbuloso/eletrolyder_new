@@ -17,7 +17,6 @@ class CompanyFactory extends Factory
     public function definition(): array
     {
         $person = fake()->randomElement(['F', 'J']);
-        $status = fake()->randomElement(['A', 'I', 'B']);
         return [
             'name' => fake()->company(),
             'fantasy_name' => fake()->company(),
