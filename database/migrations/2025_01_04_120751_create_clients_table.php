@@ -25,7 +25,7 @@ return new class extends Migration
             // Observações
             $table->text('note')->nullable();
             // Status
-            $table->enum('status', ['A', 'I', 'B'])->default('A'); // A - Ativo, I - Inativo, B - Bloqueado
+            $table->enum('status', [0, 1, 2])->default(0); // 0 - Ativo, 1 - Inativo, 2 - Bloqueado
             $table->string('blocking_reason')->nullable(); // Motivo do bloqueio
             $table->string('last_purchase')->nullable();
             $table->timestamps();
