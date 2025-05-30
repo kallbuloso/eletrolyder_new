@@ -16,10 +16,10 @@ class TenantFactory extends Factory
    */
   public function definition(): array
   {
-    $status = fake()->randomElement(['A', 'I', 'B']);
+    $status = fake()->randomElement([0, 1, 2]);
     return [
       'status' => $status,
-      'blocking_reason' => $status === 'B' ? fake()->sentence() : null,
+      'blocking_reason' => $status === 2 ? fake()->sentence() : null,
     ];
   }
 }
