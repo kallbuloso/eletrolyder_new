@@ -14,7 +14,7 @@ return new class extends Migration
     Schema::create('tenants', function (Blueprint $table) {
       $table->id();
       // Status
-      $table->enum('status', ['A', 'I', 'B'])->default('A'); // A - Ativo, I - Inativo, B - Bloqueado
+      $table->enum('status', [0, 1, 2])->default(0); // 0 - Ativo, 1 - Inativo, 2 - Bloqueado
       // Motivo do Bloqueio
       $table->string('blocking_reason')->nullable();
       // Planos
