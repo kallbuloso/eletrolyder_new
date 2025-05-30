@@ -24,9 +24,9 @@ const props = defineProps({
 // Função para retornar o status
 function _getStatus(status) {
   const statusList = {
-    A: 'Ativo',
-    I: 'Inativo',
-    B: 'Bloqueado'
+    0: 'Ativo',
+    1: 'Inativo',
+    2: 'Bloqueado'
   }
   return statusList[status]
 }
@@ -34,9 +34,9 @@ function _getStatus(status) {
 // Função para retornar a cor do status
 function _getStatusColor(status) {
   const statusList = {
-    A: 'primary',
-    I: 'warning',
-    B: 'error'
+    0: 'primary',
+    1: 'warning',
+    2: 'error'
   }
   return statusList[status]
 }
