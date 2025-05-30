@@ -25,7 +25,7 @@ const form = useForm({
   cpf_cnpj: '',
   gender: 'M',
   note: '',
-  status: 'A',
+  status: 0,
   last_purchase: '',
   phones: [],
   addresses: []
