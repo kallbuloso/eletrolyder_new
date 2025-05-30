@@ -11,18 +11,45 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('so_statuses', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->foreignId('tenant_id')->nullable()->constrained();
-        //     $table->string('description');
-        //     // status_type: entrada = 0, em andamento = 1, saída = 2
-        //     $table->tinyInteger('status_type');
-        //     // generates_revenue: 0 = gera receita, 1 = não gera receita
-        //     $table->tinyInteger('generates_revenue')->nullable();
-        //     // plano de contas
-        //     // $table->foreignId('accounting_plan_id')->nullable()->constrained('accounting_plans');
-        //     $table->timestamps();
-        // });
+        Schema::create('so_statuses', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('tenant_id')->nullable()->constrained();
+            $table->string('description');
+            // status_type: entrada = 0, em andamento = 1, saída = 2
+            $table->tinyInteger('status_type');
+            // generates_revenue: 0 = gera receita, 1 = não gera receita
+            $table->tinyInteger('generates_revenue')->nullable();
+            // plano de contas
+            // $table->foreignId('accounting_plan_id')->nullable()->constrained('accounting_plans');
+            $table->timestamps();
+        });
+
+        Schema::create('so_status_steps', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('tenant_id')->nullable()->constrained();
+            $table->foreignId('so_status_id')->nullable()->constrained('so_statuses');
+            $table->string('description');
+            $table->timestamps();
+        });
+        
+        Schema::create('so_equipments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('tenant_id')->nullable()->constrained();
+            $table->foreignId('client_id')->nullable()->constrained();
+            $table->string('device_type')->nullable(); // tipo de dispositivo (ex: notebook, desktop, impressora, etc.)
+            $table->string('brand')->nullable(); // marca
+            $table->string('model')->nullable(); // modelo
+            $table->string('serial_number')->nullable(); // número de série (ex: SN123456789)
+            $table->text('damages')->nullable(); // danos visíveis no dispositivo
+            $table->text('accessories')->nullable(); // acessórios
+            $table->text('notes')->nullable(); // notas
+            $table->string('warranty_provider')->nullable(); // fornecedor da garantia
+            $table->date('purchase_date')->nullable(); // data de compra
+            $table->string('reseller')->nullable(); // revendedor
+            $table->string('invoice_number')->nullable(); // número da nota
+            $table->string('warranty_certificate')->nullable(); // certificado de garantia
+            $table->timestamps();
+        });
 
         Schema::create('service_orders', function (Blueprint $table) {
             $table->id();
