@@ -28,7 +28,7 @@ const form = useForm({
   site: '',
   email: '',
   note: '',
-  status: 'A',
+  status: 0,
   phones: [],
   addresses: []
 })
