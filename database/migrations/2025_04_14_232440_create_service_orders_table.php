@@ -23,7 +23,7 @@ return new class extends Migration
         Schema::create('so_devices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
-            $table->string('so_device_type'); // Tipo de dispositivo (ex: notebook, desktop, impressora, etc.)
+            $table->foreignId('so_device_type_id')->constrained('so_devices_type'); // Tipo de dispositivo (ex: notebook, desktop, impressora, etc.)
             $table->string('description')->nullable(); // Descrição do dispositivo
             $table->string('brand'); // Marca
             $table->string('model'); // Modelo
@@ -116,6 +116,7 @@ return new class extends Migration
             $table->foreignId('so_status_steps_id')->constrained('so_status_steps');
             $table->foreignId('changed_by')->constrained('users');
             $table->timestamp('changed_at')->useCurrent();
+            $table->timestamps();
         });
     }
 
@@ -124,7 +125,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('so_statuses');
+        Schema::dropIfExists('service_order_history');
         Schema::dropIfExists('service_orders');
+        Schema::dropIfExists('so_status_steps');
+        Schema::dropIfExists('so_statuses');
+        Schema::dropIfExists('so_devices');
+        Schema::dropIfExists('so_devices_type');
     }
 };
