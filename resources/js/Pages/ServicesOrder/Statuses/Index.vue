@@ -100,7 +100,7 @@ function deleteItem(item) {
 
 <template layout="AppShell,AuthenticatedLayout">
   <template v-if="props.soStatusCount > 0">
-    <v-card class="mx-auto" prepend-icon="mdi-account-group" :title="$page.props.title">
+    <v-card class="mx-auto" width="700" prepend-icon="mdi-account-group" :title="$page.props.title">
       <template #append>
         <v-btn prepend-icon="mdi-plus" color="primary" variant="text" @click="createItem()">Novo</v-btn>
       </template>
