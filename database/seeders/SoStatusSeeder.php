@@ -15,42 +15,42 @@ class SoStatusSeeder
             [
                 'name' => 'Entrada para orçamento',
                 'status_type' => 0,
-                'generates_revenue' => 0
+                'generates_revenue' => false
             ],
             [
                 'name' => 'Garantia Loja',
                 'status_type' => 0,
-                'generates_revenue' => 1
+                'generates_revenue' => false
             ],
             [
                 'name' => 'Garantia Fabricante',
                 'status_type' => 0,
-                'generates_revenue' => 0
+                'generates_revenue' => false
             ],
             [
                 'name' => 'Orçamento em andamento',
                 'status_type' => 1,
-                'generates_revenue' => 1
+                'generates_revenue' => true
             ],
             [
                 'name' => 'Orçamento finalizado',
                 'status_type' => 1,
-                'generates_revenue' => 0
+                'generates_revenue' => true
             ],
             [
                 'name' => 'Conserto Aprovado',
                 'status_type' => 1,
-                'generates_revenue' => 1
+                'generates_revenue' => true
             ],
             [
                 'name' => 'Conserto em andamento',
                 'status_type' => 1,
-                'generates_revenue' => 1
+                'generates_revenue' => true
             ],
             [
                 'name' => 'Conserto Finalizado',
                 'status_type' => 1,
-                'generates_revenue' => 1
+                'generates_revenue' => true
             ],
         ];
 
@@ -79,7 +79,7 @@ class SoStatusSeeder
             'tenant_id' => $tenantId,
             'description' => 'Default Status',
             'status_type' => 0, // Default type
-            'generates_revenue' => 0, // Default revenue generation
+            'generates_revenue' => true, // Default revenue generation
         ]);
     }
 }
