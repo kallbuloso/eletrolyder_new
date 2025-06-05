@@ -24,7 +24,7 @@ class SoStatusRequest extends FormRequest
         return [
             'description' => ['required', 'string'],
             'status_type' => ['required', 'integer'],
-            'generates_revenue' => ['required', 'integer'],
+            'generates_revenue' => ['required', 'boolean'],
         ];
     }
 }
