@@ -36,7 +36,7 @@ function formataNumeroBr($numero, $dec = 2)
   return number_format($numero, $dec, ',', '.');
 }
 
-//função limata caracteres
+// função limita caracteres
 function limita_caracteres($texto, $limite, $quebra = true)
 {
   $tamanho = strlen($texto);
