@@ -7,9 +7,8 @@ use App\Models\Scopes\TenantScope;
 
 trait TenantebleTrait
 {
-    protected static function boot()
+    protected static function bootTenantebleTrait()
     {
-        parent::boot();
         static::addGlobalScope(new TenantScope);
         static::creating(function ($model) {
             if (checkTenantId()) {
