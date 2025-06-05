@@ -75,7 +75,7 @@ async function loadItems(options = {}) {
 // Ações da tabela
 function createItem() {
   if (can('soStatus', 'criar')) {
-    router.get(route('registers.soStatus.create'))
+    router.get(route('orders.soStatus.create'))
   } else {
     swToast('Você não tem permissão para criar status.', 'error', 3000)
   }
@@ -83,7 +83,7 @@ function createItem() {
 
 function editItem(id) {
   if (can('soStatus', 'editar')) {
-    router.get(route('registers.soStatus.edit', id))
+    router.get(route('orders.soStatus.edit', id))
   } else {
     swToast('Você não tem permissão para editar status.', 'error', 3000)
   }
@@ -91,7 +91,7 @@ function editItem(id) {
 
 function deleteItem(item) {
   if (can('soStatus', 'excluir')) {
-    swDeleteQuestion(item.name, route('registers.soStatus.destroy', item.id))
+    swDeleteQuestion(item.name, route('orders.soStatus.destroy', item.id))
   } else {
     swToast('Você não tem permissão para excluir status.', 'error', 3000)
   }
