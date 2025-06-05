@@ -88,7 +88,6 @@ return new class extends Migration
             // $table->foreignId('so_service_id')->constrained('so_services');
             $table->foreignId('so_status_id')->nullable()->constrained('so_statuses'); // Status
             $table->foreignId('so_step_id')->nullable()->constrained('so_status_steps'); // Etapa do status
-            $table->foreignId('client_id')->nullable()->constrained(); // Cliente
             // Warranty expiration date
             $table->date('warranty_expires_on')->nullable(); // Vencimento da garantia
             // Monetary values
