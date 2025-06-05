@@ -26,13 +26,13 @@ class SoStatusController extends Controller
      * Page Title
      * @var string
      */
-    private $pageTitle = 'SoStatus';
+    private $pageTitle = 'Status';
 
     /**
      * Title Singular
      * @var string
      */
-    private $titleSingular = 'SoStatus';
+    private $titleSingular = 'Status';
 
     /**
      * Summary of pageIndex
