@@ -58,7 +58,7 @@ class CrudCommand extends GeneratorCommand
             // ->buildSearchableTraits()
             ->buildService()
             ->buildRequest()
-            ->buildFatory()
+            ->buildFactory()
             ->buildSeeder()
             ->buildRoute()
             ->buildTraits()
@@ -248,11 +248,12 @@ class CrudCommand extends GeneratorCommand
     }
 
     /**
+     * Build a new factory for the generated model.
+     *
      * @return $this
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     *
      */
-    protected function buildFatory()
+    protected function buildFactory()
     {
         // $factoryPath = $this->_getFactoryPath($this->name);
 
