@@ -153,42 +153,67 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Entrada para orçamento',
                 'status_type' => 0,
-                'generates_revenue' => 0
+                'generates_revenue' => true
             ],
             [
-                'name' => 'Garantia Loja',
+                'name' => 'Garantia da Loja',
                 'status_type' => 0,
-                'generates_revenue' => 1
+                'generates_revenue' => false
             ],
             [
-                'name' => 'Garantia Fabricante',
+                'name' => 'Garantia do Fabricante',
                 'status_type' => 0,
-                'generates_revenue' => 0
+                'generates_revenue' => false
             ],
             [
                 'name' => 'Orçamento em andamento',
                 'status_type' => 1,
-                'generates_revenue' => 1
+                'generates_revenue' => true
             ],
             [
                 'name' => 'Orçamento finalizado',
                 'status_type' => 1,
-                'generates_revenue' => 0
+                'generates_revenue' => true
             ],
             [
                 'name' => 'Conserto Aprovado',
                 'status_type' => 1,
-                'generates_revenue' => 1
+                'generates_revenue' => true
             ],
             [
                 'name' => 'Conserto em andamento',
                 'status_type' => 1,
-                'generates_revenue' => 1
+                'generates_revenue' => true
             ],
             [
                 'name' => 'Conserto Finalizado',
                 'status_type' => 1,
-                'generates_revenue' => 1
+                'generates_revenue' => true
+            ],
+            [
+                'name' => 'Entregue reparado',
+                'status_type' => 2,
+                'generates_revenue' => true
+            ],
+            [
+                'name' => 'Entregue (sem garantia)',
+                'status_type' => 2,
+                'generates_revenue' => false
+            ],
+            [
+                'name' => 'Entregue (sem conserto)',
+                'status_type' => 2,
+                'generates_revenue' => false
+            ],
+            [
+                'name' => 'Entregue (cortesia)',
+                'status_type' => 2,
+                'generates_revenue' => false
+            ],
+            [
+                'name' => 'Entregue sem reparo',
+                'status_type' => 2,
+                'generates_revenue' => false
             ],
         ];
 
