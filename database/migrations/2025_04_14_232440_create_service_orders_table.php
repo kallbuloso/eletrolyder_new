@@ -11,38 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('so_statuses', function (Blueprint $table) {
+        // Tipos de dispositivos e equipamentos
+        Schema::create('so_devices_type', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
-            $table->string('description');
-            // status_type: entrada = 0, em andamento = 1, saída = 2
-            $table->tinyInteger('status_type');
-            // generates_revenue: 0 = gera receita, 1 = não gera receita
-            $table->tinyInteger('generates_revenue')->nullable();
-            // plano de contas
-            // $table->foreignId('accounting_plan_id')->nullable()->constrained('accounting_plans');
+            $table->string('description'); // Descrição do tipo de dispositivo
             $table->timestamps();
         });
 
-        Schema::create('so_status_steps', function (Blueprint $table) {
+        // Dispositivos e equipamentos
+        Schema::create('so_devices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
-            $table->foreignId('so_status_id')->nullable()->constrained('so_statuses');
-            $table->string('description');
-            $table->timestamps();
-        });
-        
-        Schema::create('so_equipments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('tenant_id')->nullable()->constrained();
-            $table->foreignId('client_id')->nullable()->constrained();
-            $table->string('device_type')->nullable(); // tipo de dispositivo (ex: notebook, desktop, impressora, etc.)
-            $table->string('brand')->nullable(); // marca
-            $table->string('model')->nullable(); // modelo
-            $table->string('serial_number')->nullable(); // número de série (ex: SN123456789)
-            $table->text('damages')->nullable(); // danos visíveis no dispositivo
-            $table->text('accessories')->nullable(); // acessórios
-            $table->text('notes')->nullable(); // notas
+            $table->string('so_device_type'); // Tipo de dispositivo (ex: notebook, desktop, impressora, etc.)
+            $table->string('description')->nullable(); // Descrição do dispositivo
+            $table->string('brand'); // Marca
+            $table->string('model'); // Modelo
+            $table->string('serial_number'); // Número de série (ex: SN123456789)
+            $table->text('damages')->nullable(); // Danos visíveis no dispositivo
+            $table->text('accessories')->nullable(); // Acessórios
+            $table->text('notes')->nullable(); // Notas/Observações
             $table->string('warranty_provider')->nullable(); // fornecedor da garantia
             $table->date('purchase_date')->nullable(); // data de compra
             $table->string('reseller')->nullable(); // revendedor
@@ -51,16 +39,56 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('service_orders', function (Blueprint $table) {
+        // Status para Ordens de Serviço
+        Schema::create('so_statuses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
-            // References to status and step (lookup tables)
-            $table->foreignId('client_id')->nullable()->constrained(); // Cliente
+            $table->string('description'); // Descrição do status            
+            $table->tinyInteger('status_type'); // status_type: entrada = 0, em andamento = 1, saída = 2
+            $table->tinyInteger('is_active')->default(1); // 0 = inativo, 1 = ativo
+            $table->tinyInteger('generates_revenue')->nullable(); // generates_revenue: 0 = gera receita, 1 = não gera receita // generates_revenue: 0 = gera receita, 1 = não gera receita
+            $table->timestamps();
+        });
+
+        // Etapas de status para Ordens de Serviço
+        Schema::create('so_status_steps', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('tenant_id')->nullable()->constrained();
+            $table->foreignId('so_status_id')->nullable()->constrained('so_statuses');
+            $table->string('description');
+            $table->timestamps();
+        });
+        
+        // Equipamentos relacionados às Ordens de Serviço
+        // Schema::create('so_equipments', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->foreignId('tenant_id')->nullable()->constrained();
+        //     $table->foreignId('client_id')->nullable()->constrained();
+        //     $table->string('device_type')->nullable(); // tipo de dispositivo (ex: notebook, desktop, impressora, etc.)
+        //     $table->string('brand')->nullable(); // marca
+        //     $table->string('model')->nullable(); // modelo
+        //     $table->string('serial_number')->nullable(); // número de série (ex: SN123456789)
+        //     $table->text('damages')->nullable(); // danos visíveis no dispositivo
+        //     $table->text('accessories')->nullable(); // acessórios
+        //     $table->text('notes')->nullable(); // notas
+        //     $table->string('warranty_provider')->nullable(); // fornecedor da garantia
+        //     $table->date('purchase_date')->nullable(); // data de compra
+        //     $table->string('reseller')->nullable(); // revendedor
+        //     $table->string('invoice_number')->nullable(); // número da nota
+        //     $table->string('warranty_certificate')->nullable(); // certificado de garantia
+        //     $table->timestamps();
+        // });
+
+        Schema::create('service_orders', function (Blueprint $table) {
+            $table->id();
+            $table->string('order_number')->unique(); // Ordem de serviço
+            $table->foreignId('tenant_id')->nullable()->constrained();
+            $table->foreignId('client_id')->constrained('clients');
+            $table->foreignId('so_device_id')->constrained('so_devices');
+            // $table->foreignId('so_service_id')->constrained('so_services');
             $table->foreignId('so_status_id')->nullable()->constrained('so_statuses'); // Status
             $table->foreignId('so_step_id')->nullable()->constrained('so_status_steps'); // Etapa do status
-            // Equipment relation
-            $table->foreignId('so_equipment_id')->nullable()->constrained('so_equipments'); // Equipamento
-            $table->string('order_number')->unique(); // Ordem de serviço
+            $table->foreignId('client_id')->nullable()->constrained(); // Cliente
             // Warranty expiration date
             $table->date('warranty_expires_on')->nullable(); // Vencimento da garantia
             // Monetary values
@@ -70,7 +98,7 @@ return new class extends Migration
             $table->decimal('discount', 10, 2)->nullable(); // Desconto
             $table->decimal('advance_payment', 10, 2)->nullable(); // Pagamento antecipado/sinal
             // Editing and historical tracking
-            $table->boolean('in_use')->default(false); // Em uso
+            $table->boolean('in_use')->default(false); // Em uso (para evitar edição simultânea)
             $table->string('currently_editing')->nullable();
             $table->string('initially_attended_by')->nullable();
             $table->timestamp('abandonment_alert')->nullable(); // Data de alerta de abandono
@@ -80,6 +108,15 @@ return new class extends Migration
             $table->timestamp('closed_at')->nullable(); // Fecha
             $table->timestamp('reopened_at')->nullable(); // Reabre
             $table->timestamps();
+        });
+
+        Schema::create('service_order_history', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('order_id')->constrained('service_orders');
+            $table->foreignId('so_status_id')->constrained('so_statuses');
+            $table->foreignId('so_status_steps_id')->constrained('so_status_steps');
+            $table->foreignId('changed_by')->constrained('users');
+            $table->timestamp('changed_at')->useCurrent();
         });
     }
 
