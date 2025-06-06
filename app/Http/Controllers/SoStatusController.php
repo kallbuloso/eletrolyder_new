@@ -26,13 +26,13 @@ class SoStatusController extends Controller
      * Page Title
      * @var string
      */
-    private $pageTitle = 'Status';
+    private $pageTitle = 'Status de Ordens de Serviço';
 
     /**
      * Title Singular
      * @var string
      */
-    private $titleSingular = 'Status';
+    private $titleSingular = 'Status de Ordem de Serviço';
 
     /**
      * Summary of pageIndex
