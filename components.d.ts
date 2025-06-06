@@ -67,6 +67,7 @@ declare module 'vue' {
     ScrollToTop: typeof import('./resources/js/Components/Form/ScrollToTop.vue')['default']
     VFormAddressCreate: typeof import('./resources/js/Components/Form/VFormAddressCreate.vue')['default']
     VFormAuth: typeof import('./resources/js/Components/Form/VFormAuth.vue')['default']
+    VFormRowForm: typeof import('vuetify/components')['VFormRowForm']
     VNodeRenderer: typeof import('./resources/js/Components/Form/VNodeRenderer.vue')['default']
     VuetifyLogo: typeof import('./resources/js/Components/Form/Logo/VuetifyLogo.vue')['default']
   }
