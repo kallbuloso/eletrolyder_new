@@ -65,8 +65,6 @@ class SoStatusController extends Controller
     {
         $this->authorize('soStatus listar');
 
-
-
         try {
             $query = SoStatus::query();
             $fields = SoStatus::getSearchable();
@@ -97,20 +95,17 @@ class SoStatusController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Inertia\Response
+     * @return \Momentum\Modal\Modal
      */
-    public function create(): \Inertia\Response
+    public function create(): \Momentum\Modal\Modal
     {
         $this->authorize('soStatus criar');
 
-        return $this->renderPage("$this->pathView/Form", [
-            'title' => "Adicionar $this->titleSingular",
-            'breadcrumbs' => [
-                ['title' => 'Dashboard', 'href' => route('dashboard')],
-                ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-                ['title' => 'Adicionar', 'disabled' => true],
-            ],
-        ]);
+        return $this->renderModal("$this->pathView/Create")
+            ->with([
+                'title' => "Adicionar $this->titleSingular",
+            ])
+            ->baseRoute($this->pageIndex);
     }
 
     /**
@@ -123,10 +118,12 @@ class SoStatusController extends Controller
     {
         $this->authorize('soStatus criar');
 
-        $this->service->create($request->validated());
+        $val = $request->validated();
+
+        $status = $this->service->create($val);
 
         return redirect()->route($this->pageIndex)
-            ->toast("$this->titleSingular criado.", 'success');
+            ->toast("$this->titleSingular criado com sucesso. ID: {$status->id}", 'success');
     }
 
     /**
