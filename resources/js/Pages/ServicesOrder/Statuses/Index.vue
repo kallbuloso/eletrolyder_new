@@ -91,7 +91,7 @@ function editItem(id) {
 
 function deleteItem(item) {
   if (can('soStatus', 'excluir')) {
-    swDeleteQuestion(item.name, route('orders.soStatus.destroy', item.id))
+    swDeleteQuestion(item.description, route('orders.soStatus.destroy', item.id))
   } else {
     swToast('Você não tem permissão para excluir status.', 'error', 3000)
   }
