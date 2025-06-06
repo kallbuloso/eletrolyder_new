@@ -4,6 +4,10 @@ const props = defineProps({
     type: [Object, Array],
     required: false
   },
+  title: {
+    type: [Object, Array],
+    required: false
+  },
   phones: {
     type: [Object, Array],
     required: false
@@ -102,7 +106,7 @@ onMounted(() => {
 <template>
   <app-modal width="700">
     <v-form @submit.prevent="submit">
-      <v-card class="mx-auto" :prepend-icon="props.data ? 'mdi-pencil' : 'mdi-plus'" :title="$page.props.title">
+      <v-card class="mx-auto" :prepend-icon="props.data ? 'mdi-pencil' : 'mdi-plus'" :title="props.title">
         <v-card-text class="mx-4">
           <!-- Pessoa -->
           <app-row-form icon="mdi-account-arrow-up" title="Tipo de Pessoa">
