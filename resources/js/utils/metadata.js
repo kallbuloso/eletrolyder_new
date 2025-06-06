@@ -1,26 +1,26 @@
-export const setMetadata = (html_url, image_url, html_title, page_title, page_description) => {
+export const setMetadata = (htmlUrl, imageUrl, htmlTitle, pageTitle, pageDescription) => {
   const metaData = {
-    title: html_title + ' | ' + page_title,
+    title: htmlTitle + ' | ' + pageTitle,
     meta: {
       description: {
         name: 'description',
-        content: page_description
+        content: pageDescription
       },
       og_title: {
         property: 'og:title',
-        content: html_title + ' | ' + page_title
+        content: htmlTitle + ' | ' + pageTitle
       },
       og_description: {
         property: 'og:description',
-        content: page_description
+        content: pageDescription
       },
       og_url: {
         property: 'og:url',
-        content: html_url
+        content: htmlUrl
       },
       og_image: {
         property: 'og:image',
-        content: image_url
+        content: imageUrl
       }
     }
   }
