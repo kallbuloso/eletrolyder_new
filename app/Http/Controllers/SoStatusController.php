@@ -127,59 +127,6 @@ class SoStatusController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  PhoneRequest  $request
-     * @param  $clientId
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function storePhone(PhoneRequest $request, $soStatusId): \Illuminate\Http\RedirectResponse
-    {
-        $this->authorize('phone criar');
-
-        $soStatus = $this->service->getById($soStatusId);
-
-        $soStatus->phones()->create([
-            'phone_type' => $request->phone_type,
-            'phone_number' => $request->phone_number,
-            'phone_contact' => $request->phone_contact,
-            'phone_has_whatsapp' => $request->phone_has_whatsapp,
-        ]);
-        return redirect()->back()
-            ->toast("Telefone adicionado ao $this->titleSingular.", 'success');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  AddressRequest  $request
-     * @param  $clientId
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function storeAddress(AddressRequest $request, $clientId): \Illuminate\Http\RedirectResponse
-    {
-        $this->authorize('address criar');
-
-        $client = $this->service->getById($clientId);
-
-        $client->addresses()->create([
-            'type' => $request->type,
-            'street' => $request->street,
-            'number' => $request->number,
-            'complement' => $request->complement,
-            'neighborhood' => $request->neighborhood,
-            'city' => $request->city,
-            'state' => $request->state,
-            'country' => $request->country,
-            'zip_code' => $request->zip_code,
-            'reference' => $request->reference,
-        ]);
-
-        return redirect()->back()
-            ->toast("Endereço adicionado ao $this->titleSingular.", 'success');
-    }
-
-    /**
      * Display the specified resource.
      *
      * @return \Inertia\Response
@@ -208,7 +155,7 @@ class SoStatusController extends Controller
     {
         $this->authorize('soStatus editar');
 
-        return $this->renderPage("$this->pathView/Form", [
+        return $this->renderPage("$this->pathView/Edit", [
             'title' => "Editando $this->titleSingular",
             'breadcrumbs' => [
                 ['title' => 'Dashboard', 'href' => route('dashboard')],
