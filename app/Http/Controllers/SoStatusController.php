@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\SoStatus;
 use Illuminate\Http\Request;
-use App\Http\Requests\SoStatusRequest;
-use App\Http\Requests\PhoneRequest;
-use App\Http\Requests\AddressRequest;
 use App\Services\SoStatusService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SoStatusRequest;
+use App\Http\Requests\SoStatusUpdateRequest;
 
 /**
  * Class SoStatusController
@@ -120,6 +119,16 @@ class SoStatusController extends Controller
 
         $val = $request->validated();
 
+        $existingStatus = $this->service->where('description', $val['description'])
+            ->where('tenant_id', session('tenant_id'))
+            ->first();
+
+        if ($existingStatus) {
+            return redirect()->back()
+                ->withErrors(['description' => 'Já existe um status com essa descrição.'])
+                ->withInput();
+        }
+
         $status = $this->service->create($val);
 
         return redirect()->route($this->pageIndex)
@@ -127,43 +136,20 @@ class SoStatusController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @return \Inertia\Response
-     */
-    public function show($id): \Inertia\Response
-    {
-        $this->authorize('soStatus ver');
-
-        return $this->renderPage("$this->pathView/Show", [
-            'title' => 'Detalhes de ' . $this->titleSingular,
-            'breadcrumbs' => [
-                ['title' => 'Dashboard', 'href' => route('dashboard')],
-                ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-                ['title' => 'Mostrar', 'disabled' => true],
-            ],
-            'data' => $this->service->getById($id),
-        ]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @return \Inertia\Response
+     * @return \Momentum\Modal\Modal
      */
-    public function edit($id): \Inertia\Response
+    public function edit($id): \Momentum\Modal\Modal
     {
         $this->authorize('soStatus editar');
 
-        return $this->renderPage("$this->pathView/Edit", [
-            'title' => "Editando $this->titleSingular",
-            'breadcrumbs' => [
-                ['title' => 'Dashboard', 'href' => route('dashboard')],
-                ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-                ['title' => 'Editar', 'disabled' => true],
-            ],
-            'data' => $this->service->getById($id),
-        ]);
+        return $this->renderModal("$this->pathView/Edit")
+            ->with([
+                'title' => "Editando $this->titleSingular",
+                'data' => $this->service->getById($id),
+            ])
+            ->baseRoute($this->pageIndex);
     }
 
     /**
@@ -173,11 +159,24 @@ class SoStatusController extends Controller
      * @param  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(SoStatusRequest $request, $id): \Illuminate\Http\RedirectResponse
+    public function update(SoStatusUpdateRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
         $this->authorize('soStatus editar');
 
-        $this->service->update($id, $request->validated());
+        $val = $request->validated();
+
+        $existingStatus = $this->service->where('description', $val['description'])
+            ->where('tenant_id', session('tenant_id'))
+            ->where('id', $id,'!=')
+            ->first();
+
+        if ($existingStatus) {
+            return redirect()->back()
+                ->withErrors(['description' => 'Já existe um status com essa descrição.'])
+                ->withInput();
+        }
+
+        $this->service->update($id, $val);
 
         return redirect()->back()
             ->toast("$this->titleSingular atualizado.", 'success');
