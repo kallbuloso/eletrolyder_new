@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SoStatusStep;
+use App\Models\SoStatus;
 use Illuminate\Http\Request;
 use App\Http\Requests\SoStatusStepRequest;
 use App\Http\Requests\PhoneRequest;
@@ -65,8 +66,16 @@ class SoStatusStepController extends Controller
   {
     $this->authorize('soStatusStep listar');
 
-    try {
+        try {
             $query = SoStatusStep::query();
+
+            $status = null;
+
+            if ($request->filled('so_status_id')) {
+                $query->where('so_status_id', $request->get('so_status_id'));
+                $status = SoStatus::find($request->get('so_status_id'));
+            }
+
             $fields = SoStatusStep::getSearchable();
             $query = $this->service->applyFilters($query, $request, $fields);
             $data = $query->paginate($request->get('limit', 10));
@@ -82,6 +91,9 @@ class SoStatusStepController extends Controller
                     ['title' => $this->pageTitle, 'disabled' => true],
                 ],
                 'soStatusStepCount' => $this->service->count(),
+                'data' => $data,
+                'statusId' => $request->get('so_status_id'),
+                'status' => $status,
             ]);
         } catch (\Exception $e) {
             if ($request->wantsJson()) {

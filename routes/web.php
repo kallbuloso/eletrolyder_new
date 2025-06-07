@@ -156,6 +156,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/{id}/edit', 'edit')->name('edit');
             Route::put('/{id}', 'update')->name('update');
             Route::delete('/{id}', 'destroy')->name('destroy');
+            Route::get('/{id}/steps', [SoStatusStepController::class, 'index'])->name('steps');
         });
         // Route groups for SoStatusStep
     Route::controller(SoStatusStepController::class)->prefix('so-status-steps')->as('soStatusStep.')->group(function () {

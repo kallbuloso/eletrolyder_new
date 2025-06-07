@@ -4,6 +4,14 @@ import { router } from '@inertiajs/vue3'
 const props = defineProps({
   data: {
     type: Object
+  },
+  statusId: {
+    type: [Number, String],
+    default: null
+  },
+  status: {
+    type: Object,
+    default: null
   }
 })
 
@@ -16,10 +24,10 @@ const pageCount = computed(() => {
 })
 const headers = ref([
   { title: 'ID', key: 'id' },
-	{ title: 'Tenant Id', key: 'tenant_id' },
-	{ title: 'So Status Id', key: 'so_status_id' },
-	{ title: 'Description', key: 'description' },
-  { title: 'Action', key: 'action', sortable: false, align: 'end' },
+  { title: 'Tenant Id', key: 'tenant_id' },
+  { title: 'So Status Id', key: 'so_status_id' },
+  { title: 'Description', key: 'description' },
+  { title: 'Action', key: 'action', sortable: false, align: 'end' }
 ])
 
 function loadItems({ page, itemsPerPage, sortBy, search }) {
@@ -32,6 +40,9 @@ function loadItems({ page, itemsPerPage, sortBy, search }) {
   }
   if (search) {
     params.search = search
+  }
+  if (props.statusId) {
+    params.so_status_id = props.statusId
   }
   router.get('/so-status-steps', params, {
     preserveState: true,
@@ -80,7 +91,7 @@ onMounted(() => {
 </script>
 
 <template layout="AppShell,AuthenticatedLayout">
-  <v-card class="mx-auto" width="800" prepend-icon="mdi-account-lock" :title="$page.props.title">
+  <v-card class="mx-auto" width="800" prepend-icon="mdi-account-lock" :title="props.status ? `Etapas de ${props.status.description}` : $page.props.title">
     <template #append>
       <v-btn prepend-icon="mdi-plus" color="primary" variant="text" @click="createItem()">Novo</v-btn>
     </template>
