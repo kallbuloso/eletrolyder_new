@@ -23,7 +23,7 @@ class RoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => ['required', 'string', 'max:100', 'unique:roles,tenant_id'], // 'unique:roles,tenant_id' é o mesmo que 'unique:roles,tenant_id,NULL,id'
+            'name'          => ['required', 'string', 'max:100'], // 'unique:roles,tenant_id' é o mesmo que 'unique:roles,tenant_id,NULL,id'
             'description'    => 'nullable|string',
             'guard_name' => 'required|string',
             'permissions.*' => 'nullable|exists:permissions,id',
@@ -39,7 +39,7 @@ class RoleRequest extends FormRequest
     {
         return [
             'name.required' => 'Nome do acesso é obrigatório.',
-            'name.unique' => 'Já existe um acesso com esse nome.',
+            // 'name.unique' => 'Já existe um acesso com esse nome.',
         ];
     }
 }
