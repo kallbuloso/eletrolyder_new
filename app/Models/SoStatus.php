@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SoStatusTrait;
+use App\Models\SoStatusStep;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -43,4 +44,12 @@ class SoStatus extends Model
     protected $searchable = [
         'description'
     ];
+
+    /**
+     * Get the steps associated with the status.
+     */
+    public function steps()
+    {
+        return $this->hasMany(SoStatusStep::class, 'so_status_id');
+    }
 }
