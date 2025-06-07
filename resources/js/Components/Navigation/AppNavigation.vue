@@ -111,8 +111,8 @@ const menuSections = ref([
     title: 'Ordem de Serviço',
     items: [
       {
-        title: 'Config. de OS',
-        icon: 'mdi-exit-to-app',
+        title: 'Configurações',
+        icon: 'iconify:carbon:settings-edit',
         group: 'soStatus',
         children: [
           {
