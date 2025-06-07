@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use Illuminate\Http\Request;
 use App\Services\RoleService;
 use App\Http\Requests\RoleRequest;
 use App\Http\Requests\RoleUpdateRequest;
