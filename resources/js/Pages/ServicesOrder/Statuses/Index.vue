@@ -171,7 +171,7 @@ function deleteItem(item) {
       <v-col cols="5">
         <v-card class="mx-auto" prepend-icon="iconify:carbon:settings-edit" title="Configurações de Etapas do Status">
           <v-card-text>
-            <p>Esta página lista todos os status de ordem de serviço cadastrados no sistema.</p>
+            <p>Esta página lista todas as etapas de um Status de OS.</p>
             <p>Você pode criar, editar ou excluir status conforme necessário.</p>
           </v-card-text>
         </v-card>
