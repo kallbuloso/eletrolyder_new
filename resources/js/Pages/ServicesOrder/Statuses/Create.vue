@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   title: {
-    type: [Object, Array],
+    type: String,
     required: true
   },
   errors: {
