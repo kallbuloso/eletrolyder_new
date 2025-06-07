@@ -27,4 +27,17 @@ class SoStatusRequest extends FormRequest
             'generates_revenue' => ['required', 'boolean'],
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'description.required' => 'A descrição é obrigatória.',
+            // 'description.unique' => 'Já existe um status com essa descrição.',
+        ];
+    }
 }
