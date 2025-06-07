@@ -12,6 +12,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SoStatusController;
+use App\Http\Controllers\SoStatusStepController;
 // routeImport
 
 Route::get('/', function () {
@@ -156,7 +157,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('/{id}', 'update')->name('update');
             Route::delete('/{id}', 'destroy')->name('destroy');
         });
-        // addRoute
+        // Route groups for SoStatusStep
+    Route::controller(SoStatusStepController::class)->prefix('so-status-steps')->as('soStatusStep.')->group(function () {
+      Route::get('/', 'index') ->name('index');
+      Route::get('/create', 'create') ->name('create');
+      Route::post('/', 'store') ->name('store');
+      Route::get('/show/{id}', 'show') ->name('show');
+      Route::get('/{id}/edit', 'edit') ->name('edit');
+      Route::post('/{id}/phone', 'storePhone')->name('phone.store');
+      Route::post('/{id}/address', 'storeAddress')->name('address.store');
+      Route::put('/{id}', 'update') ->name('update');
+      Route::delete('/{id}', 'destroy') ->name('destroy');
+    });
+    // addRoute
+
 
     });
 });
