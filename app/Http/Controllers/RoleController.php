@@ -100,13 +100,13 @@ class RoleController extends Controller
 
         $val = $request->validated();
 
-        $existingRole = Role::where('name', $val['name'])
+        $existingRole = $this->service->where('name', $val['name'])
             ->where('tenant_id', session('tenant_id'))
             ->first();
 
         if ($existingRole) {
             return redirect()->back()
-                ->withErrors(['name' => 'O nome do acesso já existe nesta empresa.'])
+                ->withErrors(['name' => 'Já existe um controle de acesso com esse nome.'])
                 ->withInput();
         }
 
@@ -149,14 +149,14 @@ class RoleController extends Controller
 
         $val = $request->validated();
 
-        $existingRole = Role::where('name', $val['name'])
+        $existingRole = $this->service->where('name', $val['name'])
             ->where('tenant_id', session('tenant_id'))
-            ->where('id', '!=', $id)
+            ->where('id', $id,'!=')
             ->first();
 
         if ($existingRole) {
             return redirect()->back()
-                ->withErrors(['name' => 'O nome do acesso já existe nesta empresa.'])
+                ->withErrors(['name' => 'Já existe um controle de acesso com esse nome.'])
                 ->withInput();
         }
 
