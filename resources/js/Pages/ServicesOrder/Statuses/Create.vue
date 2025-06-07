@@ -30,15 +30,15 @@ const statusTypes = [
 </script>
 
 <template>
-  <app-modal width="600">
+  <app-modal width="450">
     <v-form @submit.prevent="submit">
       <v-card :prepend-icon="'mdi-plus'" :title="props.title">
         <v-card-text class="mx-1">
           <v-row>
-            <v-col cols="6">
+            <v-col cols="12">
               <app-text-field id="description" v-model="form.description" label="Descrição" placeholder="Descrição do status" required :error-messages="form.errors.description" />
             </v-col>
-            <v-col cols="6">
+            <v-col cols="7">
               <app-select
                 id="status_type"
                 v-model="form.status_type"
@@ -50,17 +50,17 @@ const statusTypes = [
               />
             </v-col>
             <v-spacer />
-            <v-col cols="6">
-              <app-checkbox id="generates_revenue" v-model="form.generates_revenue" title="Gera Receita?" :error-messages="form.errors.generates_revenue" />
+            <v-col cols="5">
+              <v-checkbox class="mt-6" id="generates_revenue" v-model="form.generates_revenue" label="Gera Receita?" :error-messages="form.errors.generates_revenue" />
             </v-col>
           </v-row>
         </v-card-text>
         <v-card-actions class="mx-4">
           <v-spacer />
-          <Link :href="route('orders.soStatus.index')" as="div">
+          <!-- <Link :href="route('orders.soStatus.index')" as="div">
             <v-btn class="mr-2" variant="text">Cancelar</v-btn>
-          </Link>
-          <v-btn type="submit" color="primary" variant="flat" :loading="form.processing">Salvar</v-btn>
+          </Link> -->
+          <v-btn type="submit" color="primary" variant="text" :loading="form.processing">Salvar</v-btn>
         </v-card-actions>
       </v-card>
     </v-form>
