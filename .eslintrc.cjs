@@ -26,7 +26,7 @@ module.exports = {
     'vue/require-default-prop': 'off',
     'vue/multi-word-component-names': 'off',
     'no-undef': 'off',
-    indent: ['error', 2]
+    indent: ['error', 4]
   },
   globals: {
     // sweetalert2
