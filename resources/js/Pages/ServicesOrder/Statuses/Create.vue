@@ -51,7 +51,7 @@ const statusTypes = [
             </v-col>
             <v-spacer />
             <v-col cols="5">
-              <v-checkbox class="mt-6" id="generates_revenue" v-model="form.generates_revenue" label="Gera Receita?" :error-messages="form.errors.generates_revenue" />
+              <v-checkbox id="generates_revenue" v-model="form.generates_revenue" class="mt-6" label="Gera Receita?" :error-messages="form.errors.generates_revenue" />
             </v-col>
           </v-row>
         </v-card-text>
