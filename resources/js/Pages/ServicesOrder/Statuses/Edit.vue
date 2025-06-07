@@ -1,11 +1,11 @@
 <script setup>
 const props = defineProps({
   data: {
-    type: [Object, Array],
+    type: Object,
     required: false
   },
   title: {
-    type: [Object, Array],
+    type: String,
     required: true
   },
   errors: {
