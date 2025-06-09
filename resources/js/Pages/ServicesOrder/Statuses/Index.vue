@@ -104,86 +104,64 @@ function manageSteps(id) {
 
 <template layout="AppShell,AuthenticatedLayout">
   <template v-if="props.soStatusCount > 0">
-    <v-row>
-      <v-col cols="12">
-        <v-card class="mx-auto" prepend-icon="mdi-information" :title="'Configuração dos ' + $page.props.title + ' e andamentos'">
-          <v-card-text>
-            <p>Esta página lista todos os status de ordem de serviço cadastrados no sistema. Você pode criar, editar ou excluir status conforme necessário.</p>
-            <p>Clique na descrição do <b>status</b> para ver, editar ou excluir o andamento vinculado ao status.</p>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="7">
-        <v-card prepend-icon="mdi-account-group" :title="$page.props.title">
-          <template #append>
-            <v-btn prepend-icon="mdi-plus" color="primary" variant="text" @click="createItem()">Novo</v-btn>
+    <v-card class="mx-auto" width="700" prepend-icon="mdi-account-group" :title="$page.props.title">
+      <template #append>
+        <v-btn prepend-icon="mdi-plus" color="primary" variant="text" @click="createItem()">Novo</v-btn>
+      </template>
+      <v-card-text class="d-flex">
+        <v-row>
+          <v-col cols="12" lg="8" md="8" sm="6">
+            <v-text-field v-model="search" label="Procurar" prepend-inner-icon="mdi-magnify" hide-details clearable />
+          </v-col>
+          <v-col v-if="content.total > 10" cols="12" lg="4" md="4" sm="6">
+            <v-select v-model="itemsPerPage" :items="[10, 15, 25, 35, 50, 100]" label="Itens por Página" width="150px"></v-select>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-item>
+        <v-data-table-server
+          :headers="headers"
+          :page="page"
+          :items="content.data"
+          :items-length="Number(content.total)"
+          :search="search"
+          :show-select="false"
+          :items-per-page="itemsPerPage"
+          loading-text="Carregando, por favor aguarde..."
+          :loading="isLoadingTable"
+          @update:options="loadItems"
+        >
+          <template #loading>
+            <v-skeleton-loader type="table-row@5" />
           </template>
-          <v-card-text class="d-flex">
-            <v-row>
-              <v-col cols="12" lg="8" md="8" sm="6">
-                <v-text-field v-model="search" label="Procurar" prepend-inner-icon="mdi-magnify" hide-details clearable />
-              </v-col>
-              <v-col v-if="content.total > 10" cols="12" lg="4" md="4" sm="6">
-                <v-select v-model="itemsPerPage" :items="[10, 15, 25, 35, 50, 100]" label="Itens por Página" width="150px"></v-select>
-              </v-col>
-            </v-row>
-          </v-card-text>
-          <v-card-item>
-            <v-data-table-server
-              :headers="headers"
-              :page="page"
-              :items="content.data"
-              :items-length="Number(content.total)"
-              :search="search"
-              :show-select="false"
-              :items-per-page="itemsPerPage"
-              loading-text="Carregando, por favor aguarde..."
-              :loading="isLoadingTable"
-              @update:options="loadItems"
-            >
-              <template #loading>
-                <v-skeleton-loader type="table-row@5" />
-              </template>
-              <template #item.description="{ item }">
-                <a @click.prevent="manageSteps(item.id)" href="#">{{ item.description }}</a>
-              </template>
-              <template #item.status_type="{ item }">
-                {{ item.status_type == 0 ? 'Entrada' : item.status_type == 1 ? 'Em Andamento' : 'Saida' }}
-              </template>
-              <template #item.generates_revenue="{ item }">
-                <v-chip :color="item.generates_revenue == 1 ? 'success' : 'error'" size="small">
-                  {{ item.generates_revenue == 1 ? 'Sim' : 'Não' }}
-                </v-chip>
-              </template>
-              <template #item.action="{ item }">
-                <v-icon v-if="can('soStatus', 'editar')" color="warning" icon="mdi-pencil" size="small" @click="editItem(item.id)" />
-                <v-icon v-if="can('soStatus', 'excluir')" class="ml-1" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
-              </template>
-              <template #bottom>
-                <v-divider />
-              </template>
-            </v-data-table-server>
-          </v-card-item>
-          <v-card-actions>
-            <template v-if="content.total > 10 && itemsPerPage < content.total">
-              <v-list-item :title="`Página ${content.current_page} de ${content.last_page}`" :subtitle="`Total de ${formatCount(content.total)} ${$page.props.title}`" />
-              <v-spacer />
-              <v-pagination v-model="page" :length="content.last_page" :total-visible="2" size="small" rounded></v-pagination>
-            </template>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-      <v-col cols="5">
-        <v-card class="mx-auto" prepend-icon="iconify:carbon:settings-edit" title="Configurações de Etapas do Status">
-          <v-card-text>
-            <p>Esta página lista todas as etapas de um Status de OS.</p>
-            <p>Você pode criar, editar ou excluir status conforme necessário.</p>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+          <template #item.description="{ item }">
+            <a @click.prevent="manageSteps(item.id)" href="#">{{ item.description }}</a>
+          </template>
+          <template #item.status_type="{ item }">
+            {{ item.status_type == 0 ? 'Entrada' : item.status_type == 1 ? 'Em Andamento' : 'Saida' }}
+          </template>
+          <template #item.generates_revenue="{ item }">
+            <v-chip :color="item.generates_revenue == 1 ? 'success' : 'error'" size="small">
+              {{ item.generates_revenue == 1 ? 'Sim' : 'Não' }}
+            </v-chip>
+          </template>
+          <template #item.action="{ item }">
+            <v-icon v-if="can('soStatus', 'editar')" color="warning" icon="mdi-pencil" size="small" @click="editItem(item.id)" />
+            <v-icon v-if="can('soStatus', 'excluir')" class="ml-1" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
+          </template>
+          <template #bottom>
+            <v-divider />
+          </template>
+        </v-data-table-server>
+      </v-card-item>
+      <v-card-actions>
+        <template v-if="content.total > 10 && itemsPerPage < content.total">
+          <v-list-item :title="`Página ${content.current_page} de ${content.last_page}`" :subtitle="`Total de ${formatCount(content.total)} ${$page.props.title}`" />
+          <v-spacer />
+          <v-pagination v-model="page" :length="content.last_page" :total-visible="2" size="small" rounded></v-pagination>
+        </template>
+      </v-card-actions>
+    </v-card>
   </template>
   <template v-else>
     <v-row align="center" justify="center" style="height: 70vh">
