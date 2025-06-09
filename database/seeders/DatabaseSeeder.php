@@ -24,13 +24,6 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
         ]);
 
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'karl@admim.com',
-        // ]);
-
         // $tenantQtd = 1;
         $userQtd = 10;
         $clientQtd = 120;
@@ -112,7 +105,6 @@ class DatabaseSeeder extends Seeder
 
             $this->createSoStatuses($tenant->id);
 
-
             $user = User::factory()->create([
                 'tenant_id' => $tenant->id,
                 'name' => "Test User {$tenant->id}",
@@ -143,7 +135,7 @@ class DatabaseSeeder extends Seeder
             }
         }
     }
-    
+
     /**
      * Run the database seeds.
      */
@@ -153,42 +145,76 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Entrada para orçamento',
                 'status_type' => 0,
-                'generates_revenue' => true
+                'generates_revenue' => true,
+                'status_steps' => [
+                    'Aguardando avaliação de técnico',
+                    'Orçamento em andamento',
+                ]
             ],
             [
                 'name' => 'Garantia da Loja',
                 'status_type' => 0,
-                'generates_revenue' => false
+                'generates_revenue' => false,
+                'status_steps' => [
+                    'Aguardando avaliação de técnico',
+                    'Aguardando peças',
+                    'Conserto em andamento',
+                ]
             ],
             [
                 'name' => 'Garantia do Fabricante',
                 'status_type' => 0,
-                'generates_revenue' => false
+                'generates_revenue' => false,
+                'status_steps' => [
+                    'Aguardando avaliação de técnico',
+                    'Aguardando peças',
+                    'Conserto em andamento',
+                ]
             ],
             [
                 'name' => 'Orçamento em andamento',
                 'status_type' => 1,
-                'generates_revenue' => true
+                'generates_revenue' => true,
+                'status_steps' => [
+                    'Aguardando peças para concluir orçamento',
+                    'Aguardando cotação de peças',
+                ]
             ],
             [
                 'name' => 'Orçamento finalizado',
                 'status_type' => 1,
-                'generates_revenue' => true
+                'generates_revenue' => true,
+                'status_steps' => [
+                    'Aguardando aprovação do cliente',
+                ]
             ],
             [
                 'name' => 'Conserto Aprovado',
                 'status_type' => 1,
-                'generates_revenue' => true
+                'generates_revenue' => true,
+                'status_steps' => [
+                    'Aguardando peças',
+                    'Aguardando Conserto',
+                ]
             ],
             [
                 'name' => 'Conserto em andamento',
                 'status_type' => 1,
-                'generates_revenue' => true
+                'generates_revenue' => true,
+                'status_steps' => [
+                    'Aguardando restante de peças',
+                    'Aparelho em testes',
+                    'Conserto em andamento',
+                ]
             ],
             [
                 'name' => 'Conserto Finalizado',
                 'status_type' => 1,
-                'generates_revenue' => true
+                'generates_revenue' => true,
+                'status_steps' => [
+                    'Aguardando iformar ao cliente',
+                    'Aguardando retirada do aparelho',
+                ]
             ],
             [
                 'name' => 'Entregue reparado',
@@ -217,13 +243,52 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
+        // $statuses = collect($statuses)->map(function ($status) {
+        //     return [
+        //         'name' => $status['name'],
+        //         'status_type' => $status['status_type'],
+        //         'generates_revenue' => $status['generates_revenue'],
+        //     ];
+        // })->toArray();
+
+        $statusSteps = [
+            [
+                'description' => 'Aguardando orçamento',
+            ],
+            [
+                'description' => 'Orçamento enviado',
+            ],
+            [
+                'description' => 'Aguardando aprovação do cliente',
+            ],
+            [
+                'description' => 'Aguardando peças',
+            ],
+            [
+                'description' => 'Em conserto',
+            ],
+            [
+                'description' => 'Conserto finalizado',
+            ],
+        ];
+
         foreach ($statuses as $status) {
-            SoStatus::factory()->create([
+            $statusCreate = SoStatus::factory()->create([
                 'tenant_id' => $tenantId,
                 'description' => $status['name'],
                 'status_type' => $status['status_type'],
                 'generates_revenue' => $status['generates_revenue'],
             ]);
+
+            // Criação dos status_steps relacionados, se existirem
+            if (!empty($status['status_steps'])) {
+                foreach ($status['status_steps'] as $stepDescription) {
+                    $statusCreate->statusSteps()->create([
+                        'tenant_id' => $tenantId,
+                        'description' => $stepDescription,
+                    ]);
+                }
+            }
         }
         // Create a default status if none exist
         // if (SoStatus::where('tenant_id', $tenantId)->count() === 0) {
