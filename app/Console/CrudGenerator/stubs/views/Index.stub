@@ -40,7 +40,7 @@ function loadItems({ page, itemsPerPage, sortBy, search }) {
 }
 
 function deleteItem(item) {
-  if (can('{{modelNameLowerCase}}', 'delete')) {
+  if (can('{{modelNameLowerCase}}', 'excluir')) {
     swDeleteQuestion(item.name, route('{{modelRoute}}.destroy', item.id))
   } else {
     swToast('Você não tem permissão para excluir {{modelName}}.', 'error', 3000)
@@ -48,7 +48,7 @@ function deleteItem(item) {
 }
 
 function editItem(item) {
-  if (can('{{modelNameLowerCase}}', 'edit')) {
+  if (can('{{modelNameLowerCase}}', 'editar')) {
     router.get(route('{{modelRoute}}.edit', item.id))
   } else {
     swToast('Você não tem permissão para editar {{modelName}}.', 'error', 3000)
@@ -56,7 +56,7 @@ function editItem(item) {
 }
 
 // function showItem(item) {
-//   if (can('{{modelNameLowerCase}}', 'show')) {
+//   if (can('{{modelNameLowerCase}}', 'ver')) {
 //     router.get(route('{{modelRoute}}.show', item.id))
 //   } else {
 //     swToast('Você não tem permissão para visualizar {{modelName}}.', 'error', 3000)
@@ -64,7 +64,7 @@ function editItem(item) {
 // }
 
 function createItem() {
-  if (can('{{modelNameLowerCase}}', 'create')) {
+  if (can('{{modelNameLowerCase}}', 'criar')) {
     router.get(route('{{modelRoute}}.create'))
   } else {
     swToast('Você não tem permissão para criar {{modelName}}.', 'error', 3000)
