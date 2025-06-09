@@ -118,6 +118,7 @@ function manageSteps(id) {
           </v-col>
         </v-row>
       </v-card-text>
+      <!-- <pre>{{ content.data }}</pre> -->
       <v-card-item>
         <v-data-table-server
           :headers="headers"
