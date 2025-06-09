@@ -69,7 +69,7 @@ class SoStatusController extends Controller
             $fields = SoStatus::getSearchable();
             $query = $this->service->applyFilters($query, $request, $fields);
             $data = $query->paginate($request->get('limit', 10));
-
+            // dd($data->toArray());
             if ($request->wantsJson()) {
                 return response()->json($data);
             }
@@ -148,6 +148,7 @@ class SoStatusController extends Controller
             ->with([
                 'title' => "Editando $this->titleSingular",
                 'data' => $this->service->getById($id),
+                'statusSteps' => $this->service->getById($id)->statusSteps()->get(),
             ])
             ->baseRoute($this->pageIndex);
     }
@@ -167,7 +168,7 @@ class SoStatusController extends Controller
 
         $existingStatus = $this->service->where('description', $val['description'])
             ->where('tenant_id', session('tenant_id'))
-            ->where('id', $id,'!=')
+            ->where('id', $id, '!=')
             ->first();
 
         if ($existingStatus) {
