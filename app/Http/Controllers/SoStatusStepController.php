@@ -27,25 +27,25 @@ class SoStatusStepController extends Controller
    * Page Title
    * @var string
    */
-  private $pageTitle = 'SoStatusStep';
+  private $pageTitle = 'Passos de Status de Ordens de Serviço';
 
   /**
    * Title Singular
    * @var string
    */
-  private $titleSingular = 'SoStatusStep';
+  private $titleSingular = 'Passo de Status de Ordem de Serviço';
 
   /**
    * Summary of pageIndex
    * @var string
    */
-  private $pageIndex = 'so-status-steps.index';
+  private $pageIndex = 'orders.statusStep.index';
 
   /**
    * Summary of pathView
    * @var string
    */
-  private $pathView = 'SoStatusStep';
+  private $pathView = 'ServicesOrder/StatusStep';
 
   /**
    * SoStatusStepController constructor.
@@ -66,73 +66,59 @@ class SoStatusStepController extends Controller
   {
     $this->authorize('soStatusStep listar');
 
-        try {
-            $query = SoStatusStep::query();
+    // dd($this->service->count());
 
-            $status = null;
+    try {
+      $query = SoStatusStep::query();
+      $status = null;
 
-            if ($request->filled('so_status_id')) {
-                $query->where('so_status_id', $request->get('so_status_id'));
-                $status = SoStatus::find($request->get('so_status_id'));
-            }
+      if ($request->filled('so_status_id')) {
+        $query->where('so_status_id', $request->get('so_status_id'));
+        $status = SoStatus::find($request->get('so_status_id'));
+      }
 
-            $fields = SoStatusStep::getSearchable();
-            $query = $this->service->applyFilters($query, $request, $fields);
-            $data = $query->paginate($request->get('limit', 10));
+      // dd(SoStatusStep::query());
 
-            if ($request->wantsJson()) {
-                return response()->json($data);
-            }
+      $fields = SoStatusStep::getSearchable();
+      $query = $this->service->applyFilters($query, $request, $fields);
+      $data = $query->paginate($request->get('limit', 10));
 
-            return $this->renderPage("$this->pathView/Index", [
-                'title' => $this->pageTitle,
-                'breadcrumbs' => [
-                    ['title' => 'Dashboard', 'href' => route('dashboard')],
-                    ['title' => $this->pageTitle, 'disabled' => true],
-                ],
-                'soStatusStepCount' => $this->service->count(),
-                'data' => $data,
-                'statusId' => $request->get('so_status_id'),
-                'status' => $status,
-            ]);
-        } catch (\Exception $e) {
-            if ($request->wantsJson()) {
-                return response()->json(['error' => $e->getMessage()], 500);
-            }
+      if ($request->wantsJson()) {
+        return response()->json($data);
+      }
 
-            throw $e;
-        }
+      return $this->renderPage("$this->pathView/Index", [
+        'title' => $this->pageTitle,
+        'breadcrumbs' => [
+          ['title' => 'Dashboard', 'href' => route('dashboard')],
+          ['title' => $this->pageTitle, 'disabled' => true],
+        ],
+        'soStatusStepCount' => $this->service->count(),
+        'status' => $status,
+      ]);
+    } catch (\Exception $e) {
+      if ($request->wantsJson()) {
+        return response()->json(['error' => $e->getMessage()], 500);
+      }
 
-    // $query = SoStatusStep::query();
-    // $query = $this->service->applyFilters($query, $request);
-    // $data = $query->paginate($request->get('limit', 10));
-    // return $this->renderPage("$this->pathView/Index", [
-    //   'title' => $this->pageTitle,
-    //   'breadcrumbs' => [
-    //     ['title' => 'Dashboard', 'href' => route('dashboard')],
-    //     ['title' => $this->pageTitle, 'disabled' => true],
-    //   ],
-    //   'data' => $data,
-    // ]);
+      throw $e;
+    }
   }
 
   /**
    * Show the form for creating a new resource.
    *
-   * @return \Inertia\Response
+   * @return \Momentum\Modal\Modal
    */
-  public function create(): \Inertia\Response
+  public function create(): \Momentum\Modal\Modal
   {
     $this->authorize('soStatusStep criar');
 
-    return $this->renderPage("$this->pathView/Form",[
-      'title' => "Adicionar $this->titleSingular",
-      'breadcrumbs' => [
-        ['title' => 'Dashboard', 'href' => route('dashboard')],
-        ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-        ['title' => 'Adicionar', 'disabled' => true],
-      ],
-    ]);
+    return $this->renderModal("$this->pathView/Create")
+      ->with([
+        'title' => "Adicionar $this->titleSingular",
+      ])
+      ->baseRoute($this->pageIndex);
   }
 
   /**
@@ -150,59 +136,6 @@ class SoStatusStepController extends Controller
     return redirect()->route($this->pageIndex)
       ->toast("$this->titleSingular criado.", 'success');
   }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  PhoneRequest  $request
-     * @param  $clientId
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function storePhone(PhoneRequest $request, $soStatusStepId): \Illuminate\Http\RedirectResponse
-    {
-        $this->authorize('phone criar');
-
-        $soStatusStep = $this->service->getById($soStatusStepId);
-
-        $soStatusStep->phones()->create([
-            'phone_type' => $request->phone_type,
-            'phone_number' => $request->phone_number,
-            'phone_contact' => $request->phone_contact,
-            'phone_has_whatsapp' => $request->phone_has_whatsapp,
-        ]);
-        return redirect()->back()
-            ->toast("Telefone adicionado ao $this->titleSingular.", 'success');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  AddressRequest  $request
-     * @param  $clientId
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function storeAddress(AddressRequest $request, $clientId): \Illuminate\Http\RedirectResponse
-    {
-        $this->authorize('address criar');
-
-        $client = $this->service->getById($clientId);
-
-        $client->addresses()->create([
-            'type' => $request->type,
-            'street' => $request->street,
-            'number' => $request->number,
-            'complement' => $request->complement,
-            'neighborhood' => $request->neighborhood,
-            'city' => $request->city,
-            'state' => $request->state,
-            'country' => $request->country,
-            'zip_code' => $request->zip_code,
-            'reference' => $request->reference,
-        ]);
-
-        return redirect()->back()
-            ->toast("Endereço adicionado ao $this->titleSingular.", 'success');
-    }
 
   /**
    * Display the specified resource.
