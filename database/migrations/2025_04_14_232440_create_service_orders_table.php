@@ -53,11 +53,11 @@ return new class extends Migration
         Schema::create('so_status_steps', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
-            $table->foreignId('so_status_id')->nullable()->constrained('so_statuses');
+            $table->foreignId('so_status_id')->constrained('so_statuses');
             $table->string('description');
             $table->timestamps();
         });
-        
+
         // Equipamentos relacionados às Ordens de Serviço
         // Schema::create('so_equipments', function (Blueprint $table) {
         //     $table->id();
