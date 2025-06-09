@@ -116,12 +116,12 @@ const menuSections = ref([
         group: 'soStatus',
         children: [
           {
-            title: 'Status',
+            title: 'Status da OS',
             href: 'orders.soStatus.index'
           },
           {
-            title: 'Adicionar',
-            href: 'orders.soStatus.create'
+            title: 'Passos da OS',
+            href: 'orders.statusStep.index'
           }
         ]
       }
