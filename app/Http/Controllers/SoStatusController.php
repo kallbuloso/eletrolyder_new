@@ -138,19 +138,31 @@ class SoStatusController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @return \Momentum\Modal\Modal
+     * @return \Inertia\Response
      */
-    public function edit($id): \Momentum\Modal\Modal
+    public function edit($id): \Inertia\Response
     {
         $this->authorize('soStatus editar');
 
-        return $this->renderModal("$this->pathView/Edit")
-            ->with([
-                'title' => "Editando $this->titleSingular",
-                'data' => $this->service->getById($id),
-                'statusSteps' => $this->service->getById($id)->statusSteps()->get(),
-            ])
-            ->baseRoute($this->pageIndex);
+        return $this->renderPage("$this->pathView/Edit", [
+            'title' => "Editando $this->titleSingular",
+            'breadcrumbs' => [
+                ['title' => 'Dashboard', 'href' => route('dashboard')],
+                ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
+                ['title' => 'Editar', 'disabled' => true],
+            ],
+            'title' => "Editando $this->titleSingular",
+            'data' => $this->service->getById($id),
+            'statusSteps' => $this->service->getById($id)->statusSteps()->get(),
+        ]);
+
+        // return $this->renderModal("$this->pathView/Edit")
+        //     ->with([
+        //         'title' => "Editando $this->titleSingular",
+        //         'data' => $this->service->getById($id),
+        //         'statusSteps' => $this->service->getById($id)->statusSteps()->get(),
+        //     ])
+        //     ->baseRoute($this->pageIndex);
     }
 
     /**
