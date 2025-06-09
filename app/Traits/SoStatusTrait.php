@@ -2,10 +2,19 @@
 
 namespace App\Traits;
 
+use App\Models\SoStatusStep;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 trait SoStatusTrait
 {
     use HasFactory, TenantebleTrait, DatesModelTraits;
-    //
+
+
+    /**
+     * Relacionamento: Status possui muitos passos (steps).
+     */
+    public function statusSteps()
+    {
+        return $this->hasMany(SoStatusStep::class, 'so_status_id', 'id');
+    }
 }
