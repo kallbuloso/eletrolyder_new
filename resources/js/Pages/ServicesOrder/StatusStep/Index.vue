@@ -80,7 +80,7 @@ function createItem() {
 }
 
 function deleteItem(item) {
-  if (can('soStatusStep', 'delete')) {
+  if (can('soStatusStep', 'excluir')) {
     swDeleteQuestion(item.name, route('orders.statusStep.destroy', item.id))
   } else {
     swToast('Você não tem permissão para excluir Passos de OS.', 'error', 3000)
@@ -88,7 +88,7 @@ function deleteItem(item) {
 }
 
 function editItem(item) {
-  if (can('soStatusStep', 'edit')) {
+  if (can('soStatusStep', 'editar')) {
     router.get(route('orders.statusStep.edit', item.id))
   } else {
     swToast('Você não tem permissão para editar Passos de OS.', 'error', 3000)
@@ -124,8 +124,7 @@ onMounted(() => {
           </v-col>
         </v-row>
       </v-card-text>
-
-      <pre>{{ props.status }}</pre>
+      <!-- <pre>{{ content.data }}</pre> -->
 
       <v-card-item>
         <v-data-table-server
