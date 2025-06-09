@@ -15,6 +15,13 @@ trait SoStatusTrait
      */
     public function statusSteps()
     {
-        return $this->hasMany(SoStatusStep::class, 'so_status_id', 'id');
+        return $this->hasMany(SoStatusStep::class);
+    }
+
+    public static function bootSoStatusTrait()
+    {
+        static::deleting(function ($model) {
+            $model->statusSteps()->delete();
+        });
     }
 }
