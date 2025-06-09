@@ -17,7 +17,8 @@ class SoStatusStepFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'description' => fake()->word(),
+            'so_status_id' => fake()->numberBetween(0, 2),
         ];
     }
 }
