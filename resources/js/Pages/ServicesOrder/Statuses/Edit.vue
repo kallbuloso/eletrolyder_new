@@ -95,21 +95,33 @@ function deleteItem(item) {
         </v-row>
       </v-card-text>
       <v-card-text>
-        <v-data-table :headers="headers" :items="props.statusSteps" item-value="description" :show-select="false">
-          <template #loading>
-            <v-skeleton-loader type="table-row@5" />
-          </template>
-          <template #item.action="{ item }">
-            <v-icon class="ml-2" color="warning" icon="mdi-pencil" size="small" @click="editItem(item)" />
-            <v-icon class="ml-2" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
-          </template>
-          <template #bottom>
-            <v-spacer />
-            <Link :href="route('orders.statusStep.create', props.data.id)" as="div">
-              <v-btn class="mr-2" :prepend-icon="'mdi-plus'" variant="text">Adicionar andamento</v-btn>
-            </Link>
-          </template>
-        </v-data-table>
+        <!-- <pre>{{ props.statusSteps.length }}</pre> -->
+        <template v-if="props.statusSteps.length > 0">
+          <v-data-table :headers="headers" :items="props.statusSteps" item-value="description" :show-select="false">
+            <template #loading>
+              <v-skeleton-loader type="table-row@5" />
+            </template>
+            <template #item.action="{ item }">
+              <v-icon class="ml-2" color="warning" icon="mdi-pencil" size="small" @click="editItem(item)" />
+              <v-icon class="ml-2" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
+            </template>
+            <template #bottom>
+              <v-spacer />
+              <Link :href="route('orders.statusStep.create', props.data.id)" as="div">
+                <v-btn class="mr-2" :prepend-icon="'mdi-plus'" variant="text">Adicionar andamento</v-btn>
+              </Link>
+            </template>
+          </v-data-table>
+        </template>
+        <template v-else>
+          <v-row align="center" justify="center">
+            <v-empty-state headline="Andamentos" title="Nenhum andamento para este status.">
+              <Link :href="route('orders.statusStep.create', props.data.id)" as="div">
+                <v-btn class="mr-2" :prepend-icon="'mdi-plus'" variant="text">Adicionar andamento</v-btn>
+              </Link>
+            </v-empty-state>
+          </v-row>
+        </template>
       </v-card-text>
       <v-card-actions class="mx-4">
         <v-spacer />
