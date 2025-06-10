@@ -96,10 +96,6 @@ function deleteItem(item) {
     swToast('Você não tem permissão para excluir status.', 'error', 3000)
   }
 }
-
-function manageSteps(id) {
-  router.get(route('orders.soStatus.steps', id))
-}
 </script>
 
 <template layout="AppShell,AuthenticatedLayout">
@@ -134,9 +130,6 @@ function manageSteps(id) {
         >
           <template #loading>
             <v-skeleton-loader type="table-row@5" />
-          </template>
-          <template #item.description="{ item }">
-            <a @click.prevent="manageSteps(item.id)" href="#">{{ item.description }}</a>
           </template>
           <template #item.status_type="{ item }">
             {{ item.status_type == 0 ? 'Entrada' : item.status_type == 1 ? 'Em Andamento' : 'Saida' }}
