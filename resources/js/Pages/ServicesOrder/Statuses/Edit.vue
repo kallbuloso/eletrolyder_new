@@ -96,6 +96,9 @@ function deleteItem(item) {
       </v-card-text>
       <v-card-text>
         <v-data-table :headers="headers" :items="props.statusSteps" item-value="description" :show-select="false">
+          <template #loading>
+            <v-skeleton-loader type="table-row@5" />
+          </template>
           <template #item.action="{ item }">
             <v-icon class="ml-2" color="warning" icon="mdi-pencil" size="small" @click="editItem(item)" />
             <v-icon class="ml-2" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
@@ -106,7 +109,6 @@ function deleteItem(item) {
               <v-btn class="mr-2" :prepend-icon="'mdi-plus'" variant="text">Adicionar andamento</v-btn>
             </Link>
           </template>
-          <!-- <pre>{{ props.data }}</pre> -->
         </v-data-table>
       </v-card-text>
       <v-card-actions class="mx-4">
