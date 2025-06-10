@@ -59,7 +59,7 @@ const menuItems = [
   { tooltip: 'Ordem de Serviço', target: '#orders', icon: 'iconify:game-icons:auto-repair' },
   { tooltip: 'Chats', target: '#chats', icon: 'iconify:gridicons:chat' },
   { tooltip: 'Mercado Livre', target: '#meli', icon: 'iconify:simple-icons:mercadopago' },
-  { tooltip: 'Cadastros', target: '#registers', icon: 'iconify:medical-icon:i-registration' },
+  { tooltip: 'Cadastros', target: '#registers', icon: 'iconify:material-symbols:app-registration-outline-sharp' },
   { tooltip: 'Configurações', target: '#settings', icon: 'iconify:carbon:settings-edit' }
 ]
 
@@ -118,10 +118,6 @@ const menuSections = ref([
           {
             title: 'Status da OS',
             href: 'orders.soStatus.index'
-          },
-          {
-            title: 'Passos da OS',
-            href: 'orders.statusStep.index'
           }
         ]
       }
