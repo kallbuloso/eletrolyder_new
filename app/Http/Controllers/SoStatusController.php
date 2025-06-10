@@ -132,7 +132,7 @@ class SoStatusController extends Controller
         $status = $this->service->create($val);
 
         return redirect()->route($this->pageIndex)
-            ->toast("$this->titleSingular criado com sucesso. ID: {$status->id}", 'success');
+            ->toast("Status criado com sucesso.", 'success');
     }
 
     /**
@@ -155,14 +155,6 @@ class SoStatusController extends Controller
             'data' => $this->service->getById($id),
             'statusSteps' => $this->service->getById($id)->statusSteps()->get(),
         ]);
-
-        // return $this->renderModal("$this->pathView/Edit")
-        //     ->with([
-        //         'title' => "Editando $this->titleSingular",
-        //         'data' => $this->service->getById($id),
-        //         'statusSteps' => $this->service->getById($id)->statusSteps()->get(),
-        //     ])
-        //     ->baseRoute($this->pageIndex);
     }
 
     /**
