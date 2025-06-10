@@ -94,18 +94,6 @@ function editItem(item) {
     swToast('Você não tem permissão para editar Passos de OS.', 'error', 3000)
   }
 }
-
-// function showItem(item) {
-//   if (can('soStatusStep', 'show')) {
-//     router.get(route('so-status-steps.show', item.id))
-//   } else {
-//     swToast('Você não tem permissão para visualizar SoStatusStep.', 'error', 3000)
-//   }
-// }
-
-onMounted(() => {
-  // console.log('SoStatusStep page mounted')
-})
 </script>
 
 <template layout="AppShell,AuthenticatedLayout">
@@ -124,8 +112,6 @@ onMounted(() => {
           </v-col>
         </v-row>
       </v-card-text>
-      <!-- <pre>{{ content.data }}</pre> -->
-
       <v-card-item>
         <v-data-table-server
           :page="page"
@@ -139,13 +125,10 @@ onMounted(() => {
           :loading="isLoadingTable"
           @update:options="loadItems"
         >
-          <!--<template #item.gender="{ item }">
-            {{ item.gender == 'male' ? 'Masculino' : 'Feminino' }}
-          </template>-->
+          <template #loading>
+            <v-skeleton-loader type="table-row@5" />
+          </template>
           <template #item.action="{ item }">
-            <!--
-                <v-icon class="ml-2" color="primary" icon="mdi-eye" size="small" @click="showItem(item)" />
-              -->
             <v-icon class="ml-2" color="warning" icon="mdi-pencil" size="small" @click="editItem(item)" />
             <v-icon class="ml-2" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
           </template>
