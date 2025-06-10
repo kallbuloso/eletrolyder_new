@@ -39,16 +39,12 @@ onMounted(() => {
         <v-card-text class="mx-1">
           <v-row>
             <v-col cols="12">
-              <app-text-field id="description" v-model="form.description" label="Descrição" placeholder="Descrição do passo" required :error-messages="form.errors.description" />
+              <app-text-field id="description" v-model="form.description" label="Descrição" placeholder="Descrição do passo" :error-messages="form.errors.description" />
             </v-col>
           </v-row>
         </v-card-text>
-        <pre>{{ form }}</pre>
         <v-card-actions>
           <v-spacer />
-          <!-- <Link :href="route('statusSteps.index')" as="div">
-            <v-btn variant="text">Cancelar</v-btn>
-          </Link> -->
           <v-btn type="submit" color="primary" :loading="form.processing">Salvar</v-btn>
         </v-card-actions>
       </v-card>
