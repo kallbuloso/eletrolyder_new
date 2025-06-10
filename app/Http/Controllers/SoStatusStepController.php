@@ -6,10 +6,9 @@ use App\Models\SoStatusStep;
 use App\Models\SoStatus;
 use Illuminate\Http\Request;
 use App\Http\Requests\SoStatusStepRequest;
-use App\Http\Requests\PhoneRequest;
-use App\Http\Requests\AddressRequest;
 use App\Services\SoStatusStepService;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * Class SoStatusStepController
@@ -27,13 +26,13 @@ class SoStatusStepController extends Controller
    * Page Title
    * @var string
    */
-  private $pageTitle = 'Passos de Status de Ordens de Serviço';
+  private $pageTitle = 'Andamento de Status de OS';
 
   /**
    * Title Singular
    * @var string
    */
-  private $titleSingular = 'Passo de Status de Ordem de Serviço';
+  private $titleSingular = 'Andamento de Status';
 
   /**
    * Summary of pageIndex
@@ -110,15 +109,18 @@ class SoStatusStepController extends Controller
    *
    * @return \Momentum\Modal\Modal
    */
-  public function create(): \Momentum\Modal\Modal
+  public function create($id): \Momentum\Modal\Modal
   {
     $this->authorize('soStatusStep criar');
+
+    // dd($id);
 
     return $this->renderModal("$this->pathView/Create")
       ->with([
         'title' => "Adicionar $this->titleSingular",
+        'soStatusId' => $id,
       ])
-      ->baseRoute($this->pageIndex);
+      ->baseRoute('orders.soStatus.edit', $id);
   }
 
   /**
@@ -131,50 +133,41 @@ class SoStatusStepController extends Controller
   {
     $this->authorize('soStatusStep criar');
 
-    $this->service->create($request->validated());
+    $val = $request->validated();
 
-    return redirect()->route($this->pageIndex)
+    $existingStatus = $this->service->where('description', $val['description'])
+      ->where('tenant_id', session('tenant_id'))
+      ->where('so_status_id', $val['so_status_id'], '=') // Corrected to access the so_status_id from $val
+      ->first();
+
+    if ($existingStatus) {
+      return redirect()->back()
+        ->withErrors(['description' => 'Já existe um andamento com essa descrição.'])
+        ->withInput();
+    }
+
+    $status = $this->service->create($val);
+
+    return redirect()->route('orders.soStatus.edit', $status->so_status_id)
       ->toast("$this->titleSingular criado.", 'success');
-  }
-
-  /**
-   * Display the specified resource.
-   *
-   * @return \Inertia\Response
-   */
-  public function show($id): \Inertia\Response
-  {
-    $this->authorize('soStatusStep ver');
-
-    return $this->renderPage("$this->pathView/Show", [
-      'title' => 'Detalhes de ' . $this->titleSingular,
-      'breadcrumbs' => [
-        ['title' => 'Dashboard', 'href' => route('dashboard')],
-        ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-        ['title' => 'Mostrar', 'disabled' => true],
-      ],
-      'data' => $this->service->getById($id),
-    ]);
   }
 
   /**
    * Show the form for editing the specified resource.
    *
-   * @return \Inertia\Response
+   * @return \Momentum\Modal\Modal
    */
-  public function edit($id): \Inertia\Response
+  public function edit($id): \Momentum\Modal\Modal
   {
     $this->authorize('soStatusStep editar');
-
-    return $this->renderPage("$this->pathView/Form", [
-      'title' => "Editando $this->titleSingular",
-      'breadcrumbs' => [
-        ['title' => 'Dashboard', 'href' => route('dashboard')],
-        ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-        ['title' => 'Editar', 'disabled' => true],
-      ],
-      'data' => $this->service->getById($id),
-    ]);
+    $data = $this->service->getById($id);
+    // dd($data['so_status_id']);
+    return $this->renderModal("$this->pathView/Edit")
+      ->with([
+        'title' => "Editar $this->titleSingular",
+        'data' => $data,
+      ])
+      ->baseRoute('orders.soStatus.edit', $data['so_status_id']);
   }
 
   /**
@@ -188,9 +181,24 @@ class SoStatusStepController extends Controller
   {
     $this->authorize('soStatusStep editar');
 
-    $this->service->update($id, $request->validated());
+    $val = $request->validated();
 
-    return redirect()->back()
+    $existingStatus = $this->service->where('description', $val['description'])
+      ->where('tenant_id', session('tenant_id'))
+      ->where('id', $id, '!=')
+      ->where('so_status_id', $val['so_status_id'], '=') // Corrected to access the so_status_id from $val
+      ->first();
+
+    if ($existingStatus) {
+      return redirect()->back()
+        ->withErrors(['description' => 'Já existe um andamento com essa descrição.'])
+        ->withInput();
+    }
+
+    $this->service->update($id, $val);
+    // dd($status);
+
+    return redirect()->route('orders.soStatus.edit', $val['so_status_id'])
       ->toast("$this->titleSingular atualizado.", 'success');
   }
 
@@ -200,13 +208,13 @@ class SoStatusStepController extends Controller
    * @param  $id
    * @return \Illuminate\Http\RedirectResponse
    */
-  public function destroy($id): \Illuminate\Http\RedirectResponse
+  public function destroy($redirect, $id): \Illuminate\Http\RedirectResponse
   {
     $this->authorize('soStatusStep excluir');
 
     $this->service->deleteById($id);
 
-    return redirect()->route($this->pageIndex)
+    return redirect()->route('orders.soStatus.edit', $redirect)
       ->toast("$this->titleSingular excluído.", 'success');
   }
 }
