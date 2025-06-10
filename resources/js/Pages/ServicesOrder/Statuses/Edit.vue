@@ -95,7 +95,6 @@ function deleteItem(item) {
         </v-row>
       </v-card-text>
       <v-card-text>
-        <!-- <pre>{{ props.statusSteps.length }}</pre> -->
         <template v-if="props.statusSteps.length > 0">
           <v-data-table :headers="headers" :items="props.statusSteps" item-value="description" :show-select="false">
             <template #loading>
@@ -125,6 +124,9 @@ function deleteItem(item) {
       </v-card-text>
       <v-card-actions class="mx-4">
         <v-spacer />
+        <Link :href="route('orders.soStatus.index')" as="div">
+          <v-btn class="mr-2" :prepend-icon="'iconify:material-symbols:arrow-back-rounded'" variant="text">Voltar</v-btn>
+        </Link>
         <v-btn type="submit" color="primary" variant="text" :loading="form.processing">Salvar Status</v-btn>
       </v-card-actions>
     </v-card>
