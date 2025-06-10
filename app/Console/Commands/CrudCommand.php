@@ -37,7 +37,7 @@ class CrudCommand extends GeneratorCommand
 
         $this->runCommands([
             'php artisan optimize:clear',
-            'php artisan migrate',
+            // 'php artisan migrate',
         ]);
 
         // If table not exist in DB return
@@ -67,7 +67,8 @@ class CrudCommand extends GeneratorCommand
 
         // $this->execute('composer dump-autoload');
         $this->runCommands([
-            // 'npm run format',
+            'npm run format',
+            'php artisan migrate:fresh --seed',
             // 'php artisan db:seed'
         ]);
 
