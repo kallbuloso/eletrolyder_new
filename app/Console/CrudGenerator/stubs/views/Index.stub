@@ -1,42 +1,72 @@
 <script setup>
-import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
-  data: {
-    type: Object
+  {{modelNameLowerCase}}Count: {
+    type: Number,
+    required: true
   }
 })
 
-const isLoadingTable = ref(false)
+// Estado da tabela
+const responseData = ref([])
+const content = computed(() => responseData.value)
+const isLoadingTable = ref(true)
 const search = ref(null)
 const itemsPerPage = ref(10)
 const page = ref(1)
-const pageCount = computed(() => {
-  return props.data.last_page
-})
+
+// Definição das colunas
 const headers = ref([
   { title: 'ID', key: 'id' },{{tableHeaders}}
   { title: 'Action', key: 'action', sortable: false, align: 'end' },
 ])
 
-function loadItems({ page, itemsPerPage, sortBy, search }) {
+// Carregamento dos dados
+async function loadItems(options = {}) {
   isLoadingTable.value = true
-  const upPage = page
-  const params = {
-    page: upPage,
-    limit: itemsPerPage,
-    sort: sortBy[0]
+  const { page, itemsPerPage, sortBy = [], search = null } = options
+
+  const params = new URLSearchParams()
+  params.append('page', page || 1)
+  params.append('limit', itemsPerPage || 10)
+
+  if (sortBy?.length > 0) {
+    params.append('sort[key]', sortBy[0].key)
+    params.append('sort[order]', sortBy[0].order === 'desc' ? 'desc' : 'asc')
   }
+
   if (search) {
-    params.search = search
+    params.append('search', search)
   }
-  router.get('/{{modelUrl}}', params, {
-    preserveState: true,
-    preserveScroll: true,
-    onSuccess: () => {
-      isLoadingTable.value = false
+
+  try {
+    const response = await fetch(`//{{modelUrl}}?${params.toString()}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`)
     }
-  })
+
+    const data = await response.json()
+    if (data.data) {
+      data.data = data.data.map((item) => ({
+        ...item,
+        role: item.roles?.[0]?.name ?? 'Sem acesso'
+      }))
+    }
+    responseData.value = data
+  } catch (error) {
+    console.error('Error:', error)
+    swToast(`Erro ao carregar dados: ${error.message}`, 'error', 6000)
+  } finally {
+    isLoadingTable.value = false
+  }
 }
 
 function deleteItem(item) {
@@ -77,57 +107,72 @@ onMounted(() => {
 </script>
 
 <template layout="AppShell,AuthenticatedLayout">
-  <v-card class="mx-auto" width="800" prepend-icon="mdi-account-lock" :title="$page.props.title">
-    <template #append>
-      <v-btn prepend-icon="mdi-plus" color="primary" variant="text" @click="createItem()">Novo</v-btn>
-    </template>
-    <v-card-text class="d-flex">
-      <v-row>
-        <v-col cols="12" md="9">
-          <v-text-field v-model="search" label="Procurar" prepend-inner-icon="mdi-magnify" hide-details clearable />
-        </v-col>
-        <v-col v-if="props.data.total > 10" cols="12" md="3">
-          <v-select v-model="itemsPerPage" :items="[10, 15, 25, 35, 50, 100]" label="Itens por Página" width="150px"></v-select>
-        </v-col>
-      </v-row>
-    </v-card-text>
-    <!--
-      <pre>{{ props.data }}</pre>
-      -->
-    <v-card-item>
-      <v-data-table-server
-        :page="page"
-        :items="props.data.data"
-        :items-length="props.data.total"
-        :headers="headers"
-        :search="search"
-        :show-select="false"
-        :items-per-page="itemsPerPage"
-        loading-text="Carregando, por favor aguarde..."
-        :loading="isLoadingTable"
-        @update:options="loadItems"
-      >
-        <!--<template #item.gender="{ item }">
-          {{ item.gender == 'male' ? 'Masculino' : 'Feminino' }}
-        </template>-->
-        <template #item.action="{ item }">
-          <!--
-              <v-icon class="ml-2" color="primary" icon="mdi-eye" size="small" @click="showItem(item)" />
-            -->
-          <v-icon class="ml-2" color="warning" icon="mdi-pencil" size="small" @click="editItem(item)" />
-          <v-icon class="ml-2" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
-        </template>
-        <template #bottom>
-          <v-divider />
-        </template>
-      </v-data-table-server>
-    </v-card-item>
-    <v-card-actions>
-      <template v-if="props.data.total > 10">
-        <v-list-item :title="`Página ${page} de ${pageCount}`" :subtitle="`Total de ${props.data.total} itens`" />
-        <v-spacer />
-        <v-pagination v-model="page" :length="pageCount" :total-visible="2" size="small" rounded></v-pagination>
+  <template v-if="props.{{modelNameLowerCase}}Count > 0">
+    <v-card class="mx-auto" width="800" prepend-icon="mdi-account-lock" :title="$page.props.title">
+      <template #append>
+        <v-btn prepend-icon="mdi-plus" color="primary" variant="text" @click="createItem()">Novo</v-btn>
       </template>
-    </v-card-actions>
-  </v-card>
+      <v-card-text class="d-flex">
+        <v-row>
+          <v-col cols="12" md="9">
+            <v-text-field v-model="search" label="Procurar" prepend-inner-icon="mdi-magnify" hide-details clearable />
+          </v-col>
+          <v-col v-if="props.data.total > 10" cols="12" md="3">
+            <v-select v-model="itemsPerPage" :items="[10, 15, 25, 35, 50, 100]" label="Itens por Página" width="150px"></v-select>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <!--
+        <pre>{{ props.data }}</pre>
+        -->
+      <v-card-item>
+        <v-data-table-server
+          :page="page"
+          :items="content.data"
+          :items-length="Number(content.total)"
+          :headers="headers"
+          :search="search"
+          :show-select="false"
+          :items-per-page="itemsPerPage"
+          loading-text="Carregando, por favor aguarde..."
+          :loading="isLoadingTable"
+          @update:options="loadItems"
+        >
+          <template #loading>
+            <v-skeleton-loader type="table-row@5" />
+          </template>
+          <!--<template #item.gender="{ item }">
+            {{ item.gender == 'male' ? 'Masculino' : 'Feminino' }}
+          </template>-->
+          <template #item.action="{ item }">
+            <!--
+                <v-icon class="ml-2" color="primary" icon="mdi-eye" size="small" @click="showItem(item)" />
+              -->
+            <v-icon v-if="can('{{modelNameLowerCase}}', 'editar')" color="warning" icon="mdi-pencil" size="small" @click="editItem(item)" />
+            <v-icon v-if="can('{{modelNameLowerCase}}', 'excluir')" class="ml-1" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
+          </template>
+          <template #bottom>
+            <v-divider />
+          </template>
+        </v-data-table-server>
+      </v-card-item>
+      <v-card-actions>
+        <template v-if="props.data.total > 10">
+          <v-list-item :title="`Página ${page} de ${pageCount}`" :subtitle="`Total de ${props.data.total} itens`" />
+          <v-spacer />
+          <v-pagination v-model="page" :length="pageCount" :total-visible="2" size="small" rounded></v-pagination>
+        </template>
+      </v-card-actions>
+    </v-card>
+  </template>
+  <template v-else>
+    <v-row align="center" justify="center" style="height: 70vh">
+      <v-empty-state :headline="$page.props.title" title="Nenhum registro encontrado.">
+        <template #media>
+          <v-icon icon="iconify:fa6-solid:people-line" />
+        </template>
+        <v-btn prepend-icon="mdi-plus" color="primary" variant="flat" @click="createItem()">Adicionar Status</v-btn>
+      </v-empty-state>
+    </v-row>
+  </template>
 </template>
