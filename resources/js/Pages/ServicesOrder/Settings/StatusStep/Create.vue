@@ -13,6 +13,7 @@ const props = defineProps({
     default: () => ({})
   }
 })
+
 const form = useForm({
   so_status_id: props.soStatusId,
   tenant_id: usePage().props.auth.user.tenant_id,
