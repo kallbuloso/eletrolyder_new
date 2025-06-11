@@ -1,0 +1,33 @@
+<script setup>
+const form = useForm({ {{useFormCreate}}
+})
+
+const submit = () => {
+  form.post('/{{modelUrl}}', {
+    onSuccess() {
+      form.reset()
+    }
+  })
+}
+
+onMounted(() => {
+  // console.log('{{modelName}} page Create mounted')
+})
+</script>
+
+<template layout="AppShell,AuthenticatedLayout">
+  <v-form @submit.prevent="submit">
+    <v-card class="mx-auto" width="400" prepend-icon="mdi-plus" :title="$page.props.title">
+      <v-card-text>
+        {{form}}
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <Link :href="route('{{modelRoute}}.index')" as="div">
+          <v-btn variant="text">Cancelar</v-btn>
+        </Link>
+        <v-btn type="submit" color="primary" :loading="form.processing">Salvar</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-form>
+</template>
