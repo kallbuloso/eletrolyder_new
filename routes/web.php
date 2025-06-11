@@ -13,6 +13,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SoStatusController;
 use App\Http\Controllers\SoStatusStepController;
+use App\Http\Controllers\SoDevicesTypeController;
 // routeImport
 
 Route::get('/', function () {
@@ -123,7 +124,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
-            Route::get('/show/{id}', 'show')->name('show');
             Route::get('/{id}/edit', 'edit')->name('edit');
             Route::post('/{id}/phone', 'storePhone')->name('phone.store');
             Route::post('/{id}/address', 'storeAddress')->name('address.store');
@@ -136,7 +136,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
-            Route::get('/show/{id}', 'show')->name('show');
             Route::get('/{id}/edit', 'edit')->name('edit');
             Route::post('/{id}/phone', 'storePhone')->name('phone.store');
             Route::post('/{id}/address', 'storeAddress')->name('address.store');
@@ -158,14 +157,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
         // Route groups for SoStatusStep
         Route::controller(SoStatusStepController::class)->prefix('status-steps')->as('statusStep.')->group(function () {
-            Route::get('/', 'index')->name('index');
             Route::get('/create/{data}', 'create')->name('create');
             Route::post('/', 'store')->name('store');
             Route::get('/{id}/edit', 'edit')->name('edit');
             Route::put('/{id}', 'update')->name('update');
             Route::delete('/{redirect}/{id}', 'destroy')->name('destroy');
         });
+        // Route groups for SoDevicesType
+        Route::controller(SoDevicesTypeController::class)->prefix('so-devices-types')->as('devicesType.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
         // addRoute
+
 
     });
 });
