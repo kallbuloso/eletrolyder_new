@@ -19,13 +19,14 @@ const props = defineProps({
 })
 
 const value = shallowRef(props.data.status_type || '0')
+const generatesRevenue = shallowRef(props.data.generates_revenue)
 
 const form = useForm({
   id: props.data.id,
   tenant_id: usePage().props.auth.user.tenant_id,
   description: props.data.description,
   status_type: value.value.toString(),
-  generates_revenue: props.data.generates_revenue
+  generates_revenue: Boolean(generatesRevenue.value)
 })
 
 const headers = ref([
@@ -93,6 +94,7 @@ function deleteItem(item) {
             <v-checkbox id="generates_revenue" v-model="form.generates_revenue" class="mt-6" label="Gera Receita?" :error-messages="form.errors.generates_revenue" />
           </v-col>
         </v-row>
+        <pre>{{ form }}</pre>
       </v-card-text>
       <v-card-text>
         <template v-if="props.statusSteps.length > 0">
