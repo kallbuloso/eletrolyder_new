@@ -44,7 +44,7 @@ class SoStatusStepController extends Controller
    * Summary of pathView
    * @var string
    */
-  private $pathView = 'ServicesOrder/StatusStep';
+  private $pathView = 'ServicesOrder/Settings/StatusStep';
 
   /**
    * SoStatusStepController constructor.
