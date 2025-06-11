@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->createSoStatuses($tenant->id);
-        $this->createSoDevices($tenant->id);
+        $this->createSoDevicesType($tenant->id);
 
         $user = User::factory()->create([
             'tenant_id' => $tenant->id,
@@ -144,89 +144,74 @@ class DatabaseSeeder extends Seeder
      * @param int $tenantId
      * @return void
      */
-    public function createSoDevices($tenantId): void
+    public function createSoDevicesType($tenantId): void
     {
         $devices = [
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Celular',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Tablet',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Notebook',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Desktop',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Impressora',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Monitor',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'TV',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'System de som',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Console de videogame',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Equipamento de áudio',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Equipamento de vídeo',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Equipamento de rede',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Equipamento de automação',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Equipamento de segurança',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Equipamento de fotografia',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Equipamento de vídeo',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Equipamento de iluminação',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Equipamento de áudio profissional',
             ],
             [
-                'tenant_id' => $tenantId,
                 'description' => 'Equipamento de laboratório',
             ],
         ];
 
         foreach ($devices as $device) {
-            SoDevicesType::create($device);
+            SoDevicesType::create([
+                'tenant_id' => $tenantId,
+                'description' => $device['description'],
+                'is_active' => fake()->boolean(), // Assuming all devices are active by default
+            ]);
         }
     }
 
