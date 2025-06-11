@@ -1,6 +1,9 @@
-          <v-text-field
-            v-model="form.{{column}}"
-            label="{{title}}"
-            placeholder="{{title}}"
-            :error-messages="form.errors.{{column}}"
-          />
+          <v-col cols="12">
+            <v-text-field
+              id="{{column}}"
+              v-model="form.{{column}}"
+              label="{{title}}"
+              placeholder="{{title}}"
+              :error-messages="form.errors.{{column}}"
+            />
+          </v-col>
