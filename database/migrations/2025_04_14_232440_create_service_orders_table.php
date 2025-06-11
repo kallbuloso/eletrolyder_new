@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tenant_id')->nullable()->constrained();
             $table->string('description'); // Descrição do tipo de dispositivo
+            $table->boolean('is_active')->default(true); // Ativo ou inativo
             $table->timestamps();
         });
 
