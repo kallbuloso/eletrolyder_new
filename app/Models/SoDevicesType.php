@@ -36,11 +36,11 @@ class SoDevicesType extends Model
    */
   protected $fillable = [
     'tenant_id',
-    'description'
+    'description',
+    'is_active'
   ];
 
   protected $searchable = [
-    'tenant_id',
     'description'
   ];
 }
