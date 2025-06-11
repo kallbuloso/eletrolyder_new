@@ -94,7 +94,6 @@ function deleteItem(item) {
             <v-checkbox id="generates_revenue" v-model="form.generates_revenue" class="mt-6" label="Gera Receita?" :error-messages="form.errors.generates_revenue" />
           </v-col>
         </v-row>
-        <pre>{{ form }}</pre>
       </v-card-text>
       <v-card-text>
         <template v-if="props.statusSteps.length > 0">
