@@ -45,7 +45,7 @@ return new class extends Migration
             $table->foreignId('tenant_id')->nullable()->constrained();
             $table->string('description'); // Descrição do status            
             $table->tinyInteger('status_type'); // status_type: entrada = 0, em andamento = 1, saída = 2
-            $table->boolean('generates_revenue')->nullable(); // generates_revenue: 0 = não gera receita, 1 = gera receita 
+            $table->boolean('generates_revenue')->default(false); // generates_revenue: 0 = não gera receita, 1 = gera receita 
             $table->timestamps();
         });
 
