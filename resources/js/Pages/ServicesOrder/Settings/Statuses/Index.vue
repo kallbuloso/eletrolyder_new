@@ -70,8 +70,6 @@ async function loadItems(options = {}) {
   }
 }
 
-// TODO: Recarregar a tabela ao criar ou editar um novo usuário
-
 // Ações da tabela
 function createItem() {
   if (can('soStatus', 'criar')) {
