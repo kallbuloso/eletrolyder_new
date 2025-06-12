@@ -18,6 +18,10 @@ const props = defineProps({
   }
 })
 
+function routeDefault(name) {
+  return 'orders.soSettings.soStatus.' + name
+}
+
 const value = shallowRef(props.data.status_type || '0')
 const generatesRevenue = shallowRef(props.data.generates_revenue)
 
@@ -35,10 +39,10 @@ const headers = ref([
 ])
 
 const submit = () => {
-  form.put(route('orders.soStatus.update', props.data.id), {
+  form.put(route(routeDefault('update'), props.data.id), {
     onSuccess() {
       form.reset()
-      router.visit(route('orders.soStatus.index'), {
+      router.visit(route(routeDefault('index')), {
         preserveScroll: true,
         preserveState: false
       })
@@ -54,7 +58,7 @@ const statusTypes = [
 
 function editItem(item) {
   if (can('soStatusStep', 'editar')) {
-    router.get(route('orders.statusStep.edit', item.id))
+    router.get(route('orders.soSettings.statusStep.edit', item.id))
   } else {
     swToast('Você não tem permissão para editar Passos de OS.', 'error', 3000)
   }
@@ -62,7 +66,7 @@ function editItem(item) {
 
 function deleteItem(item) {
   if (can('soStatusStep', 'excluir')) {
-    swDeleteQuestion(item.description, route('orders.statusStep.destroy', [props.data.id, item.id]))
+    swDeleteQuestion(item.description, route('orders.soSettings.statusStep.destroy', [props.data.id, item.id]))
   } else {
     swToast('Você não tem permissão para excluir Passos de OS.', 'error', 3000)
   }
@@ -107,7 +111,7 @@ function deleteItem(item) {
             </template>
             <template #bottom>
               <v-spacer />
-              <Link :href="route('orders.statusStep.create', props.data.id)" as="div">
+              <Link :href="route('orders.soSettings.statusStep.create', props.data.id)" as="div">
                 <v-btn class="mr-2" :prepend-icon="'mdi-plus'" variant="text">Adicionar andamento</v-btn>
               </Link>
             </template>
@@ -116,7 +120,7 @@ function deleteItem(item) {
         <template v-else>
           <v-row align="center" justify="center">
             <v-empty-state headline="Andamentos" title="Nenhum andamento para este status.">
-              <Link :href="route('orders.statusStep.create', props.data.id)" as="div">
+              <Link :href="route('orders.soSettings.statusStep.create', props.data.id)" as="div">
                 <v-btn class="mr-2" :prepend-icon="'mdi-plus'" variant="text">Adicionar andamento</v-btn>
               </Link>
             </v-empty-state>
@@ -125,7 +129,7 @@ function deleteItem(item) {
       </v-card-text>
       <v-card-actions class="mx-4">
         <v-spacer />
-        <Link :href="route('orders.soStatus.index')" as="div">
+        <Link :href="route(routeDefault('index'))" as="div">
           <v-btn class="mr-2" :prepend-icon="'iconify:material-symbols:arrow-back-rounded'" variant="text">Voltar</v-btn>
         </Link>
         <v-btn type="submit" color="primary" variant="text" :loading="form.processing">Salvar Status</v-btn>
