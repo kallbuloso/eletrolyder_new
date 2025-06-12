@@ -17,7 +17,7 @@
           <template #activator="{ props }">
             <v-list-item v-bind="props" class="bg-background" :class="{ 'text-primary': openedGroup[0] === item.group }">
               <v-list-item-title>
-                <div class="d-flex flex-row align-center">
+                <div class="flex-row d-flex align-center">
                   <v-icon class="mr-2">
                     {{ item.icon || 'mdi-chevron-double-right' }}
                   </v-icon>
@@ -35,7 +35,7 @@
               }"
             >
               <v-list-item-title>
-                <div class="d-flex flex-row align-center">
+                <div class="flex-row d-flex align-center">
                   <v-icon class="mr-2">
                     {{ child.icon || 'mdi-chevron-right' }}
                   </v-icon>
@@ -51,7 +51,7 @@
         <Link :key="index" :href="route(item.href)" as="div">
           <v-list-item link :class="{ 'text-primary': activeRoute === item.href }">
             <v-list-item-title>
-              <div class="d-flex flex-row align-center">
+              <div class="flex-row d-flex align-center">
                 <v-icon class="mr-2">
                   {{ item.icon || 'mdi-chevron-right' }}
                 </v-icon>
