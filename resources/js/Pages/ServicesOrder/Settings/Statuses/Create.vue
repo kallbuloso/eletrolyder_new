@@ -17,7 +17,7 @@ const form = useForm({
 })
 
 const submit = () => {
-  form.post(route('orders.soStatus.store'), {
+  form.post(route('orders.soSettings.soStatus.store'), {
     onSuccess: () => form.reset()
   })
 }
@@ -57,9 +57,6 @@ const statusTypes = [
         </v-card-text>
         <v-card-actions class="mx-4">
           <v-spacer />
-          <!-- <Link :href="route('orders.soStatus.index')" as="div">
-            <v-btn class="mr-2" variant="text">Cancelar</v-btn>
-          </Link> -->
           <v-btn type="submit" color="primary" variant="text" :loading="form.processing">Salvar</v-btn>
         </v-card-actions>
       </v-card>
