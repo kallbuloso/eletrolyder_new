@@ -114,10 +114,10 @@ onMounted(() => {
       </template>
       <v-card-text class="d-flex">
         <v-row>
-          <v-col cols="12" md="9">
+          <v-col cols="12" lg="8" md="8" sm="6">
             <v-text-field v-model="search" label="Procurar" prepend-inner-icon="mdi-magnify" hide-details clearable />
           </v-col>
-          <v-col v-if="props.data.total > 10" cols="12" md="3">
+          <v-col v-if="content.total > 10" cols="12" lg="4" md="4" sm="6">
             <v-select v-model="itemsPerPage" :items="[10, 15, 25, 35, 50, 100]" label="Itens por Página" width="150px"></v-select>
           </v-col>
         </v-row>
@@ -157,10 +157,10 @@ onMounted(() => {
         </v-data-table-server>
       </v-card-item>
       <v-card-actions>
-        <template v-if="props.data.total > 10">
-          <v-list-item :title="`Página ${page} de ${pageCount}`" :subtitle="`Total de ${props.data.total} itens`" />
+        <template v-if="content.total > 10 && itemsPerPage < content.total">
+          <v-list-item :title="`Página ${content.current_page} de ${content.last_page}`" :subtitle="`Total de ${formatCount(content.total)} ${$page.props.title}`" />
           <v-spacer />
-          <v-pagination v-model="page" :length="pageCount" :total-visible="2" size="small" rounded></v-pagination>
+          <v-pagination v-model="page" :length="content.last_page" :total-visible="2" size="small" rounded></v-pagination>
         </template>
       </v-card-actions>
     </v-card>
