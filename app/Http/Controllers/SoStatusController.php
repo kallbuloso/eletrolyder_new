@@ -37,7 +37,7 @@ class SoStatusController extends Controller
      * Summary of pageIndex
      * @var string
      */
-    private $pageIndex = 'orders.soStatus.index';
+    private $pageIndex = 'orders.soSettings.soStatus.index';
 
     /**
      * Summary of pathView
