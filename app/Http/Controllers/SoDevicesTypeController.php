@@ -36,7 +36,7 @@ class SoDevicesTypeController extends Controller
    * Summary of pageIndex
    * @var string
    */
-  private $pageIndex = 'orders.devicesType.index';
+  private $pageIndex = 'orders.settings.soDevicesType.index';
 
   /**
    * Summary of pathView
