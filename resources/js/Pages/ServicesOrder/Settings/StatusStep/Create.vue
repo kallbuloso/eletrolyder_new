@@ -21,7 +21,7 @@ const form = useForm({
 })
 
 const submit = () => {
-  form.post(route('orders.statusStep.store'), {
+  form.post(route('orders.soSettings.statusStep.store'), {
     onSuccess() {
       form.reset()
     }
