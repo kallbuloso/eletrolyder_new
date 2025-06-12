@@ -146,35 +146,35 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Route groups for Order
     Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
-        // Route groups for SoStatus
-        Route::controller(SoStatusController::class)->prefix('statuses')->as('soStatus.')->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::get('/create', 'create')->name('create');
-            Route::post('/', 'store')->name('store');
-            Route::get('/{id}/edit', 'edit')->name('edit');
-            Route::put('/{id}', 'update')->name('update');
-            Route::delete('/{id}', 'destroy')->name('destroy');
+        Route::group(['prefix' => 'settings', 'as' => 'soSettings.'], function () {
+            // Route groups for SoStatus
+            Route::controller(SoStatusController::class)->prefix('statuses')->as('soStatus.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::get('/{id}/edit', 'edit')->name('edit');
+                Route::put('/{id}', 'update')->name('update');
+                Route::delete('/{id}', 'destroy')->name('destroy');
+            });
+            // Route groups for SoStatusStep
+            Route::controller(SoStatusStepController::class)->prefix('status-steps')->as('statusStep.')->group(function () {
+                Route::get('/create/{data}', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::get('/{id}/edit', 'edit')->name('edit');
+                Route::put('/{id}', 'update')->name('update');
+                Route::delete('/{redirect}/{id}', 'destroy')->name('destroy');
+            });
+            // Route groups for SoDevicesType
+            Route::controller(SoDevicesTypeController::class)->prefix('so-devices-types')->as('soDevicesType.')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::get('/{id}/edit', 'edit')->name('edit');
+                Route::put('/{id}', 'update')->name('update');
+                Route::delete('/{id}', 'destroy')->name('destroy');
+            });
+            // addRoute
         });
-        // Route groups for SoStatusStep
-        Route::controller(SoStatusStepController::class)->prefix('status-steps')->as('statusStep.')->group(function () {
-            Route::get('/create/{data}', 'create')->name('create');
-            Route::post('/', 'store')->name('store');
-            Route::get('/{id}/edit', 'edit')->name('edit');
-            Route::put('/{id}', 'update')->name('update');
-            Route::delete('/{redirect}/{id}', 'destroy')->name('destroy');
-        });
-        // Route groups for SoDevicesType
-        Route::controller(SoDevicesTypeController::class)->prefix('so-devices-types')->as('soDevicesType.')->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::get('/create', 'create')->name('create');
-            Route::post('/', 'store')->name('store');
-            Route::get('/{id}/edit', 'edit')->name('edit');
-            Route::put('/{id}', 'update')->name('update');
-            Route::delete('/{id}', 'destroy')->name('destroy');
-        });
-        // addRoute
-
-
     });
 });
 
