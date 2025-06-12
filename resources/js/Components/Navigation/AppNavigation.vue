@@ -113,11 +113,15 @@ const menuSections = ref([
       {
         title: 'Configurações',
         icon: 'iconify:carbon:settings-edit',
-        group: 'soStatus',
+        group: 'soSettings',
         children: [
           {
             title: 'Status da OS',
-            href: 'orders.soStatus.index'
+            href: 'orders.soSettings.soStatus.index'
+          },
+          {
+            title: 'Aparelhos',
+            href: 'orders.soSettings.soDevicesType.index'
           }
         ]
       }
