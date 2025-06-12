@@ -6,6 +6,10 @@ const props = defineProps({
   }
 })
 
+function routeDefault(name) {
+  return 'orders.soSettings.soStatus.' + name
+}
+
 // Estado da tabela
 const responseData = ref([])
 const content = computed(() => responseData.value)
@@ -41,7 +45,7 @@ async function loadItems(options = {}) {
   }
 
   try {
-    const response = await fetch(`/orders/statuses?${params.toString()}`, {
+    const response = await fetch(`/orders/settings/statuses?${params.toString()}`, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -73,15 +77,17 @@ async function loadItems(options = {}) {
 // Ações da tabela
 function createItem() {
   if (can('soStatus', 'criar')) {
-    router.get(route('orders.soStatus.create'))
+    // console.log(route(routeDefault('create')))
+    router.get(route(routeDefault('create')))
   } else {
     swToast('Você não tem permissão para criar status.', 'error', 3000)
   }
 }
 
-function editItem(id) {
+function editItem(item) {
   if (can('soStatus', 'editar')) {
-    router.get(route('orders.soStatus.edit', id))
+    // console.log(route(routeDefault('edit'), item.id))
+    router.get(route(routeDefault('edit'), item.id))
   } else {
     swToast('Você não tem permissão para editar status.', 'error', 3000)
   }
@@ -89,7 +95,7 @@ function editItem(id) {
 
 function deleteItem(item) {
   if (can('soStatus', 'excluir')) {
-    swDeleteQuestion(item.description, route('orders.soStatus.destroy', item.id))
+    swDeleteQuestion(item.description, route(routeDefault('destroy'), item.id))
   } else {
     swToast('Você não tem permissão para excluir status.', 'error', 3000)
   }
@@ -138,7 +144,7 @@ function deleteItem(item) {
             </v-chip>
           </template>
           <template #item.action="{ item }">
-            <v-icon v-if="can('soStatus', 'editar')" color="warning" icon="mdi-pencil" size="small" @click="editItem(item.id)" />
+            <v-icon v-if="can('soStatus', 'editar')" color="warning" icon="mdi-pencil" size="small" @click="editItem(item)" />
             <v-icon v-if="can('soStatus', 'excluir')" class="ml-1" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
           </template>
           <template #bottom>
