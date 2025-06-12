@@ -161,7 +161,7 @@ class SoStatusStepController extends Controller
   {
     $this->authorize('soStatusStep editar');
     $data = $this->service->getById($id);
-    // dd($data['so_status_id']);
+
     return $this->renderModal("$this->pathView/Edit")
       ->with([
         'title' => "Editar $this->titleSingular",
