@@ -24,7 +24,7 @@ class SoDevicesTypeController extends Controller
    * Page Title
    * @var string
    */
-  private $pageTitle = 'Tipo de Aparelhos';
+  private $pageTitle = 'Tipos de Aparelhos';
 
   /**
    * Title Singular
@@ -36,7 +36,7 @@ class SoDevicesTypeController extends Controller
    * Summary of pageIndex
    * @var string
    */
-  private $pageIndex = 'orders.settings.soDevicesType.index';
+  private $pageIndex = 'orders.soSettings.soDevicesType.index';
 
   /**
    * Summary of pathView
@@ -93,20 +93,17 @@ class SoDevicesTypeController extends Controller
   /**
    * Show the form for creating a new resource.
    *
-   * @return \Inertia\Response
+   * @return \Momentum\Modal\Modal
    */
-  public function create(): \Inertia\Response
+  public function create(): \Momentum\Modal\Modal
   {
     $this->authorize('soDevicesType criar');
 
-    return $this->renderPage("$this->pathView/Create", [
-      'title' => "Adicionar $this->titleSingular",
-      'breadcrumbs' => [
-        ['title' => 'Dashboard', 'href' => route('dashboard')],
-        ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-        ['title' => 'Adicionar', 'disabled' => true],
-      ],
-    ]);
+    return $this->renderModal("$this->pathView/Create")
+      ->with([
+        'title' => "Adicionar $this->titleSingular",
+      ])
+      ->baseRoute($this->pageIndex);
   }
 
   /**
@@ -119,30 +116,40 @@ class SoDevicesTypeController extends Controller
   {
     $this->authorize('soDevicesType criar');
 
-    $this->service->create($request->validated());
+    $val = $request->validated();
+
+    $existingStatus = $this->service->where('description', $val['description'])
+      ->where('tenant_id', session('tenant_id'))
+      ->first();
+
+    if ($existingStatus) {
+      return redirect()->back()
+        ->withErrors(['description' => 'Já existe um aparelho com essa descrição.'])
+        ->withInput();
+    }
+
+    $status = $this->service->create($val);
 
     return redirect()->route($this->pageIndex)
-      ->toast("$this->titleSingular criado.", 'success');
+      ->toast("$this->titleSingular criado com sucesso.", 'success');
   }
 
   /**
    * Show the form for editing the specified resource.
    *
-   * @return \Inertia\Response
+   * @return \Momentum\Modal\Modal
    */
-  public function edit($id): \Inertia\Response
+  public function edit($id): \Momentum\Modal\Modal
   {
     $this->authorize('soDevicesType editar');
+    $data = $this->service->getById($id);
 
-    return $this->renderPage("$this->pathView/Edit", [
-      'title' => "Editando $this->titleSingular",
-      'breadcrumbs' => [
-        ['title' => 'Dashboard', 'href' => route('dashboard')],
-        ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-        ['title' => 'Editar', 'disabled' => true],
-      ],
-      'data' => $this->service->getById($id),
-    ]);
+    return $this->renderModal("$this->pathView/Edit")
+      ->with([
+        'title' => "Editar $this->titleSingular",
+        'data' => $data,
+      ])
+      ->baseRoute('orders.soSettings.soDevicesType.index');
   }
 
   /**
@@ -156,7 +163,20 @@ class SoDevicesTypeController extends Controller
   {
     $this->authorize('soDevicesType editar');
 
-    $this->service->update($id, $request->validated());
+    $val = $request->validated();
+
+    $existingStatus = $this->service->where('description', $val['description'])
+      ->where('tenant_id', session('tenant_id'))
+      ->where('id', $id, '!=')
+      ->first();
+
+    if ($existingStatus) {
+      return redirect()->back()
+        ->withErrors(['description' => 'Já existe um aparelho com essa descrição.'])
+        ->withInput();
+    }
+
+    $this->service->update($id, $val);
 
     return redirect()->back()
       ->toast("$this->titleSingular atualizado.", 'success');
