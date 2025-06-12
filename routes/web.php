@@ -164,7 +164,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/{redirect}/{id}', 'destroy')->name('destroy');
         });
         // Route groups for SoDevicesType
-        Route::controller(SoDevicesTypeController::class)->prefix('so-devices-types')->as('devicesType.')->group(function () {
+        Route::controller(SoDevicesTypeController::class)->prefix('so-devices-types')->as('soDevicesType.')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::post('/', 'store')->name('store');
