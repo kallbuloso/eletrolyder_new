@@ -37,7 +37,7 @@ const submit = () => {
         <v-card-text class="mx-1">
           <v-row>
             <v-col cols="12">
-              <app-text-field id="description" v-model="form.description" label="Descrição" placeholder="Descrição do passo" required :error-messages="form.errors.description" />
+              <app-text-field id="description" v-model="form.description" label="Descrição" placeholder="Descrição do passo" autofocus :error-messages="form.errors.description" />
             </v-col>
           </v-row>
         </v-card-text>
