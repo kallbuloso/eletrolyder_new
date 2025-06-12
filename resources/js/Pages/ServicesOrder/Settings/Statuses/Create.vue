@@ -36,7 +36,7 @@ const statusTypes = [
         <v-card-text class="mx-1">
           <v-row>
             <v-col cols="12">
-              <app-text-field id="description" v-model="form.description" label="Descrição" placeholder="Descrição do status" required :error-messages="form.errors.description" />
+              <app-text-field id="description" v-model="form.description" label="Descrição" placeholder="Descrição do status" autofocus :error-messages="form.errors.description" />
             </v-col>
             <v-col cols="7">
               <app-select
@@ -45,7 +45,6 @@ const statusTypes = [
                 :items="statusTypes"
                 label="Tipo de Status"
                 placeholder="Selecione o tipo de status"
-                required
                 :error-messages="form.errors.status_type"
               />
             </v-col>
