@@ -38,7 +38,7 @@ class SoStatusStepController extends Controller
    * Summary of pageIndex
    * @var string
    */
-  private $pageIndex = 'orders.statusStep.index';
+  private $pageIndex = 'orders.soSettings.statusStep.index';
 
   /**
    * Summary of pathView
@@ -120,7 +120,7 @@ class SoStatusStepController extends Controller
         'title' => "Adicionar $this->titleSingular",
         'soStatusId' => $id,
       ])
-      ->baseRoute('orders.soStatus.edit', $id);
+      ->baseRoute('orders.soSettings.soStatus.edit', $id);
   }
 
   /**
@@ -148,7 +148,7 @@ class SoStatusStepController extends Controller
 
     $status = $this->service->create($val);
 
-    return redirect()->route('orders.soStatus.edit', $status->so_status_id)
+    return redirect()->route('orders.soSettings.soStatus.edit', $status->so_status_id)
       ->toast("$this->titleSingular criado.", 'success');
   }
 
@@ -167,7 +167,7 @@ class SoStatusStepController extends Controller
         'title' => "Editar $this->titleSingular",
         'data' => $data,
       ])
-      ->baseRoute('orders.soStatus.edit', $data['so_status_id']);
+      ->baseRoute('orders.soSettings.soStatus.edit', $data['so_status_id']);
   }
 
   /**
@@ -198,7 +198,7 @@ class SoStatusStepController extends Controller
     $this->service->update($id, $val);
     // dd($status);
 
-    return redirect()->route('orders.soStatus.edit', $val['so_status_id'])
+    return redirect()->route('orders.soSettings.soStatus.edit', $val['so_status_id'])
       ->toast("$this->titleSingular atualizado.", 'success');
   }
 
@@ -214,7 +214,7 @@ class SoStatusStepController extends Controller
 
     $this->service->deleteById($id);
 
-    return redirect()->route('orders.soStatus.edit', $redirect)
+    return redirect()->route('orders.soSettings.soStatus.edit', $redirect)
       ->toast("$this->titleSingular excluído.", 'success');
   }
 }
