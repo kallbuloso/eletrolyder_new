@@ -22,7 +22,7 @@ const form = useForm({
 })
 
 const submit = () => {
-  form.put(route('orders.statusStep.update', props.data.id), {
+  form.put(route('orders.soSettings.statusStep.update', props.data.id), {
     onSuccess() {
       form.reset()
     }
