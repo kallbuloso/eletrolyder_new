@@ -8,42 +8,47 @@ const props = defineProps({
     type: String,
     required: true
   },
-  errors: {
-    type: Object,
-    default: () => ({})
+  routeDefault: {
+    type: String,
+    required: true
   }
 })
 
-function routeDefault(name) {
-  return 'orders.soSettings.soDevicesType.' + name
+const pageTitle = props.title
+
+function routeBase(name) {
+  return props.routeDefault + name
 }
 
 const deviceIsActive = shallowRef(props.data.is_active)
 
 const form = useForm({
   id: props.data.id,
-  tenant_id: usePage().props.auth.user.tenant_id,
   description: props.data.description,
   is_active: Boolean(deviceIsActive.value)
 })
 
 const submit = () => {
-  form.put(route(routeDefault('update'), props.data.id), {
+  form.put(route(routeBase('update'), props.data.id), {
     onSuccess() {
       form.reset()
-      router.visit(route(routeDefault('index')), {
+      router.visit(route(routeBase('index')), {
         preserveScroll: true,
         preserveState: false
       })
     }
   })
 }
+
+onMounted(() => {
+  // console.log(routeBase('index'))
+})
 </script>
 
 <template>
   <app-modal width="450">
     <v-form @submit.prevent="submit">
-      <v-card prepend-icon="mdi-pencil" :title="props.title">
+      <v-card prepend-icon="mdi-pencil" :title="pageTitle">
         <v-card-text>
           <v-row>
             <v-col cols="8">
