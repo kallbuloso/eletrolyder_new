@@ -1,14 +1,32 @@
 <script setup>
 const props = defineProps({
-  soDevicesTypeCount: {
-    type: Number,
+  title: {
+    type: String,
     required: true
+  },
+  routeDefault: {
+    type: String,
+    required: true
+  },
+  count: {
+    type: Number,
+    default: 0
   }
 })
 
-function routeDefault(name) {
-  return 'orders.soSettings.soDevicesType.' + name
+const pageTitle = props.title
+const pageIcon = 'iconify:mingcute:device-line'
+
+function routeBase(name) {
+  return props.routeDefault + name
 }
+
+// Definição das colunas
+const headers = ref([
+  { title: 'Descrição', key: 'description' },
+  { title: 'Ativo', key: 'is_active' },
+  { title: 'Ação', key: 'action', sortable: false, align: 'end' }
+])
 
 // Estado da tabela
 const responseData = ref([])
@@ -17,13 +35,6 @@ const isLoadingTable = ref(true)
 const search = ref(null)
 const itemsPerPage = ref(10)
 const page = ref(1)
-
-// Definição das colunas
-const headers = ref([
-  { title: 'Descrição', key: 'description' },
-  { title: 'Ativo', key: 'is_active' },
-  { title: 'Ação', key: 'action', sortable: false, align: 'end' }
-])
 
 // Carregamento dos dados
 async function loadItems(options = {}) {
@@ -44,7 +55,7 @@ async function loadItems(options = {}) {
   }
 
   try {
-    const response = await fetch(`/orders/settings/so-devices-types?${params.toString()}`, {
+    const response = await fetch(`${route(routeBase('index'))}?${params.toString()}`, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -74,36 +85,36 @@ async function loadItems(options = {}) {
 
 function deleteItem(item) {
   if (can('soDevicesType', 'excluir')) {
-    swDeleteQuestion(item.description, route(routeDefault('destroy'), item.id))
+    swDeleteQuestion(item.description, route(routeBase('destroy'), item.id))
   } else {
-    swToast('Você não tem permissão para excluir Tipos de Aparelhos.', 'error', 3000)
+    swToast(`Você não tem permissão para excluir ${pageTitle}.`, 'error', 3000)
   }
 }
 
 function editItem(item) {
   if (can('soDevicesType', 'editar')) {
-    router.get(route(routeDefault('edit'), item.id))
+    router.get(route(routeBase('edit'), item.id))
   } else {
-    swToast('Você não tem permissão para editar Tipos de Aparelhos.', 'error', 3000)
+    swToast(`Você não tem permissão para editar ${pageTitle}.`, 'error', 3000)
   }
 }
 
 function createItem() {
   if (can('soDevicesType', 'criar')) {
-    router.get(route(routeDefault('create')))
+    router.get(route(routeBase('create')))
   } else {
-    swToast('Você não tem permissão para criar SoDevicesType.', 'error', 3000)
+    swToast(`Você não tem permissão para criar ${pageTitle}.`, 'error', 3000)
   }
 }
 
 onMounted(() => {
-  // console.log('SoDevicesType page mounted')
+  // console.log(route(routeBase('index')))
 })
 </script>
 
 <template layout="AppShell,AuthenticatedLayout">
-  <template v-if="props.soDevicesTypeCount > 0">
-    <v-card class="mx-auto" width="550" prepend-icon="iconify:mingcute:device-line" :title="$page.props.title">
+  <template v-if="props.count > 0">
+    <v-card class="mx-auto" width="550" :prepend-icon="pageIcon" :title="pageTitle">
       <template #append>
         <v-btn prepend-icon="mdi-plus" color="primary" variant="text" @click="createItem()">Novo</v-btn>
       </template>
@@ -117,9 +128,6 @@ onMounted(() => {
           </v-col>
         </v-row>
       </v-card-text>
-      <!--
-        <pre>{{ props.data }}</pre>
-        -->
       <v-card-item>
         <v-data-table-server
           :page="page"
@@ -152,7 +160,7 @@ onMounted(() => {
       </v-card-item>
       <v-card-actions>
         <template v-if="content.total > 10 && itemsPerPage < content.total">
-          <v-list-item :title="`Página ${content.current_page} de ${content.last_page}`" :subtitle="`Total de ${formatCount(content.total)} ${$page.props.title}`" />
+          <v-list-item :title="`Página ${content.current_page} de ${content.last_page}`" :subtitle="`Total de ${formatCount(content.total)} ${pageTitle}`" />
           <v-spacer />
           <v-pagination v-model="page" :length="content.last_page" :total-visible="4" size="small" rounded></v-pagination>
         </template>
@@ -161,9 +169,9 @@ onMounted(() => {
   </template>
   <template v-else>
     <v-row align="center" justify="center" style="height: 70vh">
-      <v-empty-state :headline="$page.props.title" title="Nenhum registro encontrado.">
+      <v-empty-state :headline="pageTitle" title="Nenhum registro encontrado.">
         <template #media>
-          <v-icon icon="iconify:mingcute:device-line" />
+          <v-icon :icon="pageIcon" />
         </template>
         <v-btn prepend-icon="mdi-plus" color="primary" variant="flat" @click="createItem()">Adicionar Status</v-btn>
       </v-empty-state>
