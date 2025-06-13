@@ -36,7 +36,13 @@ class SoDevicesTypeController extends Controller
    * Summary of pageIndex
    * @var string
    */
-  private $pageIndex = 'orders.soSettings.soDevicesType.index';
+  private $pageIndex = '';
+
+  /**
+   * Summary of routeBase
+   * @var string
+   */
+  private $routeBase = 'orders.soSettings.soDevicesType.';
 
   /**
    * Summary of pathView
@@ -51,6 +57,7 @@ class SoDevicesTypeController extends Controller
   public function __construct(SoDevicesTypeService $service)
   {
     $this->service = $service;
+    $this->pageIndex = $this->routeBase . 'index';
   }
 
   /**
@@ -79,7 +86,8 @@ class SoDevicesTypeController extends Controller
           ['title' => 'Dashboard', 'href' => route('dashboard')],
           ['title' => $this->pageTitle, 'disabled' => true],
         ],
-        'soDevicesTypeCount' => $this->service->count(),
+        'count' => $this->service->count(),
+        'routeDefault' => $this->routeBase,
       ]);
     } catch (\Exception $e) {
       if ($request->wantsJson()) {
@@ -102,6 +110,7 @@ class SoDevicesTypeController extends Controller
     return $this->renderModal("$this->pathView/Create")
       ->with([
         'title' => "Adicionar $this->titleSingular",
+        'routeDefault' => $this->routeBase,
       ])
       ->baseRoute($this->pageIndex);
   }
@@ -128,7 +137,7 @@ class SoDevicesTypeController extends Controller
         ->withInput();
     }
 
-    $status = $this->service->create($val);
+    $this->service->create($val);
 
     return redirect()->route($this->pageIndex)
       ->toast("$this->titleSingular criado com sucesso.", 'success');
@@ -148,6 +157,7 @@ class SoDevicesTypeController extends Controller
       ->with([
         'title' => "Editar $this->titleSingular",
         'data' => $data,
+        'routeDefault' => $this->routeBase,
       ])
       ->baseRoute('orders.soSettings.soDevicesType.index');
   }
