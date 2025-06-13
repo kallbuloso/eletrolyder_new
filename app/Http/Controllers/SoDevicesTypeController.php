@@ -113,6 +113,15 @@ class SoDevicesTypeController extends Controller
         'routeDefault' => $this->routeBase,
       ])
       ->baseRoute($this->pageIndex);
+
+    // return $this->renderPage("$this->pathView/Form", [
+    //   'title' => "Adicionar $this->titleSingular",
+    //   'breadcrumbs' => [
+    //     ['title' => 'Dashboard', 'href' => route('dashboard')],
+    //     ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
+    //     ['title' => 'Adicionar', 'disabled' => true],
+    //   ],
+    // ]);
   }
 
   /**
@@ -159,7 +168,7 @@ class SoDevicesTypeController extends Controller
         'data' => $data,
         'routeDefault' => $this->routeBase,
       ])
-      ->baseRoute('orders.soSettings.soDevicesType.index');
+      ->baseRoute($this->pageIndex);
   }
 
   /**
