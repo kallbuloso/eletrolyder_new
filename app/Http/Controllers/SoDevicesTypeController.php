@@ -140,7 +140,7 @@ class SoDevicesTypeController extends Controller
     $this->service->create($val);
 
     return redirect()->route($this->pageIndex)
-      ->toast("$this->titleSingular criado com sucesso.", 'success');
+      ->toast("$this->titleSingular adicionado com sucesso.", 'success');
   }
 
   /**
