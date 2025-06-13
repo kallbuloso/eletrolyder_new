@@ -4,11 +4,17 @@ const props = defineProps({
     type: String,
     required: true
   },
-  errors: {
-    type: Object,
-    default: () => ({})
+  routeDefault: {
+    type: String,
+    required: true
   }
 })
+
+const pageTitle = props.title
+
+function routeBase(name) {
+  return props.routeDefault + name
+}
 
 const form = useForm({
   description: '',
@@ -16,7 +22,7 @@ const form = useForm({
 })
 
 const submit = () => {
-  form.post(route('orders.soSettings.soDevicesType.store'), {
+  form.post(route(routeBase('store')), {
     onSuccess() {
       form.reset()
     }
@@ -27,7 +33,7 @@ const submit = () => {
 <template>
   <app-modal width="450">
     <v-form @submit.prevent="submit">
-      <v-card prepend-icon="mdi-plus" :title="props.title">
+      <v-card prepend-icon="mdi-plus" :title="pageTitle">
         <v-card-text class="mx-1">
           <App-name-field v-model="form.description" label="Description" placeholder="Description" autofocus :error-messages="form.errors.description" />
         </v-card-text>
