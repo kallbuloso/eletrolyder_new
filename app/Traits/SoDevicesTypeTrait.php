@@ -8,11 +8,11 @@ trait SoDevicesTypeTrait
 {
     use HasFactory, TenantebleTrait, DatesModelTraits;
 
-    // /**
-    //  * @return \Illuminate\Database\Eloquent\Relations\HasMany
-    //  */
-    // public function soDevices()
-    // {
-    //   return $this->hasMany(\App\Models\SoDevice::class, 'id', 'so_device_type_id');
-    // }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function soDevices()
+    {
+        return $this->hasMany(\App\Models\SoDevice::class, 'id', 'so_device_type_id');
+    }
 }
