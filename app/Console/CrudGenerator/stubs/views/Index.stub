@@ -127,7 +127,7 @@ onMounted(() => {
   <template v-if="props.count > 0">
     <v-card class="mx-auto" width="800" :prepend-icon="pageIcon" :title="pageTitle">
       <template #append>
-        <v-btn prepend-icon="mdi-plus" color="primary" variant="text" @click="createItem()">Novo</v-btn>
+        <v-btn prepend-icon="mdi-plus" color="primary" variant="text" @click="createItem()">Adicionar {{ pageTitle }}</v-btn>
       </template>
       <v-card-text class="d-flex">
         <v-row>
