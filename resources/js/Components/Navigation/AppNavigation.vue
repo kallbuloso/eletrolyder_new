@@ -64,6 +64,7 @@ const menuItems = [
 ]
 
 const menuSections = ref([
+  // Dashboard Section
   {
     id: 'dashboard',
     title: 'Dashboard',
@@ -75,6 +76,7 @@ const menuSections = ref([
       }
     ]
   },
+  // Registers Section
   {
     id: 'registers',
     title: 'Cadastros',
@@ -106,10 +108,16 @@ const menuSections = ref([
       //   }
     ]
   },
+  // Orders Section
   {
     id: 'orders',
     title: 'Ordem de Serviço',
     items: [
+      {
+        title: 'Equipamentos',
+        icon: 'iconify:tabler:device-tv-old',
+        href: 'orders.soDevice.index'
+      },
       {
         title: 'Configurações',
         icon: 'iconify:carbon:settings-edit',
@@ -127,16 +135,19 @@ const menuSections = ref([
       }
     ]
   },
+  // Chats Section
   {
     id: 'chats',
     title: 'Chats',
     items: []
   },
+  // Mercado Livre Section
   {
     id: 'meli',
     title: 'Mercado Livre',
     items: []
   },
+  // Settings Section
   {
     id: 'settings',
     title: 'Configurações',
