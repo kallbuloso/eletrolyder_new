@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('phones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tenant_id')->nullable()->constrained();
+            $table->foreignId('tenant_id')->constrained();
             $table->enum('phone_type', ['P', 'C'])->default('P'); // P - Principal, C - Contato
             $table->string('phone_number')->nullable();
             $table->string('phone_contact')->nullable();
