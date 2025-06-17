@@ -14,6 +14,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SoStatusController;
 use App\Http\Controllers\SoStatusStepController;
 use App\Http\Controllers\SoDevicesTypeController;
+use App\Http\Controllers\SoDeviceController;
 // routeImport
 
 Route::get('/', function () {
@@ -173,8 +174,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::put('/{id}', 'update')->name('update');
                 Route::delete('/{id}', 'destroy')->name('destroy');
             });
-            // addRoute
         });
+        // Route groups for SoDevice
+        Route::controller(SoDeviceController::class)->prefix('so-devices')->as('soDevice.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/show/{id}', 'show')->name('show');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
+        // addRoute
     });
 });
 
