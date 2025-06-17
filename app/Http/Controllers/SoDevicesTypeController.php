@@ -70,9 +70,14 @@ class SoDevicesTypeController extends Controller
   {
     $this->authorize('soDevicesType listar');
 
+    dd(SoDevicesType::query());
+
+    dd($this->service);
+
     try {
       $query = SoDevicesType::query();
       $fields = SoDevicesType::getSearchable();
+      // dd($fields);
       $query = $this->service->applyFilters($query, $request, $fields);
       $data = $query->paginate($request->get('limit', 10));
 
@@ -160,6 +165,7 @@ class SoDevicesTypeController extends Controller
   public function edit($id): \Momentum\Modal\Modal
   {
     $this->authorize('soDevicesType editar');
+
     $data = $this->service->getById($id);
 
     return $this->renderModal("$this->pathView/Edit")
