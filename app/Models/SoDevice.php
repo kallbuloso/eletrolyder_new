@@ -36,7 +36,7 @@ class SoDevice extends Model
 {
   use SoDeviceTrait;
 
-  protected $table = "soDevices";
+  protected $table = "so_devices";
 
   protected $perPage = 10;
 
@@ -65,17 +65,7 @@ class SoDevice extends Model
   ];
 
   protected $searchable = [
-    'description',
     'brand',
-    'model',
-    'serial_number',
-    'damages',
-    'accessories',
-    'notes',
-    'warranty_provider',
-    'purchase_date',
-    'reseller',
-    'invoice_number',
-    'warranty_certificate'
+    'model'
   ];
 }
