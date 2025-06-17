@@ -245,6 +245,8 @@ class {{modelName}}Controller extends Controller
   public function edit($id): \Momentum\Modal\Modal
   {
     $this->authorize('{{modelNameLowerCase}} editar');
+    
+    $data = $this->service->getById($id);
 
     return $this->renderModal("$this->pathView/Edit")
       ->with([
