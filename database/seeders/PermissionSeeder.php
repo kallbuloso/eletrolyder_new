@@ -64,6 +64,10 @@ class PermissionSeeder extends Seeder
 				'name' => 'soDevicesType',
 				'description' => 'Gerenciar soDevicesTypes',
 			],
+			[
+				'name' => 'soDevice',
+				'description' => 'Gerenciar soDevices',
+			],
 		]; // addResources
 
         $permissions = [
