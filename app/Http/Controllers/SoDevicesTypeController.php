@@ -70,10 +70,6 @@ class SoDevicesTypeController extends Controller
   {
     $this->authorize('soDevicesType listar');
 
-    dd(SoDevicesType::query());
-
-    dd($this->service);
-
     try {
       $query = SoDevicesType::query();
       $fields = SoDevicesType::getSearchable();
