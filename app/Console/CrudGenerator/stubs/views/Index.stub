@@ -125,7 +125,7 @@ onMounted(() => {
 
 <template layout="AppShell,AuthenticatedLayout">
   <template v-if="props.count > 0">
-    <v-card class="mx-auto" width="800" prepend-icon="mdi-account-lock" :title="pageTitle">
+    <v-card class="mx-auto" width="800" :prepend-icon="pageIcon" :title="pageTitle">
       <template #append>
         <v-btn prepend-icon="mdi-plus" color="primary" variant="text" @click="createItem()">Novo</v-btn>
       </template>
@@ -188,8 +188,8 @@ onMounted(() => {
         <template #media>
           <v-icon :icon="pageIcon" />
         </template>
-        // Todo: alterar (Adicionar) abaixo
-        <v-btn prepend-icon="mdi-plus" color="primary" variant="flat" @click="createItem()">Adicionar Status</v-btn>
+        <!-- Todo: alterar (Adicionar) abaixo -->
+        <v-btn prepend-icon="mdi-plus" color="primary" variant="flat" @click="createItem()">Adicionar {{ pageTitle }}</v-btn>
       </v-empty-state>
     </v-row>
   </template>
