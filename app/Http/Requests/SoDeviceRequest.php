@@ -23,7 +23,7 @@ class SoDeviceRequest extends FormRequest
   {
     return [
       'so_device_type_id' => ['required', 'integer'],
-      'description' => ['nullable', 'string'],
+      'description' => ['required', 'string'],
       'brand' => ['required', 'string'],
       'model' => ['required', 'string'],
       'serial_number' => ['required', 'string'],
@@ -35,6 +35,22 @@ class SoDeviceRequest extends FormRequest
       'reseller' => ['nullable', 'string'],
       'invoice_number' => ['nullable', 'string'],
       'warranty_certificate' => ['nullable', 'string'],
+    ];
+  }
+
+  /**
+   * Get the error messages for the defined validation rules.
+   *
+   * @return array<string, string>
+   */
+  public function messages(): array
+  {
+    return [
+      'so_device_type_id.required' => 'O tipo de dispositivo é obrigatório.',
+      'description.required' => 'O dispositivo precisa de uma descrição.',
+      'brand.required' => 'Defina a marca do dispositivo. Ou "nt" caso não tenha.',
+      'model.required' => 'Defina o modelo do dispositivo.',
+      'serial_number.required' => 'O número de série/IMEI é obrigatório.'
     ];
   }
 }
