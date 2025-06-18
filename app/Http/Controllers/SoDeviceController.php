@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SoDeviceRequest;
 use App\Services\SoDeviceService;
 use App\Http\Controllers\Controller;
+use App\Models\SoDevicesType;
 
 /**
  * Class SoDeviceController
@@ -50,6 +51,8 @@ class SoDeviceController extends Controller
    */
   private $pathView = 'ServicesOrder/SoDevice';
 
+  private $devicesType = '';
+
   /**
    * SoDeviceController constructor.
    * @param SoDeviceService $service
@@ -58,6 +61,7 @@ class SoDeviceController extends Controller
   {
     $this->service = $service;
     $this->pageIndex = $this->routeBase . 'index';
+    $this->devicesType = SoDevicesType::query()->where('is_active', '=', true)->select('id', 'description')->get();
   }
 
   /**
@@ -124,6 +128,7 @@ class SoDeviceController extends Controller
       ->with([
         'title' => "Adicionar $this->titleSingular",
         'routeDefault' => $this->routeBase,
+        'soDevicesType' => $this->devicesType,
       ])
       ->baseRoute($this->pageIndex);
 
