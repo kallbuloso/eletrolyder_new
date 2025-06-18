@@ -1,5 +1,5 @@
           <v-col cols="12">
-            <v-text-field
+            <app-text-field
               id="{{column}}"
               v-model="form.{{column}}"
               label="{{title}}"
