@@ -169,34 +169,10 @@ class DatabaseSeeder extends Seeder
                 'description' => 'TV',
             ],
             [
-                'description' => 'System de som',
+                'description' => 'System',
             ],
             [
-                'description' => 'Console de videogame',
-            ],
-            [
-                'description' => 'Equipamento de áudio',
-            ],
-            [
-                'description' => 'Equipamento de vídeo',
-            ],
-            [
-                'description' => 'Equipamento de rede',
-            ],
-            [
-                'description' => 'Equipamento de automação',
-            ],
-            [
-                'description' => 'Equipamento de segurança',
-            ],
-            [
-                'description' => 'Equipamento de fotografia',
-            ],
-            [
-                'description' => 'Equipamento de vídeo',
-            ],
-            [
-                'description' => 'Equipamento de iluminação',
+                'description' => 'Videogame',
             ],
             [
                 'description' => 'Equipamento de áudio profissional',
