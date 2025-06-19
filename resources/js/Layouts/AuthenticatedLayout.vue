@@ -48,9 +48,9 @@ onMounted(() => {
         <v-list class="bg-background" lines="one">
           <v-list-item>
             <v-list-item-title class="ml-1">{{ $page.props.title }}</v-list-item-title>
-            <v-list-item-subtitle v-if="$page.props.breadcrumbs" class="mb-0">
+            <!-- <v-list-item-subtitle v-if="$page.props.breadcrumbs" class="mb-0">
               <app-breadcrumbs :items="$page.props.breadcrumbs" class="pa-0" />
-            </v-list-item-subtitle>
+            </v-list-item-subtitle> -->
           </v-list-item>
         </v-list>
       </v-app-bar-title>
@@ -65,6 +65,9 @@ onMounted(() => {
       <v-container>
         <!-- Page title -->
         <Head :title="$page.props.title" />
+        <v-list-item-subtitle v-if="$page.props.breadcrumbs" class="mb-3">
+          <app-breadcrumbs :items="$page.props.breadcrumbs" class="pa-0" />
+        </v-list-item-subtitle>
         <slot />
         <scroll-to-top />
         <!-- Footer -->
