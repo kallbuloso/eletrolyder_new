@@ -136,7 +136,7 @@ onMounted(() => {
             </app-row-form>
           </v-card-text>
           <v-card-actions>
-            <v-btn color="error" @click="isActive.value = false">Cancelar</v-btn>
+            <!-- <v-btn color="error" @click="isActive.value = false">Cancelar</v-btn> -->
             <v-btn type="submit" color="primary">Salvar</v-btn>
           </v-card-actions>
           <!--
