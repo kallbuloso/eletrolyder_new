@@ -89,6 +89,15 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('so_warranty_terms', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('tenant_id')->constrained();
+            $table->foreignId('so_devices_type_id')->constrained('so_devices_type'); // Dispositivo relacionado
+            $table->string('description'); // Descrição da garantia            
+            $table->string('warranty_terms'); // Termos da garantia
+            $table->timestamps();
+        });
+
         Schema::create('service_order_history', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('service_orders');
