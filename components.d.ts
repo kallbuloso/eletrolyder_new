@@ -64,6 +64,7 @@ declare module 'vue' {
     ILineMdLightDarkLoop: typeof import('~icons/line-md/light-dark-loop')['default']
     IRiMenuUnfold3Line2: typeof import('~icons/ri/menu-unfold3-line2')['default']
     IRiMenuUnfold4Line2: typeof import('~icons/ri/menu-unfold4-line2')['default']
+    MeliLogo: typeof import('./resources/js/Components/Form/Logo/MeliLogo.vue')['default']
     NavigationMenu: typeof import('./resources/js/Components/Navigation/NavigationMenu.vue')['default']
     ScaleYTransition: typeof import('./resources/js/Transitions/ScaleYTransition.vue')['default']
     ScrollToTop: typeof import('./resources/js/Components/Form/ScrollToTop.vue')['default']
