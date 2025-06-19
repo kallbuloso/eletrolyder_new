@@ -54,7 +54,7 @@ watch(
             <app-address-form v-model="address" :errors="form.errors" />
           </v-card-text>
           <v-card-actions>
-            <v-btn color="error" @click="isActive.value = false">Cancelar</v-btn>
+            <!-- <v-btn color="error" @click="isActive.value = false">Cancelar</v-btn> -->
             <v-btn type="submit" color="primary" :disabled="form.processing">Salvar</v-btn>
           </v-card-actions>
         </v-card>
