@@ -132,7 +132,7 @@ function deleteItem(item) {
           </template>
           <template #item.action="{ item }">
             <v-icon v-if="item.role !== 'Administrador' && can('user', 'editar')" color="warning" icon="mdi-pencil" size="small" @click="editItem(item.id)" />
-            <v-icon v-if="can('user', 'excluir')" class="ml-1" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
+            <v-icon v-if="item.role !== 'Administrador' && can('user', 'excluir')" class="ml-1" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
           </template>
           <template #bottom>
             <v-divider />
