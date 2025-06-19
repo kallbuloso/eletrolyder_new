@@ -187,10 +187,10 @@ onMounted(() => {
         </v-card-text>
         <v-card-actions class="mx-4">
           <v-spacer />
-          <Link :href="route('registers.supplier.index')" as="div">
+          <!-- <Link :href="route('registers.supplier.index')" as="div">
             <v-btn class="mr-2" variant="text">Cancelar</v-btn>
-          </Link>
-          <v-btn type="submit" color="primary" variant="flat" :loading="form.processing">{{ props.data ? 'Atualizar' : 'Salvar' }}</v-btn>
+          </Link> -->
+          <v-btn type="submit" color="primary" variant="text" :loading="form.processing">{{ props.data ? 'Atualizar' : 'Salvar' }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-form>
