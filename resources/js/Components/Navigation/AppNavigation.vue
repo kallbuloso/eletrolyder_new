@@ -6,9 +6,23 @@
         <li v-for="(item, index) in menuItems" :key="index" v-tooltip="item.tooltip" :class="{ active: activeMenu === item.target }">
           <a :href="item.target" class="no-underline" @click.prevent="navigate(item.target)">
             <v-badge v-if="item.badge" color="error" :content="item.badge" dot>
-              <v-icon :icon="item.icon" />
+              <template v-if="item.img">
+                <img :src="item.img" alt="icon" style="width: 24px; height: 24px" />
+              </template>
+              <template v-else>
+                <v-icon :icon="item.icon" />
+              </template>
             </v-badge>
-            <v-icon v-else :icon="item.icon" />
+            <template v-else>
+              <template v-if="item.img">
+                <img :src="item.img" alt="icon" style="width: 24px; height: 24px" />
+              </template>
+              <template v-else>
+                <v-icon>
+                  {{ item.icon }}
+                </v-icon>
+              </template>
+            </template>
           </a>
         </li>
       </ul>
@@ -45,6 +59,7 @@
 </template>
 
 <script setup>
+import mercadoLivreIcon from '@images/svg/mercado-livre.svg'
 const activeRoute = ref(null)
 // Reactive data
 const activeMenu = ref(activeRoute.value)
@@ -58,7 +73,7 @@ const menuItems = [
   { tooltip: 'Dashboard', target: '#dashboard', icon: 'iconify:fluent-mdl2:b-i-dashboard', badge: 5 },
   { tooltip: 'Ordem de Serviço', target: '#orders', icon: 'iconify:game-icons:auto-repair' },
   { tooltip: 'Chats', target: '#chats', icon: 'iconify:gridicons:chat' },
-  { tooltip: 'Mercado Livre', target: '#meli', icon: 'iconify:simple-icons:mercadopago' },
+  { tooltip: 'Mercado Livre', target: '#meli', img: mercadoLivreIcon },
   { tooltip: 'Cadastros', target: '#registers', icon: 'iconify:material-symbols:app-registration-outline-sharp' },
   { tooltip: 'Configurações', target: '#settings', icon: 'iconify:carbon:settings-edit' }
 ]
