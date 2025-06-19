@@ -143,9 +143,9 @@ onMounted(() => {
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <Link :href="route('registers.user.index')" as="div">
+          <!-- <Link :href="route('registers.user.index')" as="div">
             <v-btn variant="text">Cancelar</v-btn>
-          </Link>
+          </Link> -->
           <v-btn type="submit" color="primary" :loading="form.processing">{{ props.data ? 'Atualizar' : 'Criar' }}</v-btn>
         </v-card-actions>
       </v-card>
