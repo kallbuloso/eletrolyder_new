@@ -1,10 +1,10 @@
 <script setup>
-const props = defineProps({
-  data: {
-    type: Object,
-    required: true
-  }
-})
+// const props = defineProps({
+//   data: {
+//     type: Object,
+//     required: true
+//   }
+// })
 onMounted(() => {
   console.log('{{modelName}} page Show mounted')
 })
