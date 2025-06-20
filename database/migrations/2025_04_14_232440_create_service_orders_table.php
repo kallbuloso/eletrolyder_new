@@ -38,6 +38,8 @@ return new class extends Migration
             $table->string('invoice_number')->nullable(); // número da nota
             $table->string('warranty_certificate')->nullable(); // certificado de garantia
             $table->timestamps();
+            // Todo: adicionar campos adicionais conforme necessário
+            // Todo: adicionar campos para rastreamento de histórico de alterações
         });
 
         // Status para Ordens de Serviço
@@ -84,17 +86,17 @@ return new class extends Migration
             $table->string('quoted_by_technician')->nullable(); // Avaliado pelo técnico
             $table->string('repaired_by_technician')->nullable(); // Reparado pelo técnico
             $table->text('internal_notes')->nullable(); // Notas internas
-            $table->timestamp('closed_at')->nullable(); // Fecha
-            $table->timestamp('reopened_at')->nullable(); // Reabre
+            $table->timestamp('closed_at')->nullable(); // Fechado
+            $table->timestamp('reopened_at')->nullable(); // Reaberto
             $table->timestamps();
         });
 
-        Schema::create('so_warranty_terms', function (Blueprint $table) {
+        Schema::create('so_warranties_terms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->constrained();
             $table->foreignId('so_devices_type_id')->constrained('so_devices_type'); // Dispositivo relacionado
             $table->string('description'); // Descrição da garantia            
-            $table->string('warranty_terms'); // Termos da garantia
+            $table->string('warranty_term'); // Termo da garantia
             $table->timestamps();
         });
 
