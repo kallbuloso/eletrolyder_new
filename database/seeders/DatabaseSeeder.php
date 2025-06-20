@@ -147,45 +147,23 @@ class DatabaseSeeder extends Seeder
     public function createSoDevicesType($tenantId): void
     {
         $devices = [
-            [
-                'description' => 'Celular',
-            ],
-            [
-                'description' => 'Tablet',
-            ],
-            [
-                'description' => 'Notebook',
-            ],
-            [
-                'description' => 'Desktop',
-            ],
-            [
-                'description' => 'Impressora',
-            ],
-            [
-                'description' => 'Monitor',
-            ],
-            [
-                'description' => 'TV',
-            ],
-            [
-                'description' => 'System',
-            ],
-            [
-                'description' => 'Videogame',
-            ],
-            [
-                'description' => 'Equipamento de áudio profissional',
-            ],
-            [
-                'description' => 'Equipamento de laboratório',
-            ],
+            'TV',
+            'Celular',
+            'Tablet',
+            'Notebook',
+            'Desktop',
+            'Impressora',
+            'Monitor',
+            'System',
+            'Videogame',
+            'Equipamento de áudio profissional',
+            'Equipamento de laboratório',
         ];
 
         foreach ($devices as $device) {
             SoDevicesType::create([
                 'tenant_id' => $tenantId,
-                'description' => $device['description'],
+                'description' => $device,
                 'is_active' => fake()->boolean(), // Assuming all devices are active by default
             ]);
         }
