@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 trait SoStatusTrait
 {
-    use HasFactory, TenantebleTrait, DatesModelTraits;
+    use HasFactory, TenantableTrait, DatesModelTraits;
 
 
     /**

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Traits\PhoneableTrait;
 use App\Traits\SearchableTrait;
-use App\Traits\TenantebleTrait;
+use App\Traits\TenantableTrait;
 use App\Traits\DatesModelTraits;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Phone extends Model
 {
-    use HasFactory, DatesModelTraits, TenantebleTrait, PhoneableTrait;
+    use HasFactory, DatesModelTraits, TenantableTrait, PhoneableTrait;
 
     protected $table = "phones";
 

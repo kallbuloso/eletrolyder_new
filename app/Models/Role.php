@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SearchableTrait;
-use App\Traits\TenantebleTrait;
+use App\Traits\TenantableTrait;
 use App\Traits\DatesModelTraits;
 use Spatie\Permission\Models\Role as OriginalRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Role extends OriginalRole
 {
-    use HasFactory, TenantebleTrait, DatesModelTraits;
+    use HasFactory, TenantableTrait, DatesModelTraits;
 
     protected $table = "roles";
 

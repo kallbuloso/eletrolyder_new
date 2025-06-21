@@ -5,9 +5,9 @@ namespace App\Traits;
 use App\Models\Tenant;
 use App\Models\Scopes\TenantScope;
 
-trait TenantebleTrait
+trait TenantableTrait
 {
-    protected static function bootTenantebleTrait()
+    protected static function bootTenantableTrait()
     {
         static::addGlobalScope(new TenantScope);
         static::creating(function ($model) {
