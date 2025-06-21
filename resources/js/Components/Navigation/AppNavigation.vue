@@ -129,6 +129,11 @@ const menuSections = ref([
     title: 'Ordem de Serviço',
     items: [
       {
+        title: 'Ordens de Serviço',
+        icon: 'iconify:game-icons:auto-repair',
+        href: 'orders.serviceOrder.index'
+      },
+      {
         title: 'Equipamentos',
         icon: 'iconify:tabler:device-tv-old',
         href: 'orders.soDevice.index'
