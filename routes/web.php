@@ -15,6 +15,7 @@ use App\Http\Controllers\SoStatusController;
 use App\Http\Controllers\SoStatusStepController;
 use App\Http\Controllers\SoDevicesTypeController;
 use App\Http\Controllers\SoDeviceController;
+use App\Http\Controllers\ServiceOrderController;
 // routeImport
 
 Route::get('/', function () {
@@ -185,7 +186,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::put('/{id}', 'update')->name('update');
             Route::delete('/{id}', 'destroy')->name('destroy');
         });
+        // Route groups for ServiceOrder
+        Route::controller(ServiceOrderController::class)->prefix('service-orders')->as('serviceOrder.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+            Route::get('/show/{id}', 'show')->name('show');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}', 'update')->name('update');
+            Route::delete('/{id}', 'destroy')->name('destroy');
+        });
         // addRoute
+
     });
 });
 
