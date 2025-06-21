@@ -87,7 +87,7 @@ async function loadItems(options = {}) {
 
 function deleteItem(item) {
   if (can('serviceOrder', 'excluir')) {
-    swDeleteQuestion(item.order_number, route(routeBase('destroy'), item.id))
+    swDeleteQuestion('a OS nº' + item.order_number, route(routeBase('destroy'), item.id))
   } else {
     swToast(`Você não tem permissão para excluir ${pageTitle}.`, 'error', 3000)
   }
@@ -159,8 +159,8 @@ onMounted(() => {
             {{ item.gender == 'male' ? 'Masculino' : 'Feminino' }}
           </template>-->
           <template #item.action="{ item }">
-            <v-icon v-if="can('serviceOrder', 'ver')" class="ml-2" color="primary" icon="mdi-eye" size="small" @click="showItem(item)" />
-            <v-icon v-if="can('serviceOrder', 'editar')" color="warning" icon="mdi-pencil" size="small" @click="editItem(item)" />
+            <v-icon v-if="can('serviceOrder', 'ver')" class="mr-1" color="primary" icon="mdi-eye" size="small" @click="showItem(item)" />
+            <v-icon v-if="can('serviceOrder', 'editar')" class="ml-1" color="warning" icon="mdi-pencil" size="small" @click="editItem(item)" />
             <v-icon v-if="can('serviceOrder', 'excluir')" class="ml-1" color="error" icon="mdi-delete" size="small" @click="deleteItem(item)" />
           </template>
           <template #bottom>
