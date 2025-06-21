@@ -19,7 +19,7 @@ function routeBase(name) {
 
 // Definição das colunas
 const headers = ref([
-  { title: 'Dispositivo', key: 'so_device_type_id' },
+  { title: 'Aparelho', key: 'so_device_type_id' },
   { title: 'Descrição', key: 'description' },
   { title: 'Marca', key: 'brand' },
   { title: 'Modelo', key: 'model' },
@@ -150,9 +150,9 @@ function createItem() {
         <template #loading>
           <v-skeleton-loader type="table-row@5" />
         </template>
-        <!--<template #item.gender="{ item }">
-          {{ item.gender == 'male' ? 'Masculino' : 'Feminino' }}
-        </template>-->
+        <template #item.so_device_type_id="{ item }">
+          {{ item.soDevicesType?.description || '-' }}
+        </template>
         <template #item.action="{ item }">
           <!--
               <v-icon class="ml-2" color="primary" icon="mdi-eye" size="small" @click="showItem(item)" />
@@ -164,6 +164,7 @@ function createItem() {
           <v-divider />
         </template>
       </v-data-table-server>
+      <pre>{{ content.data }}</pre>
     </v-card-item>
     <v-card-actions>
       <template v-if="content.total > 10 && itemsPerPage < content.total">
