@@ -36,8 +36,6 @@ const form = useForm({
   invoice_number: '',
   warranty_certificate: ''
 })
-
-// Todo: alterar a rota abaixo
 const submit = () => {
   form.post(route(routeBase('store')), {
     onSuccess() {
