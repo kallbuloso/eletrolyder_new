@@ -148,7 +148,7 @@ class ServiceOrderController extends Controller
     $val = $request->validated();
 
     // Todo: ajustar nome da validação
-    $existingStatus = $this->service->where('description', $val['description'])
+    $existingStatus = $this->service->where('order_number', $val['order_number'])
       ->where('tenant_id', session('tenant_id'))
       ->first();
 
