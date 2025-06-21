@@ -33,7 +33,6 @@ class ServiceOrderRequest extends FormRequest
 			'service_cost' => ['nullable'],
 			'discount' => ['nullable'],
 			'advance_payment' => ['nullable'],
-			'in_use' => ['required'],
 			'currently_editing' => ['nullable', 'string'],
 			'initially_attended_by' => ['nullable', 'string'],
 			'abandonment_alert' => ['nullable'],
