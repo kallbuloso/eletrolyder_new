@@ -13,7 +13,7 @@ trait SoDeviceTrait
      */
     public function soDevicesType()
     {
-        return $this->belongsTo(\App\Models\SoDevicesType::class, 'so_device_type_id', 'id');
+        return $this->belongsTo(\App\Models\SoDevicesType::class);
     }
 
     /**
@@ -21,6 +21,6 @@ trait SoDeviceTrait
      */
     public function serviceOrders()
     {
-        // return $this->hasMany(\App\Models\ServiceOrder::class, 'id', 'so_device_id');
+        return $this->hasMany(\App\Models\ServiceOrder::class, 'id', 'so_device_id');
     }
 }
