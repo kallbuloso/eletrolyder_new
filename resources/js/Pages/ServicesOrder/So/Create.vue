@@ -44,6 +44,10 @@ const submit = () => {
   form.post(route(routeBase('store')), {
     onSuccess() {
       form.reset()
+      router.visit(route(routeBase('index')), {
+        preserveScroll: true,
+        preserveState: false
+      })
     }
   })
 }
