@@ -9,5 +9,5 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 trait UserTrait
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasRoles, PhoneableTrait, AddressableTrait, TenantebleTrait, DatesModelTraits, Notifiable;
+    use HasFactory, HasRoles, PhoneableTrait, AddressableTrait, TenantableTrait, DatesModelTraits, Notifiable;
 }
