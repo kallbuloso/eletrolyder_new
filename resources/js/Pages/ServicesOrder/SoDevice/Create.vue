@@ -42,6 +42,10 @@ const submit = () => {
   form.post(route(routeBase('store')), {
     onSuccess() {
       form.reset()
+      router.visit(route(routeBase('index')), {
+        preserveScroll: true,
+        preserveState: false
+      })
     }
   })
 }
@@ -65,6 +69,7 @@ onMounted(() => {
                 :items="props.soDevicesType"
                 item-value="id"
                 item-title="description"
+                autofocus
                 placeholder="TV, Computador, Impressora, etc."
                 :error-messages="form.errors.so_device_type_id"
               />
