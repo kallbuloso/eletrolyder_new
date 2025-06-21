@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SearchableTrait;
-use App\Traits\TenantebleTrait;
+use App\Traits\TenantableTrait;
 use App\Traits\AddressableTrait;
 use App\Traits\DatesModelTraits;
 use Illuminate\Database\Eloquent\Model;
@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Address extends Model
 {
-    use HasFactory, DatesModelTraits, TenantebleTrait, AddressableTrait;
+    use HasFactory, DatesModelTraits, TenantableTrait, AddressableTrait;
 
     protected $table = "addresses";
 

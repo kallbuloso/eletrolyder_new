@@ -11,7 +11,7 @@ trait DatesModelTraits
 
     public function getCreatedAtAttribute($value)
     {
-        return $this->checkDate($value);;
+        return $this->checkDate($value);
     }
 
     public function getUpdatedAtAttribute($value)

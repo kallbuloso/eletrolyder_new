@@ -3,7 +3,7 @@
 namespace App\Services;
 
 /**
- * Class BaseRepository.
+ * Class BaseService.
  *
  */
 abstract class BaseService
