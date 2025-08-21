@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 
         // $tenantQtd = 1;
         $userQtd = 10;
-        $clientQtd = 120;
+        $clientQtd = 150;
         $supplierQtd = 150;
 
         $tenant = Tenant::factory()->create([
