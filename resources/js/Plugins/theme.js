@@ -1,5 +1,5 @@
 export const staticPrimaryColor = '#26A69A' // Teal
-export const staticPrimaryDarkenColor = '#008080'
+export const staticPrimaryDarkenColor = '#26A69A'
 // export const staticPrimaryColor = '#7367F0'
 export const themes = {
   light: {
