@@ -11,6 +11,7 @@ declare module 'vue' {
     AppAddressesRegister: typeof import('./resources/js/Components/Form/AppAddressesRegister.vue')['default']
     AppAddressForm: typeof import('./resources/js/Components/Form/AppAddressForm.vue')['default']
     AppAddressUpdate: typeof import('./resources/js/Components/Form/AppAddressUpdate.vue')['default']
+    AppWarrantySelect: typeof import('./resources/js/Components/Select/AppWarrantySelect.vue')['default']
     AppAutocomplete: typeof import('./resources/js/Components/Autocomplete/AppAutocomplete.vue')['default']
     AppBreadcrumbs: typeof import('./resources/js/Components/Form/AppBreadcrumbs.vue')['default']
     AppCepField: typeof import('./resources/js/Components/Fields/AppCepField.vue')['default']
