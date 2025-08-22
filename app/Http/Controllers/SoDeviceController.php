@@ -94,6 +94,7 @@ class SoDeviceController extends Controller
         ],
         'count' => $this->service->count(),
         'routeDefault' => $this->routeBase,
+        'soDevicesType' => $this->devicesType
       ]);
     } catch (\Exception $e) {
       if ($request->wantsJson()) {
@@ -101,18 +102,6 @@ class SoDeviceController extends Controller
       }
       throw $e;
     }
-
-    // $query = SoDevice::query();
-    // $query = $this->service->applyFilters($query, $request);
-    // $data = $query->paginate($request->get('limit', 10));
-    // return $this->renderPage("$this->pathView/Index", [
-    //   'title' => $this->pageTitle,
-    //   'breadcrumbs' => [
-    //     ['title' => 'Dashboard', 'href' => route('dashboard')],
-    //     ['title' => $this->pageTitle, 'disabled' => true],
-    //   ],
-    //   'data' => $data,
-    // ]);
   }
 
   /**
@@ -131,15 +120,6 @@ class SoDeviceController extends Controller
         'soDevicesType' => $this->devicesType,
       ])
       ->baseRoute($this->pageIndex);
-
-    // return $this->renderPage("$this->pathView/Form", [
-    //   'title' => "Adicionar $this->titleSingular",
-    //   'breadcrumbs' => [
-    //     ['title' => 'Dashboard', 'href' => route('dashboard')],
-    //     ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
-    //     ['title' => 'Adicionar', 'disabled' => true],
-    //   ],
-    // ]);
   }
 
   /**
@@ -207,6 +187,7 @@ class SoDeviceController extends Controller
         'title' => "Editar $this->titleSingular",
         'data' => $data,
         'routeDefault' => $this->routeBase,
+        'soDevicesType' => $this->devicesType,
       ])
       ->baseRoute($this->pageIndex);
   }
