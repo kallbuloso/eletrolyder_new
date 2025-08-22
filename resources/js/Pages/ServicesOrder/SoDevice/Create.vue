@@ -78,11 +78,11 @@ onMounted(() => {
             <!-- <pre>{{ form.so_device_type_id }}</pre> -->
             <v-col cols="5">
               <!-- Todo: adicionar botão com etiqueta rasurada ou sem marca -->
-              <app-name-field id="brand" v-model="form.brand" label="Marca" placeholder="ex: Samsung" :error-messages="form.errors.brand" />
+              <app-upper-field id="brand" v-model="form.brand" label="Marca" placeholder="ex: Samsung" :error-messages="form.errors.brand" />
             </v-col>
             <v-col cols="7">
               <!-- Todo: adicionar botão com etiqueta rasurada ou sem modelo -->
-              <app-text-field id="model" v-model="form.model" label="Modelo" placeholder="ex: Galaxy S21" :error-messages="form.errors.model" />
+              <app-upper-field id="model" v-model="form.model" label="Modelo" placeholder="ex: Galaxy S21" :error-messages="form.errors.model" />
             </v-col>
             <v-col cols="5">
               <!-- Todo: adicionar botão com etiqueta rasurada ou sem número de série -->
@@ -115,7 +115,7 @@ onMounted(() => {
             <v-col cols="6">
               <app-text-field id="notes" v-model="form.notes" label="Observações" placeholder="Notas sobre o dispositivo" :error-messages="form.errors.notes" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <app-text-field
                 id="warranty_provider"
                 v-model="form.warranty_provider"
@@ -124,16 +124,16 @@ onMounted(() => {
                 :error-messages="form.errors.warranty_provider"
               />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <app-text-field id="purchase_date" v-model="form.purchase_date" label="Purchase Date" placeholder="Purchase Date" :error-messages="form.errors.purchase_date" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <app-text-field id="reseller" v-model="form.reseller" label="Reseller" placeholder="Reseller" :error-messages="form.errors.reseller" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <app-text-field id="invoice_number" v-model="form.invoice_number" label="Invoice Number" placeholder="Invoice Number" :error-messages="form.errors.invoice_number" />
             </v-col>
-            <v-col cols="12">
+            <v-col cols="6">
               <app-text-field
                 id="warranty_certificate"
                 v-model="form.warranty_certificate"
