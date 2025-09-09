@@ -144,11 +144,11 @@ const menuSections = ref([
         group: 'soSettings',
         children: [
           {
-            title: 'Status da OS',
+            title: 'Status de OS',
             href: 'orders.soSettings.soStatus.index'
           },
           {
-            title: 'Aparelhos',
+            title: 'Tipo de Aparelhos',
             href: 'orders.soSettings.soDevicesType.index'
           }
         ]
