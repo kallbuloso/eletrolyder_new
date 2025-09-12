@@ -27,19 +27,19 @@ function routeBase(name) {
 // Todo: Ajustar o form
 const form = useForm({
   tenant_id: props.data.tenant_id,
-  so_device_type_id: props.data.so_device_type_id,
-  description: props.data.description,
-  brand: props.data.brand,
-  model: props.data.model,
-  serial_number: props.data.serial_number,
-  damages: props.data.damages,
-  accessories: props.data.accessories,
-  notes: props.data.notes,
-  warranty_provider: props.data.warranty_provider,
-  purchase_date: props.data.purchase_date,
-  reseller: props.data.reseller,
-  invoice_number: props.data.invoice_number,
-  warranty_certificate: props.data.warranty_certificate
+  so_device_type_id: '',
+  description: '',
+  brand: '',
+  model: '',
+  serial_number: '',
+  damages: '',
+  accessories: '',
+  notes: '',
+  warranty_provider: '',
+  purchase_date: '',
+  reseller: '',
+  invoice_number: '',
+  warranty_certificate: ''
 })
 
 // Todo: alterar a rota abaixo
@@ -96,6 +96,7 @@ onMounted(() => {
             <v-col cols="8">
               <app-name-field id="description" v-model="form.description" label="Descrição" placeholder="LED 32, Notebook, etc." :error-messages="form.errors.description" />
             </v-col>
+            <!-- <pre>{{ form.so_device_type_id }}</pre> -->
             <v-col cols="5">
               <!-- Todo: adicionar botão com etiqueta rasurada ou sem marca -->
               <app-upper-field id="brand" v-model="form.brand" label="Marca" placeholder="ex: Samsung" :error-messages="form.errors.brand" />
@@ -135,32 +136,55 @@ onMounted(() => {
             <v-col cols="6">
               <app-text-field id="notes" v-model="form.notes" label="Observações" placeholder="Notas sobre o dispositivo" :error-messages="form.errors.notes" />
             </v-col>
-            <v-col cols="12">
-              <v-text-field
-                id="warranty_provider"
-                v-model="form.warranty_provider"
-                label="Warranty Provider"
-                placeholder="Warranty Provider"
-                :error-messages="form.errors.warranty_provider"
-              />
-            </v-col>
-            <v-col cols="12">
-              <v-text-field id="purchase_date" v-model="form.purchase_date" label="Purchase Date" placeholder="Purchase Date" :error-messages="form.errors.purchase_date" />
-            </v-col>
-            <v-col cols="12">
-              <v-text-field id="reseller" v-model="form.reseller" label="Reseller" placeholder="Reseller" :error-messages="form.errors.reseller" />
-            </v-col>
-            <v-col cols="12">
-              <v-text-field id="invoice_number" v-model="form.invoice_number" label="Invoice Number" placeholder="Invoice Number" :error-messages="form.errors.invoice_number" />
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                id="warranty_certificate"
-                v-model="form.warranty_certificate"
-                label="Warranty Certificate"
-                placeholder="Warranty Certificate"
-                :error-messages="form.errors.warranty_certificate"
-              />
+            <v-col>
+              <v-expansion-panels>
+                <v-expansion-panel>
+                  <v-expansion-panel-title>Garantia</v-expansion-panel-title>
+                  <v-expansion-panel-text>
+                    <v-row>
+                      <v-col cols="6">
+                        <app-text-field
+                          id="warranty_provider"
+                          v-model="form.warranty_provider"
+                          label="Fornecedor da Garantia"
+                          placeholder="Fornecedor da Garantia"
+                          :error-messages="form.errors.warranty_provider"
+                        />
+                      </v-col>
+                      <v-col cols="6">
+                        <app-date-field
+                          id="purchase_date"
+                          v-model="form.purchase_date"
+                          label="Data de Compra"
+                          placeholder="dd/mm/yyyy"
+                          :error-messages="form.errors.purchase_date"
+                        />
+                      </v-col>
+                      <v-col cols="6">
+                        <app-name-field id="reseller" v-model="form.reseller" label="Revendedor" placeholder="Revendedor" :error-messages="form.errors.reseller" />
+                      </v-col>
+                      <v-col cols="6">
+                        <app-text-field
+                          id="invoice_number"
+                          v-model="form.invoice_number"
+                          label="Número da NF"
+                          placeholder="Número da NF"
+                          :error-messages="form.errors.invoice_number"
+                        />
+                      </v-col>
+                      <v-col cols="6">
+                        <app-text-field
+                          id="warranty_certificate"
+                          v-model="form.warranty_certificate"
+                          label="Certificado de Garantia"
+                          placeholder="Certificado de Garantia"
+                          :error-messages="form.errors.warranty_certificate"
+                        />
+                      </v-col>
+                    </v-row>
+                  </v-expansion-panel-text>
+                </v-expansion-panel>
+              </v-expansion-panels>
             </v-col>
           </v-row>
         </v-card-text>
