@@ -206,16 +206,16 @@ class SoDeviceController extends Controller
     $val = $request->validated();
 
     // Todo: Ajustar validação
-    $existingStatus = $this->service->where('description', $val['description'])
-      ->where('tenant_id', session('tenant_id'))
-      ->where('id', $id, '!=')
-      ->first();
+    // $existingStatus = $this->service->where('serial_number', $val['serial_number'])
+    //   ->where('tenant_id', session('tenant_id'))
+    //   ->where('id', $id, '!=')
+    //   ->first();
 
-    if ($existingStatus) {
-      return redirect()->back()
-        ->withErrors(['description' => 'Já existe um aparelho com essa descrição.'])
-        ->withInput();
-    }
+    // if ($existingStatus) {
+    //   return redirect()->back()
+    //     ->withErrors(['serial_number' => 'Já existe um aparelho com esse número de série.'])
+    //     ->withInput();
+    // }
 
     $this->service->update($id, $val);
 
