@@ -166,12 +166,42 @@ export const phoneValidator = (value) => {
   return phone.length >= 10 || 'O número de telefone é inválido'
 }
 
-// 👉 Date validator
-export const dateValidator = (value) => {
-  if (isEmpty(value)) return true
-  const date = new Date(value)
+// // 👉 Date validator
+// export const dateValidator = (value) => {
+//   if (isEmpty(value)) return true
+//   const date = new Date(value)
 
-  return (date instanceof Date && !isNaN(date)) || 'A data é inválida'
+//   return (date instanceof Date && !isNaN(date)) || 'A data é inválida'
+// }
+
+// 👉 Date validator (dd/mm/yyyy, não superior à data de hoje)
+export const dateValidator = (value) => {
+  if (!value || value.trim() === '') return true
+
+  // 1. Valida o formato com regex: dd/mm/yyyy
+  const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/
+  const match = value.match(datePattern)
+  if (!match) return 'A data deve estar no formato dd/mm/yyyy'
+
+  const day = parseInt(match[1], 10)
+  const month = parseInt(match[2], 10) - 1 // mês em JS é 0-11
+  const year = parseInt(match[3], 10)
+
+  // 2. Cria a data e valida se é realmente válida (ex: 31/02/2024 é inválido)
+  const date = new Date(year, month, day)
+  if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+    return 'A data é inválida'
+  }
+
+  // 3. Verifica se a data é futura (maior que hoje)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0) // zera o horário para comparar apenas a data
+
+  if (date > today) {
+    return 'A data não pode ser superior à data de hoje'
+  }
+
+  return true
 }
 
 // 👉 CEP validator
