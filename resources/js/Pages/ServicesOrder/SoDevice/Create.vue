@@ -22,7 +22,7 @@ function routeBase(name) {
 
 // Todo: Ajustar o form
 const form = useForm({
-  so_device_type_id: '',
+  so_device_type_id: props.soDevicesType.length > 0 ? props.soDevicesType[0].id : null,
   description: '',
   brand: '',
   model: '',
@@ -115,32 +115,55 @@ onMounted(() => {
             <v-col cols="6">
               <app-text-field id="notes" v-model="form.notes" label="Observações" placeholder="Notas sobre o dispositivo" :error-messages="form.errors.notes" />
             </v-col>
-            <v-col cols="6">
-              <app-text-field
-                id="warranty_provider"
-                v-model="form.warranty_provider"
-                label="Fornecedor da Garantia"
-                placeholder="Fornecedor da Garantia"
-                :error-messages="form.errors.warranty_provider"
-              />
-            </v-col>
-            <v-col cols="6">
-              <app-text-field id="purchase_date" v-model="form.purchase_date" label="Purchase Date" placeholder="Purchase Date" :error-messages="form.errors.purchase_date" />
-            </v-col>
-            <v-col cols="6">
-              <app-text-field id="reseller" v-model="form.reseller" label="Reseller" placeholder="Reseller" :error-messages="form.errors.reseller" />
-            </v-col>
-            <v-col cols="6">
-              <app-text-field id="invoice_number" v-model="form.invoice_number" label="Invoice Number" placeholder="Invoice Number" :error-messages="form.errors.invoice_number" />
-            </v-col>
-            <v-col cols="6">
-              <app-text-field
-                id="warranty_certificate"
-                v-model="form.warranty_certificate"
-                label="Warranty Certificate"
-                placeholder="Warranty Certificate"
-                :error-messages="form.errors.warranty_certificate"
-              />
+            <v-col>
+              <v-expansion-panels>
+                <v-expansion-panel>
+                  <v-expansion-panel-title>Garantia</v-expansion-panel-title>
+                  <v-expansion-panel-text>
+                    <v-row>
+                      <v-col cols="6">
+                        <app-text-field
+                          id="warranty_provider"
+                          v-model="form.warranty_provider"
+                          label="Fornecedor da Garantia"
+                          placeholder="Fornecedor da Garantia"
+                          :error-messages="form.errors.warranty_provider"
+                        />
+                      </v-col>
+                      <v-col cols="6">
+                        <app-text-field
+                          id="purchase_date"
+                          v-model="form.purchase_date"
+                          label="Data de Compra"
+                          placeholder="Data de Compra"
+                          :error-messages="form.errors.purchase_date"
+                        />
+                      </v-col>
+                      <v-col cols="6">
+                        <app-text-field id="reseller" v-model="form.reseller" label="Revendedor" placeholder="Revendedor" :error-messages="form.errors.reseller" />
+                      </v-col>
+                      <v-col cols="6">
+                        <app-text-field
+                          id="invoice_number"
+                          v-model="form.invoice_number"
+                          label="Número da NF"
+                          placeholder="Número da NF"
+                          :error-messages="form.errors.invoice_number"
+                        />
+                      </v-col>
+                      <v-col cols="6">
+                        <app-text-field
+                          id="warranty_certificate"
+                          v-model="form.warranty_certificate"
+                          label="Certificado de Garantia"
+                          placeholder="Certificado de Garantia"
+                          :error-messages="form.errors.warranty_certificate"
+                        />
+                      </v-col>
+                    </v-row>
+                  </v-expansion-panel-text>
+                </v-expansion-panel>
+              </v-expansion-panels>
             </v-col>
           </v-row>
         </v-card-text>
