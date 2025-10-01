@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Phone;
-use Illuminate\Http\Request;
 use App\Http\Requests\PhoneRequest;
 use App\Services\PhoneService;
 use App\Http\Controllers\Controller;
