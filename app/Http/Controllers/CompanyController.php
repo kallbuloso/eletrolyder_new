@@ -2,47 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
-use Illuminate\Http\Request;
-use App\Services\CompanyService;
-use App\Http\Requests\PhoneRequest;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\CompanyRequest;
+use App\Http\Requests\PhoneRequest;
+use App\Models\Company;
+use App\Services\CompanyService;
+use Illuminate\Http\Request;
 
 /**
  * Class CompanyController
- * @package App\Http\Controllers
  */
 class CompanyController extends Controller
 {
     /**
      * Company Service
+     *
      * @var CompanyService
      */
     private $service;
 
     /**
      * Page Title
+     *
      * @var string
      */
     private $pageTitle = 'Company';
 
     /**
      * Title Singular
+     *
      * @var string
      */
     private $titleSingular = 'Company';
 
     /**
      * Summary of pageIndex
+     *
      * @var string
      */
     private $pageIndex = 'settings.company.index';
 
     /**
      * CompanyController constructor.
-     * @param CompanyService $service
      */
     public function __construct(CompanyService $service)
     {
@@ -53,7 +54,6 @@ class CompanyController extends Controller
      * Display a listing of the resource.
      *
      * @param  Request  $request
-     * @return \Inertia\Response
      */
     public function index(): \Inertia\Response
     {
@@ -63,7 +63,7 @@ class CompanyController extends Controller
             ->where('tenant_id', session('tenant_id'))
             ->first();
 
-        if (!$company) {
+        if (! $company) {
             return redirect()->back()
                 ->toast('Não foi possível encontrar a empresa.', 'error');
         } else {
@@ -85,10 +85,6 @@ class CompanyController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  PhoneRequest  $request
-     * @param  $companyId
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function storePhone(PhoneRequest $request, $companyId): \Illuminate\Http\RedirectResponse
     {
@@ -104,15 +100,11 @@ class CompanyController extends Controller
         ]);
 
         return redirect()->back()
-            ->toast("Telefone adicionado à empresa.", 'success');
+            ->toast('Telefone adicionado à empresa.', 'success');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  AddressRequest  $request
-     * @param  $companyId
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function storeAddress(AddressRequest $request, $companyId): \Illuminate\Http\RedirectResponse
     {
@@ -134,15 +126,11 @@ class CompanyController extends Controller
         ]);
 
         return redirect()->back()
-            ->toast("Endereço adicionado à empresa.", 'success');
+            ->toast('Endereço adicionado à empresa.', 'success');
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  CompanyRequest  $request
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(CompanyRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
@@ -156,9 +144,6 @@ class CompanyController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id): \Illuminate\Http\RedirectResponse
     {

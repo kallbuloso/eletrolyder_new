@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Scope;
 
 class TenantScope implements Scope
 {
-  /**
-   * Apply the scope to a given Eloquent query builder.
-   */
-  public function apply(Builder $builder, Model $model): void
-  {
-    if (checkTenantId()) {
-      $builder->where('tenant_id', session('tenant_id'));
+    /**
+     * Apply the scope to a given Eloquent query builder.
+     */
+    public function apply(Builder $builder, Model $model): void
+    {
+        if (checkTenantId()) {
+            $builder->where('tenant_id', session('tenant_id'));
+        }
     }
-  }
 }

@@ -2,12 +2,12 @@
 
 namespace App\Traits;
 
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 trait UserTrait
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, HasRoles, PhoneableTrait, AddressableTrait, TenantableTrait, DatesModelTraits, Notifiable;
+    use AddressableTrait, DatesModelTraits, HasFactory, HasRoles, Notifiable, PhoneableTrait, TenantableTrait;
 }

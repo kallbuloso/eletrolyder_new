@@ -2,15 +2,15 @@
 
 namespace App\Console\CrudGenerator\Commands;
 
-use RuntimeException;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
+use App\Console\CrudGenerator\VilvCrudGenerator;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
-use Symfony\Component\Process\Process;
-use App\Console\CrudGenerator\VilvCrudGenerator;
+use Illuminate\Support\Str;
+use RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Process\Process;
 
 /**
  * Class GeneratorCommand.
@@ -19,8 +19,6 @@ abstract class GeneratorCommand extends Command
 {
     /**
      * The filesystem instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
      */
     protected Filesystem $files;
 
@@ -107,7 +105,6 @@ abstract class GeneratorCommand extends Command
     /**
      * Create a new controller creator command instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
      *
      * @return void
      */
@@ -147,12 +144,11 @@ abstract class GeneratorCommand extends Command
      * Build the directory if necessary.
      *
      * @param  string  $path
-     *
      * @return string
      */
     protected function makeDirectory($path)
     {
-        if (!$this->files->isDirectory(dirname($path))) {
+        if (! $this->files->isDirectory(dirname($path))) {
             $this->files->makeDirectory(dirname($path), 0777, true, true);
         }
 
@@ -161,15 +157,12 @@ abstract class GeneratorCommand extends Command
 
     /**
      * Write the file/Class.
-     *
-     * @param $path
-     * @param $content
      */
     protected function write($path, $content)
     {
         $directory = $this->files->dirname($path);
 
-        if (!$this->files->isDirectory($directory)) {
+        if (! $this->files->isDirectory($directory)) {
             $this->files->makeDirectory($directory, 0755, true);
         }
 
@@ -180,22 +173,21 @@ abstract class GeneratorCommand extends Command
      * Get the stub file.
      *
      * @param  string  $type
-     * @param  boolean  $content
-     *
+     * @param  bool  $content
      * @return string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function getStub($type, $content = true)
     {
         $stub_path = config('crud.stub_path', 'default');
         if ($stub_path == 'default') {
-            $stub_path = __DIR__ . '/../stubs/';
+            $stub_path = __DIR__.'/../stubs/';
         }
 
-        $path = Str::finish($stub_path, '/') . "{$type}.stub";
+        $path = Str::finish($stub_path, '/')."{$type}.stub";
 
-        if (!$content) {
+        if (! $content) {
             return $path;
         }
 
@@ -203,8 +195,6 @@ abstract class GeneratorCommand extends Command
     }
 
     /**
-     * @param $no
-     *
      * @return string
      */
     private function _getSpace($no = 1)
@@ -218,38 +208,30 @@ abstract class GeneratorCommand extends Command
     }
 
     /**
-     * @param $name
-     *
      * @return string
      */
     protected function _getControllerPath($name)
     {
-        return app_path($this->_getNamespacePath($this->controllerNamespace) . "{$name}Controller.php");
+        return app_path($this->_getNamespacePath($this->controllerNamespace)."{$name}Controller.php");
     }
 
     /**
-     * @param $name
-     *
      * @return string
      */
     protected function _getRequestPath($name)
     {
-        return app_path($this->_getNamespacePath($this->requestNamespace) . "{$name}Request.php");
+        return app_path($this->_getNamespacePath($this->requestNamespace)."{$name}Request.php");
     }
 
     /**
-     * @param $name
-     *
      * @return string
      */
     protected function _getServicePath($name)
     {
-        return app_path($this->_getNamespacePath('App\Services') . "{$name}Service.php");
+        return app_path($this->_getNamespacePath('App\Services')."{$name}Service.php");
     }
 
     /**
-     * @param $name
-     *
      * @return string
      */
     protected function _getTraitPath($name)
@@ -258,19 +240,16 @@ abstract class GeneratorCommand extends Command
     }
 
     /**
-     * @param $name
-     *
      * @return string
      */
     protected function _getModelPath($name)
     {
-        return $this->makeDirectory(app_path($this->_getNamespacePath($this->modelNamespace) . "{$name}.php"));
+        return $this->makeDirectory(app_path($this->_getNamespacePath($this->modelNamespace)."{$name}.php"));
     }
 
     /**
      * Get the path from namespace.
      *
-     * @param $namespace
      *
      * @return string
      */
@@ -288,12 +267,11 @@ abstract class GeneratorCommand extends Command
      */
     private function _getLayoutPath()
     {
-        return $this->makeDirectory(resource_path("/views/layouts/app.blade.php"));
+        return $this->makeDirectory(resource_path('/views/layouts/app.blade.php'));
     }
 
     /**
      * Get the default factory path.
-     * @param $name
      *
      * @return string
      */
@@ -304,7 +282,6 @@ abstract class GeneratorCommand extends Command
 
     /**
      * Get the default seeder path.
-     * @param $name
      *
      * @return string
      */
@@ -314,8 +291,6 @@ abstract class GeneratorCommand extends Command
     }
 
     /**
-     * @param $view
-     *
      * @return string
      */
     protected function _getViewPath($view)
@@ -336,6 +311,7 @@ abstract class GeneratorCommand extends Command
             // Una as partes com a barra como separador
             $name = implode('/', $capitalizedParts);
         }
+
         return $name;
     }
 
@@ -382,13 +358,10 @@ abstract class GeneratorCommand extends Command
     /**
      * Build the form fields for form.
      *
-     * @param $title
-     * @param $column
      * @param  string  $type
-     *
      * @return mixed
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function getField($title, $column, $type = 'form-field')
     {
@@ -406,8 +379,6 @@ abstract class GeneratorCommand extends Command
     }
 
     /**
-     * @param $column
-     *
      * @return mixed
      */
     protected function getFormFields($column)
@@ -419,13 +390,11 @@ abstract class GeneratorCommand extends Command
         return str_replace(
             array_keys($replace),
             array_values($replace),
-            "\n" . $this->_getSpace(2) . "form.{{column}} = props.data.{{column}}"
+            "\n".$this->_getSpace(2).'form.{{column}} = props.data.{{column}}'
         );
     }
 
     /**
-     * @param $column
-     *
      * @return mixed
      */
     protected function getFormFieldsCriate($column)
@@ -437,13 +406,11 @@ abstract class GeneratorCommand extends Command
         return str_replace(
             array_keys($replace),
             array_values($replace),
-            "\n" . $this->_getSpace(1) . "{{column}}: '',"
+            "\n".$this->_getSpace(1)."{{column}}: '',"
         );
     }
 
     /**
-     * @param $column
-     *
      * @return mixed
      */
     protected function getFormFieldsEdit($column)
@@ -455,13 +422,11 @@ abstract class GeneratorCommand extends Command
         return str_replace(
             array_keys($replace),
             array_values($replace),
-            "\n" . $this->_getSpace(1) . "{{column}}: props.data.{{column}},"
+            "\n".$this->_getSpace(1).'{{column}}: props.data.{{column}},'
         );
     }
 
     /**
-     * @param $title
-     *
      * @return mixed
      */
     protected function getHead($title)
@@ -476,13 +441,11 @@ abstract class GeneratorCommand extends Command
         return str_replace(
             array_keys($replace),
             array_values($replace),
-            "\n" . $this->_getSpace(1) . "{ title: '{{title}}', key: '{{key}}' },"
+            "\n".$this->_getSpace(1)."{ title: '{{title}}', key: '{{key}}' },"
         );
     }
 
     /**
-     * @param $column
-     *
      * @return mixed
      */
     protected function getBody($column)
@@ -494,7 +457,7 @@ abstract class GeneratorCommand extends Command
         return str_replace(
             array_keys($replace),
             array_values($replace),
-            $this->_getSpace(11) . '<td>{{ ${{modelNameLowerCase}}->{{column}} }}</td>' . "\n"
+            $this->_getSpace(11).'<td>{{ ${{modelNameLowerCase}}->{{column}} }}</td>'."\n"
         );
     }
 
@@ -505,7 +468,7 @@ abstract class GeneratorCommand extends Command
      */
     protected function buildLayout(): void
     {
-        if (!(view()->exists($this->layout))) {
+        if (! (view()->exists($this->layout))) {
 
             $this->info('Creating Layout ...');
 
@@ -544,7 +507,7 @@ abstract class GeneratorCommand extends Command
         }
 
         return array_filter($columns, function ($value) use ($unwanted) {
-            return !in_array($value, $unwanted);
+            return ! in_array($value, $unwanted);
         });
     }
 
@@ -562,7 +525,7 @@ abstract class GeneratorCommand extends Command
         foreach ($this->getColumns() as $column) {
             $properties .= "\n * @property \${$column['name']}";
 
-            if (!$column['nullable']) {
+            if (! $column['nullable']) {
                 $rulesArray[$column['name']] = ['required'];
             }
 
@@ -592,7 +555,7 @@ abstract class GeneratorCommand extends Command
 
             if ($column['name'] == 'deleted_at') {
                 $softDeletesNamespace = "use Illuminate\Database\Eloquent\SoftDeletes;\n";
-                $softDeletes = " SoftDeletes,";
+                $softDeletes = ' SoftDeletes,';
             }
         }
 
@@ -602,7 +565,7 @@ abstract class GeneratorCommand extends Command
             $rulesArray = Arr::except($rulesArray, $this->unwantedColumns);
             // Make rulesArray
             foreach ($rulesArray as $col => $rule) {
-                $rules .= "\n\t\t\t'{$col}' => ['" . implode('\', \'', $rule) . "'],";
+                $rules .= "\n\t\t\t'{$col}' => ['".implode('\', \'', $rule)."'],";
             }
 
             return $rules;
@@ -615,7 +578,7 @@ abstract class GeneratorCommand extends Command
 
             // Add quotes to the unwanted columns for fillable
             array_walk($filterColumns, function (&$value) {
-                $value = "\n\t\t'" . $value . "'";
+                $value = "\n\t\t'".$value."'";
             });
 
             // CSV format
@@ -656,7 +619,7 @@ abstract class GeneratorCommand extends Command
     {
         $route = $this->option('route');
 
-        if (!empty($route)) {
+        if (! empty($route)) {
             $this->options['route'] = $route;
         }
 
@@ -687,10 +650,6 @@ abstract class GeneratorCommand extends Command
 
     /**
      * Installs the given Composer Packages into the application.
-     *
-     * @param  array  $packages
-     * @param  bool  $asDev
-     * @return bool
      */
     protected function requireComposerPackages(array $packages, bool $asDev = false): bool
     {
@@ -709,9 +668,6 @@ abstract class GeneratorCommand extends Command
 
     /**
      * Run the given commands.
-     *
-     * @param  array  $commands
-     * @return void
      */
     protected function runCommands(array $commands): void
     {
@@ -721,12 +677,12 @@ abstract class GeneratorCommand extends Command
             try {
                 $process->setTty(true);
             } catch (RuntimeException $e) {
-                $this->output->writeln('  <bg=yellow;fg=black> WARN </> ' . $e->getMessage() . PHP_EOL);
+                $this->output->writeln('  <bg=yellow;fg=black> WARN </> '.$e->getMessage().PHP_EOL);
             }
         }
 
         $process->run(function ($type, $line) {
-            $this->output->write('    ' . $line);
+            $this->output->write('    '.$line);
         });
     }
 }

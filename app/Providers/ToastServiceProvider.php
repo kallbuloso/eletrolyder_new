@@ -15,7 +15,7 @@ class ToastServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->instance(ToastService::class, new ToastService());
+        $this->app->instance(ToastService::class, new ToastService);
 
         RedirectResponse::macro('toast', function () {
             $toast = resolve(ToastService::class);

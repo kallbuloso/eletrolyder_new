@@ -13,34 +13,33 @@ use Illuminate\Database\Eloquent\Model;
  * @property $description
  * @property $created_at
  * @property $updated_at
- *
  * @property Tenant $tenant
  * @property Main.soDevice[] $main.soDevices
- * @package App
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class SoDevicesType extends Model
 {
-  use SoDevicesTypeTrait;
+    use SoDevicesTypeTrait;
 
-  protected $table = "so_devices_type";
+    protected $table = 'so_devices_type';
 
-  protected $perPage = 10;
+    protected $perPage = 10;
 
-  protected $guarded = ['id'];
+    protected $guarded = ['id'];
 
-  /**
-   * Attributes that should be mass-assignable.
-   *
-   * @var array
-   */
-  protected $fillable = [
-    'tenant_id',
-    'description',
-    'is_active'
-  ];
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'tenant_id',
+        'description',
+        'is_active',
+    ];
 
-  protected $searchable = [
-    'description'
-  ];
+    protected $searchable = [
+        'description',
+    ];
 }

@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use App\Facades\Toast;
+use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
-use Illuminate\Http\Request;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -31,10 +31,11 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        if (!empty($request->user())) {
+        if (! empty($request->user())) {
             // session value set on login
             setPermissionsTeamId($request->user()->tenant_id);
         }
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -48,7 +49,7 @@ class HandleInertiaRequests extends Middleware
                     'permissions' => $request->user()->getAllPermissions()->pluck('name'),
                 ] : null,
             ],
-            'ziggy' => fn() => [
+            'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],

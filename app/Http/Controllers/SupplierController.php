@@ -2,53 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Supplier;
-use Illuminate\Http\Request;
-use App\Services\SupplierService;
-use App\Http\Requests\PhoneRequest;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PhoneRequest;
 use App\Http\Requests\SupplierRequest;
+use App\Models\Supplier;
+use App\Services\SupplierService;
+use Illuminate\Http\Request;
 
 /**
  * Class SupplierController
- * @package App\Http\Controllers
  */
 class SupplierController extends Controller
 {
     /**
      * Supplier Service
+     *
      * @var SupplierService
      */
     private $service;
 
     /**
      * Page Title
+     *
      * @var string
      */
     private $pageTitle = 'Fornecedores';
 
     /**
      * Title Singular
+     *
      * @var string
      */
     private $titleSingular = 'Fornecedor';
 
     /**
      * Summary of pageIndex
+     *
      * @var string
      */
     private $pageIndex = 'registers.supplier.index';
 
     /**
      * Summary of pathView
+     *
      * @var string
      */
     private $pathView = 'Registers/Supplier';
 
     /**
      * SupplierController constructor.
-     * @param SupplierService $service
      */
     public function __construct(SupplierService $service)
     {
@@ -57,9 +59,6 @@ class SupplierController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\JsonResponse|\Inertia\Response
      */
     public function index(Request $request): \Illuminate\Http\JsonResponse|\Inertia\Response
     {
@@ -94,8 +93,6 @@ class SupplierController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Momentum\Modal\Modal
      */
     public function create(): \Momentum\Modal\Modal
     {
@@ -110,9 +107,6 @@ class SupplierController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  SupplierRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(SupplierRequest $request): \Illuminate\Http\RedirectResponse
     {
@@ -154,10 +148,6 @@ class SupplierController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  PhoneRequest  $request
-     * @param  $supplierId
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function storePhone(PhoneRequest $request, $supplierId): \Illuminate\Http\RedirectResponse
     {
@@ -171,16 +161,13 @@ class SupplierController extends Controller
             'phone_contact' => $request->phone_contact,
             'phone_has_whatsapp' => $request->phone_has_whatsapp,
         ]);
+
         return redirect()->back()
             ->toast("Telefone adicionado ao $this->titleSingular.", 'success');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  AddressRequest  $request
-     * @param  $supplierId
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function storeAddress(AddressRequest $request, $supplierId): \Illuminate\Http\RedirectResponse
     {
@@ -207,15 +194,13 @@ class SupplierController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Inertia\Response
      */
     public function show($id): \Inertia\Response
     {
         $this->authorize('supplier ver');
 
         return $this->renderPage("$this->pathView/Show", [
-            'title' => 'Detalhes de ' . $this->titleSingular,
+            'title' => 'Detalhes de '.$this->titleSingular,
             'breadcrumbs' => [
                 ['title' => 'Dashboard', 'href' => route('dashboard')],
                 ['title' => $this->pageTitle, 'href' => route($this->pageIndex)],
@@ -227,8 +212,6 @@ class SupplierController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Inertia\Response
      */
     public function edit($id): \Inertia\Response
     {
@@ -255,10 +238,6 @@ class SupplierController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  SupplierRequest  $request
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(SupplierRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
@@ -272,9 +251,6 @@ class SupplierController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id): \Illuminate\Http\RedirectResponse
     {

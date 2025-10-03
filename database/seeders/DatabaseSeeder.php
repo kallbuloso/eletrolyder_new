@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Client;
-use App\Models\Tenant;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Company;
+use App\Models\SoDevicesType;
 use App\Models\SoStatus;
 use App\Models\Supplier;
-use App\Models\SoDevicesType;
+use App\Models\Tenant;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -141,8 +141,7 @@ class DatabaseSeeder extends Seeder
     /**
      * Create default service order devices.
      *
-     * @param int $tenantId
-     * @return void
+     * @param  int  $tenantId
      */
     public function createSoDevicesType($tenantId): void
     {
@@ -182,7 +181,7 @@ class DatabaseSeeder extends Seeder
                 'status_steps' => [
                     'Aguardando avaliação de técnico',
                     'Orçamento em andamento',
-                ]
+                ],
             ],
             [
                 'name' => 'Garantia da Loja',
@@ -192,7 +191,7 @@ class DatabaseSeeder extends Seeder
                     'Aguardando avaliação de técnico',
                     'Aguardando peças',
                     'Conserto em andamento',
-                ]
+                ],
             ],
             [
                 'name' => 'Garantia do Fabricante',
@@ -202,7 +201,7 @@ class DatabaseSeeder extends Seeder
                     'Aguardando avaliação de técnico',
                     'Aguardando peças',
                     'Conserto em andamento',
-                ]
+                ],
             ],
             [
                 'name' => 'Orçamento em andamento',
@@ -211,7 +210,7 @@ class DatabaseSeeder extends Seeder
                 'status_steps' => [
                     'Aguardando peças para concluir orçamento',
                     'Aguardando cotação de peças',
-                ]
+                ],
             ],
             [
                 'name' => 'Orçamento finalizado',
@@ -219,7 +218,7 @@ class DatabaseSeeder extends Seeder
                 'generates_revenue' => true,
                 'status_steps' => [
                     'Aguardando aprovação do cliente',
-                ]
+                ],
             ],
             [
                 'name' => 'Conserto Aprovado',
@@ -228,7 +227,7 @@ class DatabaseSeeder extends Seeder
                 'status_steps' => [
                     'Aguardando peças',
                     'Aguardando Conserto',
-                ]
+                ],
             ],
             [
                 'name' => 'Conserto em andamento',
@@ -238,7 +237,7 @@ class DatabaseSeeder extends Seeder
                     'Aguardando restante de peças',
                     'Aparelho em testes',
                     'Conserto em andamento',
-                ]
+                ],
             ],
             [
                 'name' => 'Conserto Finalizado',
@@ -247,32 +246,32 @@ class DatabaseSeeder extends Seeder
                 'status_steps' => [
                     'Aguardando iformar ao cliente',
                     'Aguardando retirada do aparelho',
-                ]
+                ],
             ],
             [
                 'name' => 'Entregue reparado',
                 'status_type' => 2,
-                'generates_revenue' => true
+                'generates_revenue' => true,
             ],
             [
                 'name' => 'Entregue (sem garantia)',
                 'status_type' => 2,
-                'generates_revenue' => false
+                'generates_revenue' => false,
             ],
             [
                 'name' => 'Entregue (sem conserto)',
                 'status_type' => 2,
-                'generates_revenue' => false
+                'generates_revenue' => false,
             ],
             [
                 'name' => 'Entregue (cortesia)',
                 'status_type' => 2,
-                'generates_revenue' => false
+                'generates_revenue' => false,
             ],
             [
                 'name' => 'Entregue sem reparo',
                 'status_type' => 2,
-                'generates_revenue' => false
+                'generates_revenue' => false,
             ],
         ];
 
@@ -314,7 +313,7 @@ class DatabaseSeeder extends Seeder
             ]);
 
             // Criação dos status_steps relacionados, se existirem
-            if (!empty($status['status_steps'])) {
+            if (! empty($status['status_steps'])) {
                 foreach ($status['status_steps'] as $stepDescription) {
                     $statusCreate->statusSteps()->create([
                         'tenant_id' => $tenantId,

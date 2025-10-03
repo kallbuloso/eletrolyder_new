@@ -13,16 +13,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property $name
  * @property $status_type
  * @property $generates_revenue
- *
  * @property Tenant $tenant
- * @package App
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class SoStatus extends Model
 {
     use SoStatusTrait;
 
-    protected $table = "so_statuses";
+    protected $table = 'so_statuses';
 
     protected $perPage = 10;
 
@@ -37,10 +36,10 @@ class SoStatus extends Model
         'tenant_id',
         'description',
         'status_type',
-        'generates_revenue'
+        'generates_revenue',
     ];
 
     protected $searchable = [
-        'description'
+        'description',
     ];
 }

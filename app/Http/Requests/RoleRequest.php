@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RoleRequest extends FormRequest
@@ -23,8 +22,8 @@ class RoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => ['required', 'string', 'max:100'], // 'unique:roles,tenant_id' é o mesmo que 'unique:roles,tenant_id,NULL,id'
-            'description'    => 'nullable|string',
+            'name' => ['required', 'string', 'max:100'], // 'unique:roles,tenant_id' é o mesmo que 'unique:roles,tenant_id,NULL,id'
+            'description' => 'nullable|string',
             'guard_name' => 'required|string',
             'permissions.*' => 'nullable|exists:permissions,id',
         ];

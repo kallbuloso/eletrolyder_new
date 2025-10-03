@@ -15,42 +15,42 @@ class SoStatusSeeder
             [
                 'name' => 'Entrada para orçamento',
                 'status_type' => 0,
-                'generates_revenue' => false
+                'generates_revenue' => false,
             ],
             [
                 'name' => 'Garantia Loja',
                 'status_type' => 0,
-                'generates_revenue' => false
+                'generates_revenue' => false,
             ],
             [
                 'name' => 'Garantia Fabricante',
                 'status_type' => 0,
-                'generates_revenue' => false
+                'generates_revenue' => false,
             ],
             [
                 'name' => 'Orçamento em andamento',
                 'status_type' => 1,
-                'generates_revenue' => true
+                'generates_revenue' => true,
             ],
             [
                 'name' => 'Orçamento finalizado',
                 'status_type' => 1,
-                'generates_revenue' => true
+                'generates_revenue' => true,
             ],
             [
                 'name' => 'Conserto Aprovado',
                 'status_type' => 1,
-                'generates_revenue' => true
+                'generates_revenue' => true,
             ],
             [
                 'name' => 'Conserto em andamento',
                 'status_type' => 1,
-                'generates_revenue' => true
+                'generates_revenue' => true,
             ],
             [
                 'name' => 'Conserto Finalizado',
                 'status_type' => 1,
-                'generates_revenue' => true
+                'generates_revenue' => true,
             ],
         ];
 
@@ -70,6 +70,7 @@ class SoStatusSeeder
             'tenant_id' => $tenantId,
         ]);
     }
+
     /**
      * Create a default SO status.
      */

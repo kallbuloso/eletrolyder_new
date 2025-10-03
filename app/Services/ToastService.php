@@ -9,6 +9,7 @@ use Illuminate\Support\ViewErrorBag;
 class ToastService
 {
     protected $flashedToasts = [];
+
     protected $toasts = [];
 
     public function __call($method, $args)
@@ -34,7 +35,7 @@ class ToastService
         return [
             'type' => $type,
             'text' => $message,
-            'duration' => $duration
+            'duration' => $duration,
         ];
     }
 

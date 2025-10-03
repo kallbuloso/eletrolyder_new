@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Inertia;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Inertia\Inertia;
 
 abstract class Controller
 {
@@ -12,9 +12,7 @@ abstract class Controller
     /**
      * Render a page component.
      *
-     * @param string $component
-     * @param array|null $props
-     * @return \Inertia\Response
+     * @param  array|null  $props
      */
     public function renderPage(string $component, array $props = []): \Inertia\Response
     {
@@ -24,10 +22,8 @@ abstract class Controller
     /**
      * Render a modal component.
      *
-     * @param string $component
-     * @param array|null $props
-     * @param string|array $baseRoute
-     * @return \Momentum\Modal\Modal
+     * @param  array|null  $props
+     * @param  string|array  $baseRoute
      */
     public function renderModal(string $component): \Momentum\Modal\Modal
     {

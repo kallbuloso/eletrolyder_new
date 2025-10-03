@@ -6,7 +6,6 @@ use App\Models\Phone;
 
 trait PhoneableTrait
 {
-
     public function phones()
     {
         return $this->morphMany(Phone::class, 'phoneable');

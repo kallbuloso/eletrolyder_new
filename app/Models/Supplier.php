@@ -23,14 +23,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property $blocking_reason
  * @property $last_purchase
  *
- * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Supplier extends Model
 {
     use SupplierTrait;
 
-    protected $table = "suppliers";
+    protected $table = 'suppliers';
 
     protected $perPage = 10;
 
@@ -54,7 +53,7 @@ class Supplier extends Model
         'note',
         'status',
         'blocking_reason',
-        'last_purchase'
+        'last_purchase',
     ];
 
     protected $searchable = [
@@ -70,6 +69,6 @@ class Supplier extends Model
         'note',
         'status',
         'blocking_reason',
-        'last_purchase'
+        'last_purchase',
     ];
 }

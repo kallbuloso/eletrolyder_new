@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Traits\PhoneableTrait;
-use App\Traits\SearchableTrait;
-use App\Traits\TenantableTrait;
 use App\Traits\DatesModelTraits;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\PhoneableTrait;
+use App\Traits\TenantableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Phone
@@ -21,14 +20,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property $created_at
  * @property $updated_at
  *
- * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Phone extends Model
 {
-    use HasFactory, DatesModelTraits, TenantableTrait, PhoneableTrait;
+    use DatesModelTraits, HasFactory, PhoneableTrait, TenantableTrait;
 
-    protected $table = "phones";
+    protected $table = 'phones';
 
     protected $perPage = 10;
 
@@ -51,7 +49,7 @@ class Phone extends Model
         'phone_type',
         'phone_number',
         'phone_contact',
-        'phone_has_whatsapp'
+        'phone_has_whatsapp',
     ];
 
     public function phoneable()

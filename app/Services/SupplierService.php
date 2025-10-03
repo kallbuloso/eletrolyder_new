@@ -6,8 +6,8 @@ use App\Models\Supplier;
 
 class SupplierService extends BaseService
 {
-  public function __construct(Supplier $service)
-  {
-    $this->model = $service;
-  }
+    public function __construct(Supplier $service)
+    {
+        $this->model = $service;
+    }
 }

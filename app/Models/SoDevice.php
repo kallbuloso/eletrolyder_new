@@ -25,47 +25,46 @@ use Illuminate\Database\Eloquent\Model;
  * @property $warranty_certificate
  * @property $created_at
  * @property $updated_at
- *
  * @property SoDevicesType $soDevicesType
  * @property Tenant $tenant
  * @property Main.serviceOrder[] $main.serviceOrders
- * @package App
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class SoDevice extends Model
 {
-  use SoDeviceTrait;
+    use SoDeviceTrait;
 
-  protected $table = "so_devices";
+    protected $table = 'so_devices';
 
-  protected $perPage = 10;
+    protected $perPage = 10;
 
-  protected $guarded = ['id'];
+    protected $guarded = ['id'];
 
-  /**
-   * Attributes that should be mass-assignable.
-   *
-   * @var array
-   */
-  protected $fillable = [
-    'tenant_id',
-    'so_device_type_id',
-    'description',
-    'brand',
-    'model',
-    'serial_number',
-    'damages',
-    'accessories',
-    'notes',
-    'warranty_provider',
-    'purchase_date',
-    'reseller',
-    'invoice_number',
-    'warranty_certificate'
-  ];
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'tenant_id',
+        'so_device_type_id',
+        'description',
+        'brand',
+        'model',
+        'serial_number',
+        'damages',
+        'accessories',
+        'notes',
+        'warranty_provider',
+        'purchase_date',
+        'reseller',
+        'invoice_number',
+        'warranty_certificate',
+    ];
 
-  protected $searchable = [
-    'brand',
-    'model'
-  ];
+    protected $searchable = [
+        'brand',
+        'model',
+    ];
 }

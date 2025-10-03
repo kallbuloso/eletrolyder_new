@@ -2,53 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
-use Illuminate\Http\Request;
-use App\Services\ClientService;
-use App\Http\Requests\PhoneRequest;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ClientRequest;
 use App\Http\Requests\AddressRequest;
+use App\Http\Requests\ClientRequest;
+use App\Http\Requests\PhoneRequest;
+use App\Models\Client;
+use App\Services\ClientService;
+use Illuminate\Http\Request;
 
 /**
  * Class ClientController
- * @package App\Http\Controllers
  */
 class ClientController extends Controller
 {
     /**
      * Client Service
+     *
      * @var ClientService
      */
     private $service;
 
     /**
      * Page Title
+     *
      * @var string
      */
     private $pageTitle = 'Clientes';
 
     /**
      * Title Singular
+     *
      * @var string
      */
     private $titleSingular = 'Cliente';
 
     /**
      * Summary of pageIndex
+     *
      * @var string
      */
     private $pageIndex = 'registers.client.index';
 
     /**
      * Summary of pathView
+     *
      * @var string
      */
     private $pathView = 'Registers/Client';
 
     /**
      * ClientController constructor.
-     * @param ClientService $service
      */
     public function __construct(ClientService $service)
     {
@@ -57,9 +59,6 @@ class ClientController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\JsonResponse|\Inertia\Response
      */
     public function index(Request $request): \Illuminate\Http\JsonResponse|\Inertia\Response
     {
@@ -94,8 +93,6 @@ class ClientController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Momentum\Modal\Modal
      */
     public function create(): \Momentum\Modal\Modal
     {
@@ -110,9 +107,6 @@ class ClientController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  ClientRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ClientRequest $request): \Illuminate\Http\RedirectResponse
     {
@@ -154,10 +148,6 @@ class ClientController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  PhoneRequest  $request
-     * @param  $clientId
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function storePhone(PhoneRequest $request, $clientId): \Illuminate\Http\RedirectResponse
     {
@@ -171,16 +161,13 @@ class ClientController extends Controller
             'phone_contact' => $request->phone_contact,
             'phone_has_whatsapp' => $request->phone_has_whatsapp,
         ]);
+
         return redirect()->back()
             ->toast("Telefone adicionado ao $this->titleSingular.", 'success');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  AddressRequest  $request
-     * @param  $clientId
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function storeAddress(AddressRequest $request, $clientId): \Illuminate\Http\RedirectResponse
     {
@@ -207,8 +194,6 @@ class ClientController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Inertia\Response
      */
     public function edit($id): \Inertia\Response
     {
@@ -235,10 +220,6 @@ class ClientController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  ClientRequest  $request
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ClientRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
@@ -252,9 +233,6 @@ class ClientController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id): \Illuminate\Http\RedirectResponse
     {

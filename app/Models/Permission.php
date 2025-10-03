@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\SearchableTrait;
 use Spatie\Permission\Models\Permission as OriginalPermission;
 
 /**
@@ -16,12 +15,11 @@ use Spatie\Permission\Models\Permission as OriginalPermission;
  * @property $created_at
  * @property $updated_at
  *
- * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Permission extends OriginalPermission
 {
-    protected $table = "permissions";
+    protected $table = 'permissions';
 
     /**
      * Attributes that should be mass-assignable.
@@ -32,16 +30,16 @@ class Permission extends OriginalPermission
         'tenant_id',
         'name',
         'description',
-        'guard_name'
+        'guard_name',
     ];
 
     protected $searchable = [
-        'name'
+        'name',
     ];
 
     public function getCreatedAtAttribute($value)
     {
-        return date("d/m/Y H:i:s", strtotime($value));
+        return date('d/m/Y H:i:s', strtotime($value));
     }
 
     public function getUpdatedAtAttribute($value)

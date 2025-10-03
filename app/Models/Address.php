@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use App\Traits\SearchableTrait;
-use App\Traits\TenantableTrait;
 use App\Traits\AddressableTrait;
 use App\Traits\DatesModelTraits;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\TenantableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Address
@@ -25,14 +24,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property $zip_code
  * @property $reference
  *
- * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Address extends Model
 {
-    use HasFactory, DatesModelTraits, TenantableTrait, AddressableTrait;
+    use AddressableTrait, DatesModelTraits, HasFactory, TenantableTrait;
 
-    protected $table = "addresses";
+    protected $table = 'addresses';
 
     protected $perPage = 10;
 
@@ -54,7 +52,7 @@ class Address extends Model
         'state',
         'country',
         'zip_code',
-        'reference'
+        'reference',
     ];
 
     protected $searchable = [
@@ -67,7 +65,7 @@ class Address extends Model
         'state',
         'country',
         'zip_code',
-        'reference'
+        'reference',
     ];
 
     public function addressable()

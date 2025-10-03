@@ -46,9 +46,9 @@ return new class extends Migration
         Schema::create('so_statuses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->constrained();
-            $table->string('description'); // Descrição do status            
+            $table->string('description'); // Descrição do status
             $table->tinyInteger('status_type'); // status_type: entrada = 0, em andamento = 1, saída = 2
-            $table->boolean('generates_revenue')->default(false); // generates_revenue: 0 = não gera receita, 1 = gera receita 
+            $table->boolean('generates_revenue')->default(false); // generates_revenue: 0 = não gera receita, 1 = gera receita
             $table->timestamps();
         });
 
@@ -95,7 +95,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tenant_id')->constrained();
             $table->foreignId('so_devices_type_id')->constrained('so_devices_type'); // Dispositivo relacionado
-            $table->string('description'); // Descrição da garantia            
+            $table->string('description'); // Descrição da garantia
             $table->string('warranty_term'); // Termo da garantia
             $table->timestamps();
         });

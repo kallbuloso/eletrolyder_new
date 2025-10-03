@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Traits\SearchableTrait;
-use App\Traits\TenantableTrait;
 use App\Traits\DatesModelTraits;
-use Spatie\Permission\Models\Role as OriginalRole;
+use App\Traits\TenantableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Models\Role as OriginalRole;
 
 /**
  * Class Role
@@ -19,14 +18,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property $created_at
  * @property $updated_at
  *
- * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Role extends OriginalRole
 {
-    use HasFactory, TenantableTrait, DatesModelTraits;
+    use DatesModelTraits, HasFactory, TenantableTrait;
 
-    protected $table = "roles";
+    protected $table = 'roles';
 
     /**
      * Attributes that should be mass-assignable.
@@ -39,12 +37,12 @@ class Role extends OriginalRole
         'description',
         'guard_name',
         'updated_at',
-        'created_at'
+        'created_at',
     ];
 
     protected $searchable = [
         'name',
-        'description'
+        'description',
     ];
 
     public static function bootRole(): void

@@ -2,45 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\RoleService;
 use App\Http\Requests\RoleRequest;
 use App\Http\Requests\RoleUpdateRequest;
+use App\Services\RoleService;
 use Spatie\Permission\Models\Permission;
 
 /**
  * Class RoleController
- * @package App\Http\Controllers
  */
 class RoleController extends Controller
 {
     /**
      * Role Service
+     *
      * @var RoleService
      */
     private $service;
 
     /**
      * Page Title
+     *
      * @var string
      */
     private $pageTitle = 'Controle de Acessos';
 
     /**
      * Title Singular
+     *
      * @var string
      */
     private $titleSingular = 'Controle de Acesso';
 
     /**
      * Summary of pageIndex
+     *
      * @var string
      */
     private $pageIndex = 'settings.roles.index';
 
     private $allPermissions;
+
     /**
      * RoleController constructor.
-     * @param RoleService $service
      */
     public function __construct(RoleService $service)
     {
@@ -50,8 +53,6 @@ class RoleController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Inertia\Response
      */
     public function index(): \Inertia\Response
     {
@@ -71,8 +72,6 @@ class RoleController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Momentum\Modal\Modal
      */
     public function create(): \Momentum\Modal\Modal
     {
@@ -88,9 +87,6 @@ class RoleController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  RoleRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(RoleRequest $request): \Illuminate\Http\RedirectResponse
     {
@@ -111,15 +107,12 @@ class RoleController extends Controller
         $role = $this->service->create($val);
         $role->syncPermissions($request->permissions);
 
-
         return redirect()->route($this->pageIndex)
             ->toast("$this->titleSingular criado.", 'success');
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Momentum\Modal\Modal
      */
     public function edit($id): \Momentum\Modal\Modal
     {
@@ -138,8 +131,6 @@ class RoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  RoleRequest  $request
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(RoleUpdateRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
@@ -149,7 +140,7 @@ class RoleController extends Controller
 
         $existingRole = $this->service->where('name', $val['name'])
             ->where('tenant_id', session('tenant_id'))
-            ->where('id', $id,'!=')
+            ->where('id', $id, '!=')
             ->first();
 
         if ($existingRole) {
@@ -168,9 +159,6 @@ class RoleController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id): \Illuminate\Http\RedirectResponse
     {

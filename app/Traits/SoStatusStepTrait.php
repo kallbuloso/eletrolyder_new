@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 trait SoStatusStepTrait
 {
-    use HasFactory, TenantableTrait, DatesModelTraits;
+    use DatesModelTraits, HasFactory, TenantableTrait;
 
     /**
      * Relacionamento: Status possui muitos passos (steps).

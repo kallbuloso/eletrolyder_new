@@ -32,21 +32,20 @@ use Illuminate\Database\Eloquent\Model;
  * @property $reopened_at
  * @property $created_at
  * @property $updated_at
- *
  * @property SoStatusStep $soStatusStep
  * @property SoStatus $soStatus
  * @property SoDevice $soDevice
  * @property Client $client
  * @property Tenant $tenant
  * @property ServiceOrderHistory[] $serviceOrderHistories
- * @package App
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class ServiceOrder extends Model
 {
     use ServiceOrderTrait;
 
-    protected $table = "service_orders";
+    protected $table = 'service_orders';
 
     protected $perPage = 10;
 
@@ -77,7 +76,7 @@ class ServiceOrder extends Model
         'repaired_by_technician',
         'internal_notes',
         'closed_at',
-        'reopened_at'
+        'reopened_at',
     ];
 
     protected $searchable = [

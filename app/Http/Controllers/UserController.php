@@ -2,55 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
-use App\Http\Requests\UserRequest;
-use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\UserUpdateRequest;
+use Spatie\Permission\Models\Role;
 
 /**
  * Class UserController
- * @package App\Http\Controllers
  */
 class UserController extends Controller
 {
     /**
      * User Service
+     *
      * @var UserService
      */
     private $service;
 
     /**
      * Page Title
+     *
      * @var string
      */
     private $pageTitle = 'Usuários';
 
     /**
      * Title Singular
+     *
      * @var string
      */
     private $titleSingular = 'Usuário';
 
     /**
      * Summary of pageIndex
+     *
      * @var string
      */
     private $pageIndex = 'registers.user.index';
 
     /**
      * Summary of pathView
+     *
      * @var string
      */
     private $pathView = 'Registers/User';
 
     /**
      * UserController constructor.
-     * @param UserService $service
      */
     public function __construct(UserService $service)
     {
@@ -59,9 +61,6 @@ class UserController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\JsonResponse|\Inertia\Response
      */
     public function index(Request $request): JsonResponse|\Inertia\Response
     {
@@ -98,8 +97,6 @@ class UserController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Momentum\Modal\Modal
      */
     public function create(): \Momentum\Modal\Modal
     {
@@ -115,9 +112,6 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  UserRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(UserRequest $request): \Illuminate\Http\RedirectResponse
     {
@@ -150,8 +144,6 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Momentum\Modal\Modal
      */
     public function edit($id): \Momentum\Modal\Modal
     {
@@ -171,10 +163,6 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  UserUpdateRequest  $request
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UserUpdateRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
@@ -209,7 +197,7 @@ class UserController extends Controller
 
         if ($validate['password']) {
             $user->update([
-                'password' => Hash::make($validate['password'])
+                'password' => Hash::make($validate['password']),
             ]);
         }
 
@@ -223,9 +211,6 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id): \Illuminate\Http\RedirectResponse
     {

@@ -21,16 +21,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property $email
  * @property $website
  * @property $note
- *
  * @property Tenant $tenant
- * @package App
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Company extends Model
 {
     use CompanyTrait;
 
-    protected $table = "companies";
+    protected $table = 'companies';
 
     protected $perPage = 10;
 
@@ -54,7 +53,7 @@ class Company extends Model
         'logo',
         'email',
         'website',
-        'note'
+        'note',
     ];
 
     protected $searchable = [
@@ -69,6 +68,6 @@ class Company extends Model
         'logo',
         'email',
         'website',
-        'note'
+        'note',
     ];
 }

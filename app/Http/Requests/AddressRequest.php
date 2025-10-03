@@ -31,7 +31,7 @@ class AddressRequest extends FormRequest
             'state' => ['required', 'string'],
             'country' => ['required', 'string'],
             'zip_code' => ['required', 'string'],
-            'reference' => ['nullable', 'string']
+            'reference' => ['nullable', 'string'],
         ];
     }
 

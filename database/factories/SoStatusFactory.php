@@ -19,7 +19,7 @@ class SoStatusFactory extends Factory
         return [
             'description' => fake()->word(),
             'status_type' => fake()->numberBetween(0, 2), // 0 = entrada, 1 = em andamento, 2 = saída
-            'generates_revenue' => fake()->numberBetween(0, 1), // 0 = não gera receita, 1 = gera receita       
+            'generates_revenue' => fake()->numberBetween(0, 1), // 0 = não gera receita, 1 = gera receita
         ];
     }
 }

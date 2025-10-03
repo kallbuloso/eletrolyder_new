@@ -2,52 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SoStatus;
-use Illuminate\Http\Request;
-use App\Services\SoStatusService;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\SoStatusRequest;
 use App\Http\Requests\SoStatusUpdateRequest;
+use App\Models\SoStatus;
+use App\Services\SoStatusService;
+use Illuminate\Http\Request;
 
 /**
  * Class SoStatusController
- * @package App\Http\Controllers
  */
 class SoStatusController extends Controller
 {
     /**
      * SoStatus Service
+     *
      * @var SoStatusService
      */
     private $service;
 
     /**
      * Page Title
+     *
      * @var string
      */
     private $pageTitle = 'Status de Ordens de Serviço';
 
     /**
      * Title Singular
+     *
      * @var string
      */
     private $titleSingular = 'Status de Ordem de Serviço';
 
     /**
      * Summary of pageIndex
+     *
      * @var string
      */
     private $pageIndex = 'orders.soSettings.soStatus.index';
 
     /**
      * Summary of pathView
+     *
      * @var string
      */
     private $pathView = 'ServicesOrder/Settings/Statuses';
 
     /**
      * SoStatusController constructor.
-     * @param SoStatusService $service
      */
     public function __construct(SoStatusService $service)
     {
@@ -56,9 +58,6 @@ class SoStatusController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\JsonResponse|\Inertia\Response
      */
     public function index(Request $request): \Illuminate\Http\JsonResponse|\Inertia\Response
     {
@@ -93,8 +92,6 @@ class SoStatusController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Momentum\Modal\Modal
      */
     public function create(): \Momentum\Modal\Modal
     {
@@ -109,9 +106,6 @@ class SoStatusController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  SoStatusRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(SoStatusRequest $request): \Illuminate\Http\RedirectResponse
     {
@@ -132,13 +126,11 @@ class SoStatusController extends Controller
         $status = $this->service->create($val);
 
         return redirect()->route($this->pageIndex)
-            ->toast("Status criado com sucesso.", 'success');
+            ->toast('Status criado com sucesso.', 'success');
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Inertia\Response
      */
     public function edit($id): \Inertia\Response
     {
@@ -161,8 +153,6 @@ class SoStatusController extends Controller
      * Update the specified resource in storage.
      *
      * @param  SoStatusRequest  $request
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(SoStatusUpdateRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
@@ -189,9 +179,6 @@ class SoStatusController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id): \Illuminate\Http\RedirectResponse
     {

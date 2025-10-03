@@ -1,21 +1,22 @@
 <?php
 
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PhoneController;
 use App\Http\Controllers\AddressController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\PhoneController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ServiceOrderController;
+use App\Http\Controllers\SoDeviceController;
+use App\Http\Controllers\SoDevicesTypeController;
 use App\Http\Controllers\SoStatusController;
 use App\Http\Controllers\SoStatusStepController;
-use App\Http\Controllers\SoDevicesTypeController;
-use App\Http\Controllers\SoDeviceController;
-use App\Http\Controllers\ServiceOrderController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+
 // routeImport
 
 Route::get('/', function () {
@@ -27,7 +28,6 @@ Route::get('/', function () {
     ]);
 });
 
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render(
@@ -36,7 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'title' => 'Dashboard',
                 'breadcrumbs' => [
                     ['title' => 'Dashboard', 'disabled' => true],
-                ]
+                ],
             ]
         );
     })->name('dashboard');
@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     'breadcrumbs' => [
                         ['title' => 'Dashboard', 'href' => '/dashboard'],
                         ['title' => 'Child 1', 'disabled' => true],
-                    ]
+                    ],
                 ]);
             })->name('child1');
             Route::get('/child2', function () {
@@ -60,7 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     'breadcrumbs' => [
                         ['title' => 'Dashboard', 'href' => '/dashboard'],
                         ['title' => 'Child 2', 'disabled' => true],
-                    ]
+                    ],
                 ]);
             })->name('child2');
             Route::get('/child3', function () {
@@ -69,7 +69,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     'breadcrumbs' => [
                         ['title' => 'Dashboard', 'href' => '/dashboard'],
                         ['title' => 'Child 3', 'disabled' => true],
-                    ]
+                    ],
                 ]);
             })->name('child3');
             // na rota: route('child.child1')
@@ -212,4 +212,4 @@ Route::post('/notify/{type}', function ($type) {
     return redirect()->back()->toast('Notificação do servidor =)', $type);
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

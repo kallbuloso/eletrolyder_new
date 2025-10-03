@@ -18,6 +18,7 @@ class SupplierFactory extends Factory
     {
         $person = fake()->randomElement(['F', 'J']);
         $status = fake()->randomElement([0, 1, 2]); // 0 - Ativo, 1 - Inativo, 2 - Bloqueado
+
         return [
             'name' => fake()->name(),
             'nick_name' => fake()->lastName(),

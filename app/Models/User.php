@@ -18,7 +18,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property $remember_token
  * @property $profile_photo_path
  *
- * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class User extends Authenticatable implements MustVerifyEmail

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 trait SoDeviceTrait
 {
-    use HasFactory, TenantableTrait, DatesModelTraits;
+    use DatesModelTraits, HasFactory, TenantableTrait;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

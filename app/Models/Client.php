@@ -20,16 +20,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property $status
  * @property $blocking_reason
  * @property $last_purchase
- *
  * @property Tenant $tenant
- * @package App
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Client extends Model
 {
     use ClientTrait;
 
-    protected $table = "clients";
+    protected $table = 'clients';
 
     protected $perPage = 10;
 
@@ -51,12 +50,12 @@ class Client extends Model
         'note',
         'status',
         'blocking_reason',
-        'last_purchase'
+        'last_purchase',
     ];
 
     protected $searchable = [
         'name',
         'nick_name',
-        'cpf_cnpj'
+        'cpf_cnpj',
     ];
 }

@@ -4,7 +4,6 @@ namespace App\Services;
 
 /**
  * Class BaseService.
- *
  */
 abstract class BaseService
 {
@@ -83,14 +82,13 @@ abstract class BaseService
     /**
      * Apply filter to the query.
      *
-     * @param $query
-     * @param $request
      * @return mixed
      */
     public function applyFilter($query, $request)
     {
         return $query->when($request->get('search'), function ($query, $search) {
             $search = strtolower(trim($search));
+
             return $query->whereRaw('LOWER(name) LIKE ?', ["%$search%"]);
         })->when($request->get('sort'), function ($query, $sortBy) {
             return $query->orderBy($sortBy['key'], $sortBy['order']);
@@ -100,9 +98,8 @@ abstract class BaseService
     /**
      * Apply filters to the query.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Http\Request $request
-     * @param array $searchableFields
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function applyFilters($query, $request, array $searchableFields = ['name'])
@@ -118,6 +115,7 @@ abstract class BaseService
             if (isset($sortBy['key']) && isset($sortBy['order'])) {
                 return $query->orderBy($sortBy['key'], $sortBy['order']);
             }
+
             return $query;
         });
     }
@@ -185,7 +183,6 @@ abstract class BaseService
     /**
      * Get the specified model record from the database.
      *
-     * @param $id
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function getById($id)
@@ -198,9 +195,6 @@ abstract class BaseService
     }
 
     /**
-     * @param $item
-     * @param $column
-     * @param  array  $columns
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
      */
     public function getByColumn($item, $column, array $columns = ['*'])
@@ -215,7 +209,6 @@ abstract class BaseService
     /**
      * Delete the specified model record from the database.
      *
-     * @param $id
      * @return bool|null
      *
      * @throws \Exception
@@ -266,10 +259,10 @@ abstract class BaseService
      * @param  int  $page
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function paginate($limit = 25,  $keywords = '', $columns = ['*'], $pageName = 'page', $page = null)
+    public function paginate($limit = 25, $keywords = '', $columns = ['*'], $pageName = 'page', $page = null)
     {
         $this->newQuery()->eagerLoad()->setClauses()->setScopes();
-        if (!empty($keywords) && count($this->getSearchableFields())) {
+        if (! empty($keywords) && count($this->getSearchableFields())) {
             foreach ($this->getSearchableFields() as $field) {
                 $this->query->orwhere($field, 'ilike', "%$keywords%");
             }
@@ -315,7 +308,6 @@ abstract class BaseService
     /**
      * Set Eloquent relationships to eager load.
      *
-     * @param $relations
      * @return $this
      */
     public function with($relations)
@@ -374,7 +366,7 @@ abstract class BaseService
             $this->query->orderBy($orders['column'], $orders['direction']);
         }
 
-        if (isset($this->take) and !is_null($this->take)) {
+        if (isset($this->take) and ! is_null($this->take)) {
             $this->query->take($this->take);
         }
 
@@ -409,7 +401,6 @@ abstract class BaseService
 
         return $this;
     }
-
 
     public function update($id, $input)
     {

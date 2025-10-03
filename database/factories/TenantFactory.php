@@ -9,17 +9,18 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TenantFactory extends Factory
 {
-  /**
-   * Define the model's default state.
-   *
-   * @return array<string, mixed>
-   */
-  public function definition(): array
-  {
-    $status = fake()->randomElement([0, 1, 2]);
-    return [
-      'status' => $status,
-      'blocking_reason' => $status === 2 ? fake()->sentence() : null,
-    ];
-  }
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        $status = fake()->randomElement([0, 1, 2]);
+
+        return [
+            'status' => $status,
+            'blocking_reason' => $status === 2 ? fake()->sentence() : null,
+        ];
+    }
 }

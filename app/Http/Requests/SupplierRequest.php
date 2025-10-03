@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SupplierRequest extends FormRequest
 {
@@ -33,7 +33,7 @@ class SupplierRequest extends FormRequest
                 Rule::unique('suppliers')->ignore($this->id)->where(function ($query) {
                     return $query->whereNotNull('cpf_cnpj');
                 }),
-                'required_if:person,J'
+                'required_if:person,J',
             ],
             'birth_date' => ['nullable', 'string'],
             'note' => ['nullable', 'string'],
@@ -78,6 +78,7 @@ class SupplierRequest extends FormRequest
             'phones.*.phone_contact.required_if' => 'Contato é obrigatório.',
         ];
     }
+
     /**
      * Get custom attributes for validator errors.
      *

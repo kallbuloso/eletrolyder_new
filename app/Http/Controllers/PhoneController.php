@@ -4,29 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PhoneRequest;
 use App\Services\PhoneService;
-use App\Http\Controllers\Controller;
 
 /**
  * Class PhoneController
- * @package App\Http\Controllers
  */
 class PhoneController extends Controller
 {
     /**
      * Phone Service
+     *
      * @var PhoneService
      */
     private $service;
 
     /**
      * Title Singular
+     *
      * @var string
      */
     private $titleSingular = 'Telefone';
 
     /**
      * PhoneController constructor.
-     * @param PhoneService $service
      */
     public function __construct(PhoneService $service)
     {
@@ -35,10 +34,6 @@ class PhoneController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  PhoneRequest  $request
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(PhoneRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
@@ -52,9 +47,6 @@ class PhoneController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id): \Illuminate\Http\RedirectResponse
     {

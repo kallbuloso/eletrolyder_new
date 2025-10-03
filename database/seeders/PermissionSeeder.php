@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
 class PermissionSeeder extends Seeder
@@ -52,27 +52,27 @@ class PermissionSeeder extends Seeder
                 'name' => 'supplier',
                 'description' => 'Gerenciar fornecedores',
             ],
-        	[
-				'name' => 'soStatus',
-				'description' => 'Gerenciar soStatuss',
-			],
-			[
-				'name' => 'soStatusStep',
-				'description' => 'Gerenciar soStatusSteps',
-			],
-			[
-				'name' => 'soDevicesType',
-				'description' => 'Gerenciar soDevicesTypes',
-			],
-			[
-				'name' => 'soDevice',
-				'description' => 'Gerenciar soDevices',
-			],
-			[
-				'name' => 'serviceOrder',
-				'description' => 'Gerenciar serviceOrders',
-			],
-		]; // addResources
+            [
+                'name' => 'soStatus',
+                'description' => 'Gerenciar soStatuss',
+            ],
+            [
+                'name' => 'soStatusStep',
+                'description' => 'Gerenciar soStatusSteps',
+            ],
+            [
+                'name' => 'soDevicesType',
+                'description' => 'Gerenciar soDevicesTypes',
+            ],
+            [
+                'name' => 'soDevice',
+                'description' => 'Gerenciar soDevices',
+            ],
+            [
+                'name' => 'serviceOrder',
+                'description' => 'Gerenciar serviceOrders',
+            ],
+        ]; // addResources
 
         $permissions = [
             'listar',
@@ -84,7 +84,7 @@ class PermissionSeeder extends Seeder
 
         foreach ($resources as $resource) {
             foreach ($permissions as $permission) {
-                $res = $resource['name'] . ' ' . $permission;
+                $res = $resource['name'].' '.$permission;
                 Permission::create(['name' => $res, 'description' => $resource['description']]);
             }
         }
@@ -98,7 +98,6 @@ class PermissionSeeder extends Seeder
 
         // $role2 = Role::create(['name' => 'Administrador', 'description' => 'Acesso administrativo ao sistema']);
         // $role2->syncPermissions(Permission::all());
-
 
         // $user = \App\Models\User::factory()->create([
         //     'name' => 'Super Admin',
