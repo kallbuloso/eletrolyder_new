@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Str;
 use App\Console\CrudGenerator\Commands\GeneratorCommand;
+use Illuminate\Support\Str;
+
 // use App\Models\Permission;
 
 // use Illuminate\Console\Command;
@@ -41,7 +42,7 @@ class CrudCommand extends GeneratorCommand
         ]);
 
         // If table not exist in DB return
-        if (!$this->tableExists()) {
+        if (! $this->tableExists()) {
             $this->error("A tabela {$this->table} não existe");
 
             return false;
@@ -83,8 +84,8 @@ class CrudCommand extends GeneratorCommand
      * Build the Controller Class and save in app/Http/Controllers.
      *
      * @return $this
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildController()
     {
@@ -111,8 +112,8 @@ class CrudCommand extends GeneratorCommand
 
     /**
      * @return $this
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildModel()
     {
@@ -140,8 +141,8 @@ class CrudCommand extends GeneratorCommand
 
     /**
      * @return $this
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildRequest()
     {
@@ -168,39 +169,37 @@ class CrudCommand extends GeneratorCommand
 
     /**
      * @return $this
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \Exception
      */
     protected function buildTraits()
     {
         $traitPath = $this->_getTraitPath($this->name);
 
-        if (!$this->files->exists($traitPath)) {
+        if (! $this->files->exists($traitPath)) {
 
             $this->info('Criando base Trait Interface...');
             // $this->info("php artisan make:trait Traits/{$this->name}Trait");
-
 
             $this->runCommands([
                 "php artisan make:trait {$this->name}Trait",
             ]);
         }
 
-
         return $this;
     }
 
     /**
      * @return $this
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \Exception
      */
     protected function buildSearchableTraits()
     {
         $serviceInterfacePath = $this->_getTraitPath('Searchable');
-        if (!$this->files->exists($serviceInterfacePath)) {
+        if (! $this->files->exists($serviceInterfacePath)) {
 
             $this->info('Criando base Trait Interface...');
 
@@ -212,15 +211,15 @@ class CrudCommand extends GeneratorCommand
 
     /**
      * @return $this
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildService()
     {
 
         // Make Service Class
         $servicePath = $this->_getServicePath('Base');
-        if (!$this->files->exists($servicePath)) {
+        if (! $this->files->exists($servicePath)) {
 
             $this->info('Criando base Service...');
 
@@ -252,6 +251,7 @@ class CrudCommand extends GeneratorCommand
      * Build a new factory for the generated model.
      *
      * @return $this
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildFactory()
@@ -293,22 +293,22 @@ class CrudCommand extends GeneratorCommand
         $this->info('Criando Recurso...');
 
         $permissionPath = base_path('database/seeders/PermissionSeeder.php');
-        if (!$this->files->exists($permissionPath)) {
+        if (! $this->files->exists($permissionPath)) {
             $this->error('Arquivo Permission não encontrado...');
+
             return $this;
         }
 
         $permissionContent = $this->files->get($permissionPath);
         $resource = Str::camel(Str::singular($this->name));
         $permissionContent = str_replace(
-            "]; // addResources",
+            ']; // addResources',
             "\t[\n\t\t\t\t'name' => '{$resource}',\n\t\t\t\t'description' => 'Gerenciar {$resource}s',\n\t\t\t],\n\t\t]; // addResources",
             $permissionContent
         );
 
         // var_dump($permissionContent);
         $this->files->put($permissionPath, $permissionContent);
-
 
         return $this;
 
@@ -321,16 +321,17 @@ class CrudCommand extends GeneratorCommand
 
     /**
      * @return $this
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildRoute()
     {
         $this->info('Criando as Rotas...');
 
         $routePath = base_path('routes/web.php');
-        if (!$this->files->exists($routePath)) {
+        if (! $this->files->exists($routePath)) {
             $this->error('Arquivo de rotas não encontrado...');
+
             return $this;
         }
 
@@ -360,6 +361,7 @@ class CrudCommand extends GeneratorCommand
             array_values($replace),
             $this->getStub('Route')
         );
+
         return str_replace(
             '// addRoute',
             $routeTemplate,
@@ -367,22 +369,21 @@ class CrudCommand extends GeneratorCommand
         );
     }
 
-
     /**
      * @return $this
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \Exception
      */
     protected function buildViews()
     {
         $this->info('Criando as Páginas Vue...');
 
-        $tableHead = "";
-        $useFormCreate = "";
-        $useForm = "";
-        $useFormEdit = "";
-        $tableHeaders = "";
+        $tableHead = '';
+        $useFormCreate = '';
+        $useForm = '';
+        $useFormEdit = '';
+        $tableHeaders = '';
         $tableBody = "\n";
         // $viewRows = "\n";
         $form = "\n";
