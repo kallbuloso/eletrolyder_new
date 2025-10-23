@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PhoneRequest extends FormRequest
@@ -23,7 +24,12 @@ class PhoneRequest extends FormRequest
     {
         return [
             'phone_type' => ['required', 'string'],
-            'phone_number' => ['required', 'string'],
+            'phone_number' => [
+                'required',
+                Rule::unique('phones', 'phoneable_type')->ignore($this->id)->where(function ($query) {
+                    return $query->where('phoneable_id', $this->phoneable_id);
+                }),
+            ],
             'phone_contact' => ['nullable', 'required_if:phone_type,C', 'string'],
             'phone_has_whatsapp' => ['required', 'boolean'],
         ];
