@@ -61,6 +61,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        // Tabela principal de Ordens de Serviço
         Schema::create('service_orders', function (Blueprint $table) {
             $table->id();
             $table->string('order_number')->unique(); // Ordem de serviço
@@ -91,6 +92,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        // Termos de garantia para dispositivos
         Schema::create('so_warranties_terms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->constrained();
@@ -100,6 +102,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        // Histórico de alterações de status das Ordens de Serviço
         Schema::create('service_order_history', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('service_orders');
